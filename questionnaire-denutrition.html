@@ -74,10 +74,36 @@
                 padding: 0 !important;
             }
         }
+        /* --- Bouton Retour Accueil (Ajout) --- */
+        .home-button {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background-color: #2563eb; /* Couleur bleue de la checklist */
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-size: 0.9rem; /* Cohérent avec la page */
+        }
+        .home-button:hover {
+            background-color: #1d4ed8;
+        }
+        @media (max-width: 800px) {
+            .home-button {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body class="p-4 sm:p-8">
-
+    <a href="index.html" class="home-button">
+        🏠 Accueil
+    </a>
     <div class="max-w-4xl mx-auto bg-white p-6 sm:p-10 shadow-xl rounded-lg">
         
         <!-- PAGE 1: En-tête et Discours Caractéristique -->
