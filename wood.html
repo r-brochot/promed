@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grille de Wood - ALD Polypathologies - CPAM (Formulaire Final)</title>
+    <style>
+        /* --- Styles Généraux --- */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #ffffff;
+            font-size: 13px;
+        }
+
+        h1 {
+            font-size: 16px;
+            text-align: left;
+        }
+
+        /* --- Zone d'Avertissement CPAM --- */
+        .cpam-warning {
+            max-width: 1000px;
+            margin: 0 auto 10px;
+            text-align: left;
+            padding: 5px 0;
+            line-height: 1.2;
+        }
+
+        /* --- Bandeau d'Identification Patient --- */
+        .patient-info {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto 30px;
+            padding: 10px;
+            border: 1px solid #000;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .patient-info .field {
+            display: flex;
+            align-items: center;
+        }
+
+        .patient-info label {
+            font-weight: bold;
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+
+        .patient-info input[type="text"] {
+            flex-grow: 1;
+            padding: 3px;
+            border: none;
+            border-bottom: 1px dashed #555;
+            background: transparent;
+            font-size: 13px;
+        }
+
+        /* --- Grille Principale (Tableau) --- */
+        .grid-container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        .grid-container th, .grid-container td {
+            border: 1px solid #000;
+            padding: 4px;
+            text-align: center;
+            vertical-align: middle;
+            height: 35px; 
+        }
+
+        .grid-container th {
+            background-color: #ffffff;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        /* En-têtes spécifiques (Domaines, Codes) */
+        .domain-header-cell {
+            width: 35%; 
+            text-align: left;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .code-header-cell, .code-cell {
+            width: 5%; 
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* En-tête des degrés */
+        .degree-header-group {
+            font-size: 12px;
+        }
+        
+        /* Cellules de Domaines (texte fixe) */
+        .domain-cell {
+            text-align: left !important;
+            padding-left: 8px !important;
+            font-weight: normal;
+        }
+
+        .rating-cell {
+            width: 10%; /* 5 colonnes */
+        }
+        
+        /* Assurer que les cases à cocher sont centrées */
+        input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+
+        /* --- Zone d'Observations (Nouvelle Section) --- */
+        .observations-section {
+            width: 100%;
+            max-width: 1000px;
+            margin: 20px auto;
+            border: 1px solid #000;
+            padding: 10px;
+        }
+
+        .observations-section h3 {
+            margin-top: 0;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .observations-section textarea {
+            width: 99%;
+            min-height: 150px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-sizing: border-box;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+
+        /* --- Footer (Signature/Date) --- */
+        .footer-info {
+            max-width: 1000px;
+            margin: 20px auto 0;
+            text-align: right;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-size: 12px;
+        }
+        
+        .signature-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .signature-line label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .signature-line input[type="text"] {
+            width: 300px;
+            padding: 3px;
+            border: none;
+            border-bottom: 1px dashed #555;
+            background: transparent;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .signature-line button {
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+
+        /* --- Contrôles et Impression --- */
+        @media print {
+            .controls {
+                display: none;
+            }
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .controls button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button onclick="exportToPDF()">Exporter en PDF / Imprimer la grille remplie</button>
+    </div>
+
+    <div class="cpam-warning">
+        <h1>GRILLE DE WOOD</h1>
+        A remplir par le médecin traitant en complément du protocole d'examen spécial dans le cadre d'une demande d'exonération du ticket modérateur pour "association d'affections caractérisées à l'origine de l'état pathologique invalidant - ALD (pathologies multiples)"
+    </div>
+
+    <div class="patient-info">
+        <div class="field"><label>Nom patronyme:</label> <input type="text" placeholder="À remplir"></div>
+        <div class="field"><label>Nom marital:</label> <input type="text" placeholder="À remplir"></div>
+        <div class="field"><label>Prénom:</label> <input type="text" placeholder="À remplir"></div>
+        <div class="field"><label>Numéro d'immatriculation:</label> <input type="text" placeholder="À remplir"></div>
+    </div>
+
+    <table class="grid-container">
+        <thead>
+            <tr>
+                <th colspan="7" class="degree-header-group">Degrés d'incapacité</th>
+            </tr>
+            <tr>
+                <th class="domain-header-cell" rowspan="2">Domaines d'incapacité<br>Incapacité concernant:</th>
+                
+                <th class="code-header-cell" rowspan="2">Codes</th>
+                
+                <th class="rating-cell">Nul</th>
+                <th class="rating-cell">léger</th>
+                <th class="rating-cell">moyen</th>
+                <th class="rating-cell">important</th>
+                <th class="rating-cell">très important</th>
+            </tr>
+            <tr>
+                <th class="rating-cell">0</th>
+                <th class="rating-cell">1</th>
+                <th class="rating-cell">2</th>
+                <th class="rating-cell">3</th>
+                <th class="rating-cell">4</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="domain-cell">Comportement</td>
+                <td class="code-cell">1</td>
+                <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
+            </tr>
+            <tr>
+                <td class="domain-cell">Communication</td>
+                <td class="code-cell">2</td>
+                <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
+            </tr>
+            <tr>
+                <td class="domain-cell">Locomotion</td>
+                <td class="code-cell">3</td>
+                <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
+            </tr>
+            <tr>
+                <td class="domain-cell">Manipulations</td>
+                <td class="code-cell">4</td>
+                <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
+            </tr>
+            <tr>
+                <td class="domain-cell">Soins corporels</td>
+                <td class="code-cell">5</td>
+                <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
+            </tr>
+            <tr>
+                <td class="domain-cell">Utilisation du corps dans certaines tâches</td>
+                <td class="code-cell">6</td>
+                <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
+            </tr>
+            <tr>
+                <td class="domain-cell">L'incapacité revelée par certaines situations</td>
+                <td class="code-cell">7</td>
+                <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
+                <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="observations-section">
+        <h3>Observations / Commentaires Libres:</h3>
+        <textarea placeholder="Utilisez cet espace pour toute observation complémentaire pertinente non couverte par la grille d'évaluation."></textarea>
+    </div>
+
+    <div class="footer-info">
+        <div class="signature-line">
+            <label for="signature_date">Date & signature:</label>
+            <input type="text" id="signature_date" placeholder="Lieu, JJ/MM/AAAA et Signature">
+            <button type="button" onclick="fillDate()">Mettre la date du jour</button>
+        </div>
+    </div>
+
+    <script>
+        // SCRIPT: Assure qu'une seule case est cochée par ligne (Domaine d'incapacité)
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Le nom du groupe est défini par le 'name' de la checkbox (ex: domaine1_cotation)
+                document.querySelectorAll('input[name="' + this.name + '"]').forEach(otherCheckbox => {
+                    if (otherCheckbox !== this) {
+                        otherCheckbox.checked = false;
+                    }
+                });
+            });
+        });
+
+        // SCRIPT: Ajout de la date du jour (sans la mention "Lieu")
+        function fillDate() {
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+            const yyyy = today.getFullYear();
+
+            const formattedDate = `${dd}/${mm}/${yyyy}`;
+            document.getElementById('signature_date').value = formattedDate; // Seulement la date
+        }
+
+
+        // SCRIPT: Fonction d'exportation en PDF/Impression
+        function exportToPDF() {
+            window.print();
+        }
+    </script>
+
+</body>
+</html>
