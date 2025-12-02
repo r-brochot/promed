@@ -3,57 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr Brochot - Espace Médical</title>
+    <title>Espace Médical - Dr Brochot</title>
     <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --primary-color: #0ea5e9; /* Bleu médical clair */
+            --hover-color: #0284c7;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f8;
-            color: #333;
-            text-align: center;
-            padding: 50px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
             margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
-        .container {
-            background-color: white;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h1 { color: #2c3e50; margin-bottom: 10px; }
-        p { color: #7f8c8d; line-height: 1.6; }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #3498db;
+
+        header {
+            background: linear-gradient(135deg, #0f172a, #334155);
+            width: 100%;
+            padding: 40px 20px;
+            text-align: center;
             color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
         }
-        .btn:hover { background-color: #2980b9; }
-        .footer { margin-top: 30px; font-size: 0.8em; color: #bdc3c7; }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        p.subtitle {
+            margin-top: 10px;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 24px;
+            max-width: 800px;
+            width: 90%;
+            padding: 20px;
+        }
+
+        .app-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        /* Couleurs spécifiques pour les icônes */
+        .icon-thermale { background-color: #dbeafe; color: #2563eb; }
+        .icon-wood { background-color: #dcfce7; color: #166534; }
+        .icon-wip { background-color: #f1f5f9; color: #94a3b8; }
+
+        .app-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .app-desc {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Dr Rémi Brochot</h1>
-        <p><strong>Médecin Généraliste</strong></p>
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+    <header>
+        <h1>Dr R. Brochot</h1>
+        <p class="subtitle">Portail des outils médicaux</p>
+    </header>
+
+    <div class="app-grid">
         
-        <p>Cet espace est réservé aux informations professionnelles et médicales.</p>
-        
-        <p><em>Le site est actuellement en construction.</em></p>
-        
-        <a href="https://rbrochot.fr" class="btn">Retour au site principal</a>
+        <a href="thermale.html" class="app-card">
+            <div class="icon-box icon-thermale">
+                💧
+            </div>
+            <span class="app-name">Cure Thermale</span>
+            <span class="app-desc">Check-list des CI</span>
+        </a>
+
+        <a href="wood.html" class="app-card">
+            <div class="icon-box icon-wood">
+                📝
+            </div>
+            <span class="app-name">Grille de Wood</span>
+            <span class="app-desc">Évaluation ALD</span>
+        </a>
+
+        <div class="app-card" style="opacity: 0.6; cursor: default;">
+            <div class="icon-box icon-wip">
+                ➕
+            </div>
+            <span class="app-name">Bientôt...</span>
+            <span class="app-desc">Nouvel outil</span>
+        </div>
+
     </div>
 
-    <div class="footer">
-        © 2025 – Dr Rémi Brochot. Reproduction interdite.
-    </div>
+    <footer>
+        © 2025 Dr Rémi Brochot - Usage Professionnel
+    </footer>
 
 </body>
 </html>
