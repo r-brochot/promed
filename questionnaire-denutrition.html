@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grille de Repérage Dénutrition Chez la Personne Âgée</title>
+    <!-- Chargement de Tailwind CSS pour un style moderne et responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configuration générale pour une police lisible et un rendu propre */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f7;
+        }
+        /* Style pour les sections à remplir par l'utilisateur */
+        .fillable-input {
+            border-bottom: 1px solid #9ca3af; /* Gris subtil pour la ligne */
+            padding-left: 0.5rem;
+            margin-left: 0.5rem;
+            flex-grow: 1;
+        }
+        /* Style pour les blocs de critères de dépistage */
+        .screening-section {
+            border: 1px solid #d1d5db;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            background-color: #ffffff;
+        }
+        /* Style des lignes dans les sections de critères (checkboxes) */
+        .screening-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        /* Assurer que les lignes de la page 3 sont bien visibles pour l'impression */
+        .signature-line {
+            border-bottom: 1px solid #374151;
+            padding: 0.25rem 0;
+            width: 70%;
+            margin-top: 0.5rem;
+        }
+        /* Amélioration visuelle pour les cases à cocher */
+        input[type="checkbox"] {
+            /* Taille uniforme pour toutes les cases */
+            width: 1.25rem; 
+            height: 1.25rem;
+            accent-color: #10b981; /* Vert émeraude */
+            border-radius: 0.25rem;
+            /* Assure que la case est bien alignée en haut d'une longue ligne de texte */
+            align-self: flex-start; 
+            margin-top: 0.15rem;
+            flex-shrink: 0;
+        }
+        /* Style spécifique pour le texte dans la section Pathologies pour gérer les longues phrases */
+        .patho-text {
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.25rem;
+        }
+
+        /* --- STYLES D'IMPRESSION --- */
+        @media print {
+            body {
+                background-color: #fff; /* Fond blanc pour l'impression */
+                padding: 0;
+                margin: 0;
+            }
+            .no-print {
+                display: none !important; /* Masque le bouton d'impression */
+            }
+            .max-w-4xl {
+                max-width: 100% !important; /* Utilise toute la largeur de la page */
+                box-shadow: none; /* Supprime l'ombre */
+                padding: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white p-6 sm:p-10 shadow-xl rounded-lg">
+        
+        <!-- PAGE 1: En-tête et Discours Caractéristique -->
+        <header class="text-center mb-8 pb-4 border-b-2 border-green-500">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">
+                SIGNES D'ALERTE DÉNUTRITION CHEZ LA PERSONNE ÂGÉE À DOMICILE
+            </h1>
+            <p class="mt-2 text-sm text-gray-600">
+                Pour les professionnels de santé: pharmacien, dentiste, IDEL, médecin traitant, biologiste, orthophoniste, psychologue, diététicien, kinésithérapeute, médecin spécialisé.
+            </p>
+            <p class="mt-2 text-xs italic text-gray-500">
+                Cette grille de repérage découlera d'une bonne observation du patient, de son environnement et de son mode de vie.
+            </p>
+        </header>
+
+        <!-- Zone d'informations à remplir (Remplissable) -->
+        <form class="space-y-3 mb-6 text-base font-semibold">
+            <div class="flex flex-col sm:flex-row sm:items-center">
+                <label for="patient-name" class="w-32 flex-shrink-0">PATIENT:</label>
+                <input type="text" id="patient-name" class="fillable-input outline-none focus:border-green-500 transition duration-150" placeholder="Nom et Prénom du patient">
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center">
+                <label for="date" class="w-32 flex-shrink-0">DATE:</label>
+                <input type="date" id="date" class="fillable-input outline-none focus:border-green-500 transition duration-150">
+            </div>
+            <div class="flex flex-col sm:flex-row sm:items-center">
+                <label for="caregiver" class="w-32 flex-shrink-0">SOIGNANT (NOM ET FONCTION):</label>
+                <input type="text" id="caregiver" class="fillable-input outline-none focus:border-green-500 transition duration-150" placeholder="Nom, Prénom et Fonction du soignant">
+            </div>
+        </form>
+
+        <p class="text-sm italic text-gray-500 mb-4">
+            Merci de transmettre cette fiche complétée via Parcéo, à Virginie Denommé, diététicienne nutritionniste.
+        </p>
+
+        <!-- Bloc 1: Discours caractéristique -->
+        <div class="screening-section">
+            <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Discours caractéristique</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                <!-- Colonne 1 -->
+                <label class="screening-item">
+                    <input type="checkbox" name="discours" value="plus_appetit" class="mr-3">
+                    Je n'ai plus beaucoup d'appétit
+                </label>
+                <label class="screening-item">
+                    <input type="checkbox" name="discours" value="mal_a_mastiquer" class="mr-3">
+                    J'ai du mal à mastiquer
+                </label>
+                <label class="screening-item">
+                    <input type="checkbox" name="discours" value="viande_trop_chere" class="mr-3">
+                    Je n'aime plus la viande / c'est trop cher
+                </label>
+                <label class="screening-item">
+                    <input type="checkbox" name="discours" value="un_repas" class="mr-3">
+                    Je ne prends qu'un repas par jour
+                </label>
+                <label class="screening-item">
+                    <input type="checkbox" name="discours" value="courses_cuisiner" class="mr-3">
+                    J'ai du mal à aller faire les courses / cuisiner
+                </label>
+                <!-- Colonne 2 -->
+                <label class="screening-item">
+                    <input type="checkbox" name="discours" value="pas_produits_laitiers" class="mr-3">
+                    Je ne mange pas de produits laitiers
+                </label>
+                <label class="screening-item">
+                    <input type="checkbox" name="discours" value="appareil_dentaire_mal" class="mr-3">
+                    Mon appareil dentaire me fait mal / ne tient pas
+                </label>
+                <label class="screening-item">
+                    <input type="checkbox" name="discours" value="soupe_suffit" class="mr-3">
+                    Une soupe / un bout de fromage, ça me suffit
+                </label>
+                <label class="screening-item">
+                    <input type="checkbox" name="discours" value="faire_a_manger_seul" class="mr-3">
+                    Faire à manger pour moi tout(e) seul(e)...
+                </label>
+                <label class="screening-item">
+                    <input type="checkbox" name="discours" value="couche_tot" class="mr-3">
+                    Je me couche tôt et me lève tard
+                </label>
+            </div>
+        </div>
+        
+        <!-- Bloc 2 & 3: État cutané ET Etat Bucco Dentaire CÔTE À CÔTE -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <!-- Bloc 2: État cutané -->
+            <div class="screening-section !mt-0">
+                <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Etat cutané</h2>
+                <div class="space-y-2">
+                    <label class="screening-item">
+                        <input type="checkbox" name="etat_cutane" value="escarres" class="mr-3"> Escarres
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="etat_cutane" value="plaies_cutanees" class="mr-3"> Plaies cutanées
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="etat_cutane" value="difficulte_cicatrisation" class="mr-3"> Difficulté de cicatrisation
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="etat_cutane" value="coagulation_tardive" class="mr-3"> Coagulation tardive lors du vaccin ou de la prise de sang
+                    </label>
+                </div>
+            </div>
+
+            <!-- Bloc 3: Etat Bucco Dentaire -->
+            <div class="screening-section !mt-0">
+                <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Etat Bucco Dentaire</h2>
+                <div class="space-y-2">
+                    <label class="screening-item">
+                        <input type="checkbox" name="etat_bucco" value="appareil_non_adapte" class="mr-3"> Appareillage non adapté / non porté
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="etat_bucco" value="mauvais_etat" class="mr-3"> Mauvais état bucco-dentaire
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="etat_bucco" value="alteration_gout" class="mr-3"> Altération du goût
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="etat_bucco" value="mycose_bouche_seche" class="mr-3"> Mycose buccale / bouche sèche
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Saut de page visuel (si besoin d'imprimer) et continuation du document -->
+        <div class="my-8 border-t-4 border-dashed border-gray-200"></div>
+
+        <!-- PAGE 2: Au Domicile ET Entourage/environnement CÔTE À CÔTE -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <!-- Bloc 4A: Au domicile -->
+            <div class="screening-section !mt-0">
+                <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Au domicile</h2>
+                <div class="space-y-2">
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="refrigerateur_vide" class="mr-3"> Réfrigérateur vide / peu rempli
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="placards_vides" class="mr-3"> Placards vides / peu remplis
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="appareil_non_porte" class="mr-3"> Ne porte pas / plus son appareil dentaire
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="reste_poubelle" class="mr-3"> Restes alimentaires dans la poubelle
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="aliments_perimes" class="mr-3"> Aliments périmés
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="repas_intact" class="mr-3"> Repas non consommé resté intact
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="taches_delaissees" class="mr-3"> Tâches ménagères délaissées
+                    </label>
+                </div>
+            </div>
+
+            <!-- Bloc 4B: Entourage / environnement -->
+            <div class="screening-section !mt-0">
+                <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Entourage / environnement</h2>
+                <div class="space-y-2">
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="pas_vehicule" class="mr-3"> Ne possède pas de véhicule / ne conduit pas
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="sortir_vehicule" class="mr-3"> Ne peut pas sortir seul du véhicule
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="dependance_alimenter" class="mr-3"> Dépendance pour s'alimenter
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="dependance_mobilite" class="mr-3"> Dépendance pour la mobilité
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="isolement" class="mr-3"> Isolement social / familial
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="environnement" value="difficultes_financieres" class="mr-3"> Difficultés financières
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bloc 5: Anthropométrie ET Mobilité/Autonomie CÔTE À CÔTE -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <!-- Anthropométrie -->
+            <div class="screening-section !mt-0">
+                <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Anthropométrie</h2>
+                <div class="space-y-2">
+                    <label class="screening-item">
+                        <input type="checkbox" name="anthropometrie" value="silhouette_maigre" class="mr-3"> Silhouette mince / maigre
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="anthropometrie" value="circonference_brachiale" class="mr-3"> Circonférence brachiale < 22cm
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="anthropometrie" value="circonference_mollet" class="mr-3"> Circonférence du mollet < 31 cm
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="anthropometrie" value="perte_poids" class="mr-3"> Perte de poids involontaire, avec ou sans pathologie, même en situation d'obésité
+                    </label>
+                </div>
+            </div>
+
+            <!-- Mobilité / Autonomie (Items de déglutition/mastication retirés) -->
+            <div class="screening-section !mt-0">
+                <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Mobilité / Autonomie</h2>
+                <div class="space-y-2">
+                    <label class="screening-item">
+                        <input type="checkbox" name="mobilite" value="sarcopenie" class="mr-3"> Sarcopénie
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="mobilite" value="mal_a_se_lever" class="mr-3"> Difficultés à se lever seul / à se déplacer
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="mobilite" value="mal_a_ouvrir" class="mr-3"> Difficultés à ouvrir une bouteille / une boite de médicaments / un plat préparé...
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="mobilite" value="dependance_alimentation" class="mr-3"> Dépendance pour l'alimentation
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="mobilite" value="dependance_mobilite" class="mr-3"> Dépendance pour la mobilité
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloc 6A: Pathologies ou signes cliniques (Plein écran) -->
+        <div class="screening-section !mt-4">
+            <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Pathologies ou signes cliniques</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                <!-- Colonne 1 (7 items) -->
+                <div class="space-y-2">
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="maladies_neurologiques" class="mr-3">
+                        <span class="patho-text">Maladies neurologiques / neuro-dégénératives / déambulations</span>
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="pathologie_chronique_aigue" class="mr-3">
+                        <span class="patho-text">Pathologie chronique ou aiguë</span>
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="hypercatabolisme" class="mr-3">
+                        <span class="patho-text">Hypercatabolisme / infection / cancer</span>
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="troubles_psychologiques" class="mr-3">
+                        <span class="patho-text">Troubles psychologiques / dépression</span>
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="troubles_deglutition" class="mr-3">
+                        <span class="patho-text">Troubles de la déglutition</span>
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="troubles_mastication" class="mr-3">
+                        <span class="patho-text">Troubles de la mastication</span>
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="baisse_vision" class="mr-3">
+                        <span class="patho-text">Baisse de la vision entraînant des difficultés pour faire à manger</span>
+                    </label>
+                </div>
+                <!-- Colonne 2 (5 items) -->
+                <div class="space-y-2">
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="douleurs_articulaires" class="mr-3">
+                        <span class="patho-text">Douleurs articulaires aux mains entraînant des difficultés pour manger ou faire à manger</span>
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="malabsorption" class="mr-3">
+                        <span class="patho-text">Malabsorption / Maldigestion</span>
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="constipation" class="mr-3">
+                        <span class="patho-text">Constipation</span>
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="douleurs" class="mr-3">
+                        <span class="patho-text">Douleurs</span>
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="pathologies" value="consommation_ethylique" class="mr-3">
+                        <span class="patho-text">Consommation éthylique inappropriée</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloc 6B & 6C: Vêtements ET Valeurs biologiques CÔTE À CÔTE (sous Pathologies) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <!-- Vêtements -->
+            <div class="screening-section !mt-0">
+                <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Vêtements</h2>
+                <div class="space-y-2">
+                    <label class="screening-item">
+                        <input type="checkbox" name="vetements" value="trop_larges" class="mr-3"> Trop larges / ne tiennent plus
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="vetements" value="ceinture_resserre" class="mr-3"> Marques sur la ceinture qui montrent qu'elle a été resserrée
+                    </label>
+                </div>
+            </div>
+
+            <!-- Valeurs biologiques -->
+            <div class="screening-section !mt-0">
+                <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Valeurs biologiques</h2>
+                <div class="space-y-2">
+                    <label class="screening-item">
+                        <input type="checkbox" name="biologiques" value="albumine" class="mr-3"> Albumine < 30 g/L / Pré-albu < 0.2
+                    </label>
+                    <label class="screening-item">
+                        <input type="checkbox" name="biologiques" value="pini" class="mr-3"> Indice PINI
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saut de page visuel (si besoin d'imprimer) et continuation du document -->
+        <div class="my-8 border-t-4 border-dashed border-gray-200"></div>
+
+        <!-- PAGE 3: CERTIFICAT DE CONSENTEMENT AU PARTAGE DE DONNÉES MÉDICALES (Statique) -->
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 uppercase">
+                CERTIFICAT DE CONSENTEMENT AU PARTAGE DE DONNÉES MÉDICALES
+            </h1>
+        </div>
+
+        <div class="text-sm space-y-4 mb-10 text-gray-700">
+            <p>J'autorise la Communauté Professionnelle Territoriale de Santé (CPTS) Moselle et Madon à collecter et à partager mes données personnelles et de santé avec les professionnels et services médico-sociaux participant à mon suivi.</p>
+
+            <p>Ces informations seront utilisées uniquement pour assurer la coordination et la continuité de mes soins.</p>
+
+            <p>Je consens également à ce que les informations nécessaires soient transmises à mon médecin traitant.</p>
+
+            <p>Je suis informé(e) que mes données sont traitées conformément au Règlement Général sur la Protection des Données (RGPD) et de la loi Informatique et Libertés, et que je peux retirer mon consentement à tout moment.</p>
+        </div>
+
+        <!-- Zones de signature (Non remplissables / visuelles pour l'impression) -->
+        <div class="space-y-6 mt-12 text-sm">
+            <div class="flex flex-col">
+                <span class="font-semibold">Fait à :</span>
+                <div class="signature-line"></div>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-semibold">Nom, prénom :</span>
+                <div class="signature-line"></div>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-semibold">Signature:</span>
+                <div class="signature-line"></div>
+            </div>
+        </div>
+
+        <!-- Bouton d'impression déplacé en bas à droite -->
+        <div class="mt-8 text-right no-print">
+            <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-xl transition duration-150 inline-flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v7a2 2 0 002 2h12a2 2 0 002-2v-7a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm4 2h2v1H9V6zm1 4a1 1 0 100 2 1 1 0 000-2zm1.755 4.346a.75.75 0 00-1.51 0l-.369 1.476a.75.75 0 00.985.985l1.476-.369a.75.75 0 000-1.51l-.369-1.476z" clip-rule="evenodd" />
+                </svg>
+                Imprimer la grille
+            </button>
+        </div>
+        
+    </div>
+
+</body>
+</html>
