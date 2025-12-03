@@ -60,10 +60,17 @@
         }
 
         /* --- Grille Principale (Tableau) --- */
-        .grid-container {
+        /* NOUVEAU: Wrapper pour le défilement horizontal sur mobile */
+        .table-wrapper {
+            overflow-x: auto;
             width: 100%;
             max-width: 1000px;
-            margin: 0 auto;
+            margin: 0 auto; 
+        }
+
+        .grid-container {
+            width: 100%;
+            min-width: 600px; /* Assure que le tableau reste lisible sur mobile */
             border-collapse: collapse;
         }
 
@@ -234,6 +241,11 @@
                 padding: 5px 10px;
                 font-size: 12px;
             }
+            /* Adaptation du tableau pour mobile */
+            .grid-container th, .grid-container td {
+                padding: 3px 2px;
+                font-size: 11px;
+            }
         }
         /* --- Masquer les éléments de navigation à l'impression --- */
         @media print {
@@ -247,10 +259,7 @@
     <a href="index.html" class="home-button">
         🏠 Accueil
     </a>
-    <div class="controls">
-        <button onclick="exportToPDF()">Exporter en PDF / Imprimer la grille remplie</button>
-    </div>
-
+    
     <div class="cpam-warning">
         <h1>GRILLE DE WOOD</h1>
         A remplir par le médecin traitant en complément du protocole d'examen spécial dans le cadre d'une demande d'exonération du ticket modérateur pour "association d'affections caractérisées à l'origine de l'état pathologique invalidant - ALD (pathologies multiples)"
@@ -262,102 +271,105 @@
         <div class="field"><label>Prénom:</label> <input type="text" placeholder="À remplir"></div>
         <div class="field"><label>Numéro d'immatriculation:</label> <input type="text" placeholder="À remplir"></div>
     </div>
-
-    <table class="grid-container">
-        <thead>
-            <tr>
-                <th colspan="7" class="degree-header-group">Degrés d'incapacité</th>
-            </tr>
-            <tr>
-                <th class="domain-header-cell" rowspan="2">Domaines d'incapacité<br>Incapacité concernant:</th>
-                
-                <th class="code-header-cell" rowspan="2">Codes</th>
-                
-                <th class="rating-cell">Nul</th>
-                <th class="rating-cell">léger</th>
-                <th class="rating-cell">moyen</th>
-                <th class="rating-cell">important</th>
-                <th class="rating-cell">très important</th>
-            </tr>
-            <tr>
-                <th class="rating-cell">0</th>
-                <th class="rating-cell">1</th>
-                <th class="rating-cell">2</th>
-                <th class="rating-cell">3</th>
-                <th class="rating-cell">4</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="domain-cell">Comportement</td>
-                <td class="code-cell">1</td>
-                <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
-            </tr>
-            <tr>
-                <td class="domain-cell">Communication</td>
-                <td class="code-cell">2</td>
-                <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
-            </tr>
-            <tr>
-                <td class="domain-cell">Locomotion</td>
-                <td class="code-cell">3</td>
-                <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
-            </tr>
-            <tr>
-                <td class="domain-cell">Manipulations</td>
-                <td class="code-cell">4</td>
-                <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
-            </tr>
-            <tr>
-                <td class="domain-cell">Soins corporels</td>
-                <td class="code-cell">5</td>
-                <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
-            </tr>
-            <tr>
-                <td class="domain-cell">Utilisation du corps dans certaines tâches</td>
-                <td class="code-cell">6</td>
-                <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
-            </tr>
-            <tr>
-                <td class="domain-cell">L'incapacité revelée par certaines situations</td>
-                <td class="code-cell">7</td>
-                <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
-                <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
-            </tr>
-        </tbody>
-    </table>
+    
+    <div class="table-wrapper">
+        <table class="grid-container">
+            <thead>
+                <tr>
+                    <th colspan="7" class="degree-header-group">Degrés d'incapacité</th>
+                </tr>
+                <tr>
+                    <th class="domain-header-cell" rowspan="2">Domaines d'incapacité<br>Incapacité concernant:</th>
+                    
+                    <th class="code-header-cell" rowspan="2">Codes</th>
+                    
+                    <th class="rating-cell">Nul</th>
+                    <th class="rating-cell">léger</th>
+                    <th class="rating-cell">moyen</th>
+                    <th class="rating-cell">important</th>
+                    <th class="rating-cell">très important</th>
+                </tr>
+                <tr>
+                    <th class="rating-cell">0</th>
+                    <th class="rating-cell">1</th>
+                    <th class="rating-cell">2</th>
+                    <th class="rating-cell">3</th>
+                    <th class="rating-cell">4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="domain-cell">Comportement</td>
+                    <td class="code-cell">1</td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
+                </tr>
+                <tr>
+                    <td class="domain-cell">Communication</td>
+                    <td class="code-cell">2</td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
+                </tr>
+                <tr>
+                    <td class="domain-cell">Locomotion</td>
+                    <td class="code-cell">3</td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
+                </tr>
+                <tr>
+                    <td class="domain-cell">Manipulations</td>
+                    <td class="code-cell">4</td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
+                </tr>
+                <tr>
+                    <td class="domain-cell">Soins corporels</td>
+                    <td class="code-cell">5</td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
+                </tr>
+                <tr>
+                    <td class="domain-cell">Utilisation du corps dans certaines tâches</td>
+                    <td class="code-cell">6</td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
+                </tr>
+                <tr>
+                    <td class="domain-cell">L'incapacité revelée par certaines situations</td>
+                    <td class="code-cell">7</td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
+                    <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div class="observations-section">
         <h3>Observations / Commentaires Libres:</h3>
         <textarea placeholder="Utilisez cet espace pour toute observation complémentaire pertinente non couverte par la grille d'évaluation."></textarea>
     </div>
+    
     <div class="controls">
         <button onclick="exportToPDF()">Exporter en PDF / Imprimer la grille remplie</button>
     </div>
