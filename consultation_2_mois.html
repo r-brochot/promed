@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultation Pédiatrique 2 mois</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medical: '#2c3e50',
+                        alert: '#e74c3c',
+                        warning: '#fff3cd',
+                        success: '#d4edda'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            body { background: white; padding: 0; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            .shadow-lg { box-shadow: none !important; }
+            .bg-white { background: transparent !important; }
+            input, select, textarea { 
+                border: none !important; 
+                border-bottom: 1px dotted #000 !important; 
+                padding: 0 !important;
+                background: transparent !important;
+            }
+            .hidden { display: none !important; }
+            .page-break { page-break-before: always; }
+        }
+        
+        .input-std {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            transition: border-color 0.15s ease-in-out;
+        }
+        .input-std:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 p-4 md:p-8 font-sans">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden print:max-w-none print:shadow-none">
+        
+        <header class="bg-medical text-white p-6 print:bg-white print:text-black print:border-b-2 print:border-black">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold uppercase tracking-wider">Consultation Pédiatrique 2 mois</h1>
+                    <p class="text-sm opacity-80 print:hidden">Remplissage interactif & Impression</p>
+                </div>
+                <div class="text-right text-sm">
+                    <p>Carnet de Santé 2025</p>
+                    <p class="print:block hidden">Dr. [Nom du Médecin]</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+
+            <!-- IDENTITÉ & CONSTANTES -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-3 p-4 bg-slate-50 rounded border border-slate-200 print:border-none print:p-0">
+                    <h2 class="font-bold text-medical border-b pb-1 mb-2">Identité</h2>
+                    <div class="grid grid-cols-1 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase">Nom Prénom</label>
+                            <input type="text" class="input-std font-bold" placeholder="NOM Prénom de l'enfant">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase">Né(e) le</label>
+                                <input type="date" id="dateNaissance" class="input-std" onchange="calculerAge()">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase">Sexe</label>
+                                <select class="input-std">
+                                    <option value="M">Garçon</option>
+                                    <option value="F">Fille</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 p-4 bg-blue-50 rounded border border-blue-100 print:bg-transparent print:border-none print:p-0">
+                    <h2 class="font-bold text-medical border-b pb-1 mb-2">Constantes</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase">Date Examen</label>
+                            <input type="date" id="dateExamen" class="input-std" onchange="calculerAge()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase">Âge Calculé</label>
+                            <input type="text" id="ageCalcul" class="input-std bg-gray-100 font-bold text-blue-600" readonly>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500">Poids (kg)</label>
+                            <input type="number" id="poids" step="0.01" class="input-std" oninput="calculerIMC()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500">Taille (cm)</label>
+                            <input type="number" id="taille" step="0.1" class="input-std" oninput="calculerIMC()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500">PC (cm)</label>
+                            <input type="number" id="pc" step="0.1" class="input-std">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500">IMC (Calculé)</label>
+                        <input type="text" id="imc" class="input-std bg-gray-100 font-bold" readonly>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ALIMENTATION & MODE DE GARDE -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-bold text-medical mb-2">Alimentation</h3>
+                    <div class="flex gap-4 text-sm">
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="alim" value="maternel"> Mat. Exclusif</label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="alim" value="mixte"> Mixte</label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="alim" value="artificiel"> Artificiel</label>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-medical mb-2">Mode d'accueil</h3>
+                    <select class="input-std">
+                        <option value="">Sélectionner...</option>
+                        <option value="parents">Domicile (Parents)</option>
+                        <option value="assmat">Assistante Maternelle</option>
+                        <option value="creche">Crèche / Collectif</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- DIFFICULTÉS RAPPORTÉES -->
+            <section class="bg-orange-50 p-4 rounded border border-orange-200 print:bg-transparent print:border-none print:p-0">
+                <div class="flex flex-col md:flex-row md:items-center gap-4">
+                    <h3 class="font-bold text-medical whitespace-nowrap">Difficultés rapportées ("Ça va ?")</h3>
+                    <div class="flex gap-4 text-sm items-center">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="difficulte" value="non" checked onchange="toggleDifficulte(false)"> Non
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer font-semibold text-alert">
+                            <input type="radio" name="difficulte" value="oui" onchange="toggleDifficulte(true)"> Oui
+                        </label>
+                    </div>
+                    <input type="text" id="detailsDifficulte" class="input-std flex-1 hidden transition-all border-orange-300" placeholder="Précisez (sommeil, pleurs, digestion...)">
+                </div>
+            </section>
+
+            <hr class="border-gray-200">
+
+            <!-- EXAMEN CLINIQUE (GRILLES) -->
+            <section>
+                <h3 class="font-bold text-lg text-medical mb-4 border-l-4 border-blue-500 pl-2">Examen Clinique</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4">
+                    
+                    <!-- Somatique -->
+                    <div class="space-y-1">
+                        <h4 class="font-semibold text-sm text-gray-500 uppercase mb-2">Général</h4>
+                        <div id="grid-somatic">
+                            <!-- Généré par JS -->
+                        </div>
+                    </div>
+
+                    <!-- Neuro -->
+                    <div class="space-y-1">
+                        <h4 class="font-semibold text-sm text-gray-500 uppercase mb-2">Neurologie</h4>
+                        <div id="grid-neuro">
+                            <!-- Généré par JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HANCHES (DÉTAILLÉ) -->
+            <section class="bg-slate-50 p-4 rounded border border-slate-200 print:bg-transparent print:border-none print:p-0">
+                <div class="flex flex-col gap-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-medical">Examen des Hanches</h3>
+                        <div class="flex gap-4 text-sm">
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-green-700">
+                                <input type="radio" name="hanches_global" value="normal" checked onchange="toggleHanches(false)"> Normal
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-alert">
+                                <input type="radio" name="hanches_global" value="anormal" onchange="toggleHanches(true)"> Anomalie / Doute
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Détails cachés si Normal -->
+                    <div id="detailsHanches" class="hidden pl-4 border-l-4 border-alert mt-2 space-y-3 bg-white p-3 rounded">
+                        <p class="text-xs font-bold text-gray-500 uppercase">Préciser l'anomalie (Instabilité / Limitation abduction)</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" id="hanche_d_anormale" class="text-alert"> Hanche Droite Anormale
+                                </label>
+                            </div>
+                            <div>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" id="hanche_g_anormale" class="text-alert"> Hanche Gauche Anormale
+                                </label>
+                            </div>
+                        </div>
+                        <div class="pt-2 border-t mt-2">
+                            <p class="text-xs font-bold text-gray-500 uppercase mb-1">Orientation</p>
+                            <div class="flex gap-4 text-sm">
+                                <label class="flex items-center gap-2"><input type="checkbox" name="orient_hanche" value="echo"> Échographie du bassin</label>
+                                <label class="flex items-center gap-2"><input type="checkbox" name="orient_hanche" value="avis"> Avis Spécialisé</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISION & AUDITION (DÉTAILLÉ) -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Vision -->
+                <div class="border p-4 rounded print:border-black">
+                    <h3 class="font-bold text-medical mb-3 border-b pb-1">Vision</h3>
+                    <div class="space-y-2" id="grid-vision">
+                        <!-- Généré par JS -->
+                    </div>
+                </div>
+
+                <!-- Audition -->
+                <div class="border p-4 rounded print:border-black">
+                    <h3 class="font-bold text-medical mb-3 border-b pb-1">Audition</h3>
+                    <div class="space-y-2" id="grid-audition">
+                        <!-- Généré par JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- DEVELOPPEMENT -->
+            <section class="bg-green-50 p-4 rounded print:bg-transparent print:p-0">
+                <h3 class="font-bold text-lg text-medical mb-4 border-l-4 border-green-500 pl-2">Développement Psychomoteur</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="grid-dev">
+                    <!-- Généré par JS -->
+                </div>
+            </section>
+
+            <!-- PREVENTION -->
+            <section>
+                <h3 class="font-bold text-lg text-medical mb-4 border-l-4 border-orange-500 pl-2">Prévention & Environnement</h3>
+                <div id="grid-prev" class="space-y-2">
+                    <!-- Généré par JS -->
+                </div>
+            </section>
+
+            <!-- VACCINATIONS -->
+            <section class="bg-blue-50 p-4 rounded border-l-4 border-blue-600 print:bg-transparent print:border-black print:border">
+                <h3 class="font-bold text-medical mb-2">Vaccinations (Calendrier 2025)</h3>
+                <div class="space-y-3">
+                    <!-- Vaccins Obligatoires -->
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" id="vaccinsFait" class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <div class="flex-1">
+                            <label for="vaccinsFait" class="font-bold cursor-pointer">Vaccinations Obligatoires (Injection)</label>
+                            <p class="text-sm text-gray-600">Hexavalent (DTP-Coq-Hib-HepB) + Pneumocoque (Prevenar)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Vaccin Recommandé (Rotavirus) -->
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" id="vaccinRotavirus" class="mt-1 w-5 h-5 text-blue-600 rounded focus:ring-blue-500">
+                        <div class="flex-1">
+                            <label for="vaccinRotavirus" class="font-bold cursor-pointer">Vaccination Recommandée (Orale)</label>
+                            <p class="text-sm text-gray-600">Rotavirus</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <label class="text-xs font-semibold text-gray-500">Si non fait ou partiel, commentaires :</label>
+                    <input type="text" class="input-std bg-white" placeholder="Ex: Reporté pour fièvre...">
+                </div>
+            </section>
+
+            <!-- CONCLUSION & ORIENTATION -->
+            <section>
+                <h3 class="font-bold text-medical mb-2">Synthèse & Orientation</h3>
+                <textarea class="w-full border border-gray-300 rounded p-2 text-sm h-24 print:border-none print:h-auto print:resize-none mb-4" placeholder="Examen clinique sans particularité. Bon développement staturo-pondéral et psychomoteur. Conseils prévention donnés."></textarea>
+                
+                <div class="space-y-3 bg-gray-50 p-4 rounded border border-gray-200 print:bg-transparent print:border-none print:p-0">
+                    <!-- Avis Spécialisé -->
+                    <div class="flex flex-col md:flex-row md:items-center gap-3">
+                        <span class="text-sm font-bold text-gray-700 w-64">Avis médical spécialisé demandé</span>
+                        <div class="flex items-center gap-4 text-sm">
+                            <label class="flex items-center gap-1"><input type="radio" name="avis_spe" value="non" checked onchange="toggleField('precis_avis', false)"> Non</label>
+                            <label class="flex items-center gap-1"><input type="radio" name="avis_spe" value="oui" onchange="toggleField('precis_avis', true)"> Oui</label>
+                        </div>
+                        <input type="text" id="precis_avis" class="input-std flex-1 hidden" placeholder="Préciser (Ophtalmo, ORL, Neuro...)">
+                    </div>
+
+                    <div class="border-t border-gray-200 my-2 pt-2">
+                        <p class="text-xs font-bold text-gray-500 uppercase mb-2">Orientation vers :</p>
+                        
+                        <!-- Autre Pro -->
+                        <div class="flex flex-col md:flex-row md:items-center gap-3 mb-2">
+                            <span class="text-sm text-gray-700 w-64 pl-4">- Autre professionnel de santé</span>
+                            <div class="flex items-center gap-4 text-sm">
+                                <label class="flex items-center gap-1"><input type="radio" name="orient_pro" value="non" checked onchange="toggleField('precis_pro', false)"> Non</label>
+                                <label class="flex items-center gap-1"><input type="radio" name="orient_pro" value="oui" onchange="toggleField('precis_pro', true)"> Oui</label>
+                            </div>
+                            <input type="text" id="precis_pro" class="input-std flex-1 hidden" placeholder="Préciser (Kiné, Orthophoniste...)">
+                        </div>
+
+                        <!-- Structure -->
+                        <div class="flex flex-col md:flex-row md:items-center gap-3">
+                            <span class="text-sm text-gray-700 w-64 pl-4">- Structure pluridisciplinaire</span>
+                            <div class="flex items-center gap-4 text-sm">
+                                <label class="flex items-center gap-1"><input type="radio" name="orient_struct" value="non" checked onchange="toggleField('precis_struct', false)"> Non</label>
+                                <label class="flex items-center gap-1"><input type="radio" name="orient_struct" value="oui" onchange="toggleField('precis_struct', true)"> Oui</label>
+                            </div>
+                            <input type="text" id="precis_struct" class="input-std flex-1 hidden" placeholder="Préciser (Centre réf., Réseau, CAMSP, PCO...)">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PIED DE PAGE IMPRESSION -->
+            <footer class="hidden print:flex justify-between items-end mt-12 pt-8 border-t border-gray-300">
+                <div class="text-sm text-gray-500">
+                    <p>Prochain RDV : <strong>3 mois</strong></p>
+                    <p>Date : <span id="printDate"></span></p>
+                </div>
+                <div class="text-center">
+                    <p class="mb-8 font-bold">Cachet et Signature</p>
+                    <div class="w-32 h-16 border border-gray-200 mx-auto"></div>
+                </div>
+            </footer>
+
+        </div>
+
+        <!-- BARRE D'ACTIONS -->
+        <div class="bg-gray-50 p-4 border-t border-gray-200 flex justify-center gap-4 no-print">
+            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow transition flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Imprimer / PDF
+            </button>
+            <button onclick="resetForm()" class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-6 rounded border border-gray-300 transition">
+                Réinitialiser
+            </button>
+        </div>
+    </div>
+
+    <!-- LOGIQUE JAVASCRIPT -->
+    <script>
+        
+        const somaticItems = [
+            ["Auscultation cardiaque normale", "cardio", "oui"],
+            ["Examen respiratoire normal", "respi", "oui"],
+            ["Examen abdominal normal", "abdo", "oui"],
+            ["Examen cutané normal", "cutane", "oui"],
+            ["Hernies inguinales absentes", "hernie", "oui"],
+            ["Organes génitaux normaux", "oge", "oui"]
+        ];
+
+        const neuroItems = [
+            ["Vigilance normale", "vigilance", "oui"],
+            ["Tonus Axial normal", "tonus_axial", "oui"],
+            ["Tonus Périphérique normal", "tonus_periph", "oui"]
+            // Suppression de "Motricité symétrique" car redondant avec le dev psychomoteur
+        ];
+
+        const visionItems = [
+            ["Globes oculaires de taille normale", "globe", "oui"],
+            ["Paupières tombantes", "paupieres", "non"],
+            ["Taille différente des pupilles", "pupilles", "non"],
+            ["Tache blanche sur/dans l’œil", "tache", "non"],
+            ["Reflets anormaux dans les yeux", "reflets", "non"],
+            ["Poursuite oculaire normale", "poursuite", "oui"],
+            ["Nystagmus/mouvements anormaux", "nystagmus", "non"],
+            ["Strabisme unilatéral ou fixe", "strabisme", "non"]
+        ];
+
+        const auditionItems = [
+            ["Réagit à la voix", "voix", "oui"],
+            ["Réagit au bruit", "bruit", "oui"],
+            ["Se retourne sur bruit hors vue", "retourne", "oui"]
+        ];
+
+        const devItems = [
+            ["Maintenu assis, tient sa tête droite", "tete", "oui"],
+            ["Bouge les 4 membres de manière variée et symétrique", "membres", "oui"],
+            ["Sourire-réponse", "sourire", "oui"],
+            ["Réagit à la voix des parents et aux présences familières", "reaction_voix", "oui"]
+        ];
+
+        const prevItems = [
+            ["Position de couchage adaptée", "dodo_ok", "oui"],
+            ["Conseils donnés prévention mort inattendue / bébé secoué", "conseil_secoue", "oui"],
+            ["Information risque dépression post-partum", "info_dep", "oui"],
+            ["Interactions parent(s)/bébé, conseils donnés", "interact", "oui"],
+            ["Sensibilisation aux risques environnementaux", "env", "oui"]
+        ];
+
+        function createRow(label, id, normalVal) {
+            return `
+            <div class="flex items-center justify-between py-1 border-b border-gray-100 hover:bg-gray-50 transition-colors rounded px-2">
+                <span class="text-sm font-medium text-gray-700 flex-1">${label}</span>
+                <div class="flex items-center gap-3 text-sm ml-2">
+                    <label class="flex items-center gap-1 cursor-pointer">
+                        <input type="radio" name="${id}" value="oui" ${normalVal==='oui'?'checked':''} onchange="highlightRow(this, '${normalVal}')" class="text-blue-600 focus:ring-blue-500">
+                        <span class="${normalVal==='oui'?'text-gray-600':''}">Oui</span>
+                    </label>
+                    <label class="flex items-center gap-1 cursor-pointer">
+                        <input type="radio" name="${id}" value="non" ${normalVal==='non'?'checked':''} onchange="highlightRow(this, '${normalVal}')" class="text-blue-600 focus:ring-blue-500">
+                        <span class="${normalVal==='non'?'text-gray-600':''}">Non</span>
+                    </label>
+                </div>
+            </div>`;
+        }
+
+        function createDevCard(label, id, normalVal) {
+            return `
+            <div class="flex items-center justify-between p-3 border rounded bg-white shadow-sm">
+                <span class="text-sm font-medium">${label}</span>
+                <div class="flex gap-2 text-xs">
+                    <label class="cursor-pointer px-2 py-1 rounded border hover:bg-blue-50 has-[:checked]:bg-blue-100 has-[:checked]:text-blue-700 has-[:checked]:border-blue-300">
+                        <input type="radio" name="${id}" value="oui" checked class="hidden" onchange="highlightCard(this, 'oui')"> Oui
+                    </label>
+                    <label class="cursor-pointer px-2 py-1 rounded border hover:bg-red-50 has-[:checked]:bg-red-100 has-[:checked]:text-red-700 has-[:checked]:border-red-300">
+                        <input type="radio" name="${id}" value="non" class="hidden" onchange="highlightCard(this, 'oui')"> Non
+                    </label>
+                </div>
+            </div>
+            `;
+        }
+
+        function renderItems(containerId, items, renderFn) {
+            const container = document.getElementById(containerId);
+            if (container) {
+                container.innerHTML = items.map(item => renderFn(item[0], item[1], item[2])).join('');
+            } else {
+                console.error("Element not found:", containerId);
+            }
+        }
+
+        function toggleDifficulte(show) {
+            const input = document.getElementById('detailsDifficulte');
+            if (show) {
+                input.classList.remove('hidden');
+                input.focus();
+            } else {
+                input.classList.add('hidden');
+                input.value = ''; 
+            }
+        }
+
+        function toggleHanches(show) {
+            const details = document.getElementById('detailsHanches');
+            if(show) {
+                details.classList.remove('hidden');
+            } else {
+                details.classList.add('hidden');
+                details.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            }
+        }
+
+        function toggleField(fieldId, show) {
+            const input = document.getElementById(fieldId);
+            if (show) {
+                input.classList.remove('hidden');
+                input.focus();
+            } else {
+                input.classList.add('hidden');
+                input.value = '';
+            }
+        }
+
+        function highlightRow(radio, normalVal) {
+            const row = radio.closest('div.flex.items-center.justify-between');
+            const label = row.querySelector('span');
+            
+            if (radio.value !== normalVal) {
+                row.classList.add('bg-orange-100');
+                row.classList.remove('hover:bg-gray-50');
+                label.classList.add('text-red-700', 'font-bold');
+            } else {
+                row.classList.remove('bg-orange-100');
+                row.classList.add('hover:bg-gray-50');
+                label.classList.remove('text-red-700', 'font-bold');
+            }
+        }
+
+        function highlightCard(radio, normalVal) {}
+
+        function calculerAge() {
+            const dobVal = document.getElementById('dateNaissance').value;
+            const examVal = document.getElementById('dateExamen').value;
+            
+            if(dobVal && examVal) {
+                const dob = new Date(dobVal);
+                const exam = new Date(examVal);
+                
+                let diffTime = exam - dob;
+                let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+                
+                if (diffDays < 0) {
+                    document.getElementById('ageCalcul').value = "Erreur date";
+                    return;
+                }
+
+                let mois = Math.floor(diffDays / 30.44);
+                let jours = Math.floor(diffDays % 30.44);
+                
+                document.getElementById('ageCalcul').value = `${mois} mois et ${jours} jours`;
+            }
+        }
+
+        function calculerIMC() {
+            const poids = parseFloat(document.getElementById('poids').value);
+            const tailleCm = parseFloat(document.getElementById('taille').value);
+            
+            if(poids > 0 && tailleCm > 0) {
+                const tailleM = tailleCm / 100;
+                const imc = poids / (tailleM * tailleM);
+                document.getElementById('imc').value = imc.toFixed(1) + " kg/m²";
+                
+                const inputImc = document.getElementById('imc');
+                if(imc < 13 || imc > 19) {
+                    inputImc.classList.add('text-orange-600');
+                } else {
+                    inputImc.classList.remove('text-orange-600');
+                }
+            } else {
+                document.getElementById('imc').value = "";
+            }
+        }
+
+        function resetForm() {
+            if(confirm("Tout effacer ?")) {
+                document.querySelectorAll('input').forEach(i => {
+                    if(i.type === 'radio' || i.type === 'checkbox') {
+                        if(i.defaultChecked) i.checked = true;
+                        else i.checked = false;
+                    } else {
+                        i.value = '';
+                    }
+                });
+                document.querySelector('textarea').value = '';
+                document.getElementById('dateExamen').valueAsDate = new Date();
+                
+                document.querySelectorAll('.bg-orange-100').forEach(el => el.classList.remove('bg-orange-100'));
+                document.querySelectorAll('.text-red-700').forEach(el => el.classList.remove('text-red-700', 'font-bold'));
+                
+                toggleHanches(false);
+                toggleDifficulte(false);
+                
+                // Reset nouveaux champs
+                ['precis_avis', 'precis_pro', 'precis_struct'].forEach(id => {
+                    document.getElementById(id).classList.add('hidden');
+                });
+            }
+        }
+
+        window.onload = function() {
+            document.getElementById('dateExamen').valueAsDate = new Date();
+            const now = new Date();
+            document.getElementById('printDate').textContent = now.toLocaleDateString('fr-FR');
+
+            renderItems('grid-somatic', somaticItems, createRow);
+            renderItems('grid-neuro', neuroItems, createRow);
+            renderItems('grid-vision', visionItems, createRow);
+            renderItems('grid-audition', auditionItems, createRow);
+            renderItems('grid-dev', devItems, createDevCard);
+            renderItems('grid-prev', prevItems, createRow);
+        };
+    </script>
+</body>
+</html>
