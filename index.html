@@ -4,160 +4,190 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace Médical - Dr BROCHOT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medical: '#2c3e50',
+                        accent: '#3498db',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --bg-color: #f0f2f5;
-            --primary-color: #0ea5e9; /* Bleu médical clair */
-            --hover-color: #0284c7;
-            --text-color: #1e293b;
-            --card-bg: #ffffff;
+        body { background-color: #f8fafc; }
+        .card-btn {
+            transition: all 0.3s ease;
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        header {
-            background: linear-gradient(135deg, #0f172a, #334155);
-            width: 100%;
-            padding: 40px 20px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        p.subtitle {
-            margin-top: 10px;
-            opacity: 0.8;
-            font-size: 0.95rem;
-        }
-
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 24px;
-            max-width: 800px;
-            width: 90%;
-            padding: 20px;
-        }
-
-        .app-card {
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            padding: 24px;
-            text-align: center;
-            text-decoration: none;
-            color: var(--text-color);
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .app-card:hover {
-            transform: translateY(-5px);
+        .card-btn:hover {
+            transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-color: var(--primary-color);
-        }
-
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            margin-bottom: 5px;
-        }
-
-        /* Couleurs spécifiques pour les icônes */
-        .icon-thermale { background-color: #dbeafe; color: #2563eb; }
-        .icon-wood { background-color: #dcfce7; color: #166534; }
-        .icon-nutrition { background-color: #fef3c7; color: #b45309; } /* Nouvelle couleur */
-        .icon-wip { background-color: #f1f5f9; color: #94a3b8; }
-
-        .app-name {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .app-desc {
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-
-        footer {
-            margin-top: auto;
-            padding: 20px;
-            font-size: 0.8rem;
-            color: #94a3b8;
         }
     </style>
 </head>
-<body>
+<body class="font-sans text-slate-800">
 
-    <header>
-        <h1>Dr R. Brochot</h1>
-        <p class="subtitle">Portail des outils médicaux</p>
+    <!-- EN-TÊTE -->
+    <header class="bg-medical text-white shadow-md">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0 text-center md:text-left">
+                    <h1 class="text-2xl font-bold tracking-wide">Dr R. BROCHOT</h1>
+                    <p class="text-blue-200 text-sm">Portail des outils médicaux</p>
+                </div>
+                <div class="text-xs text-blue-300 border-l-2 border-blue-500 pl-4 hidden md:block">
+                    Outils de Consultation<br>Usage Professionnel
+                </div>
+            </div>
+        </div>
     </header>
 
-    <div class="app-grid">
-        
-        <a href="questionnaire-cure-thermale.html" class="app-card">
-            <div class="icon-box icon-thermale">
-                💧
-            </div>
-            <span class="app-name">Cure Thermale</span>
-            <span class="app-desc">Check-list des CI</span>
-        </a>
+    <!-- CONTENU PRINCIPAL -->
+    <main class="max-w-6xl mx-auto px-4 py-10">
 
-        <a href="wood.html" class="app-card">
-            <div class="icon-box icon-wood">
-                📝
-            </div>
-            <span class="app-name">Grille de Wood</span>
-            <span class="app-desc">Évaluation ALD</span>
-        </a>
-
-        <a href="questionnaire-denutrition.html" class="app-card">
-            <div class="icon-box icon-nutrition">
-                🍎
-            </div>
-            <span class="app-name">Dénutrition</span>
-            <span class="app-desc">Outil de dépistage</span>
-        </a>
-        
-        <div class="app-card" style="opacity: 0.6; cursor: default;">
-            <div class="icon-box icon-wip">
-                ➕
-            </div>
-            <span class="app-name">Bientôt...</span>
-            <span class="app-desc">Nouvel outil</span>
+        <!-- MESSAGE DE BIENVENUE -->
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-slate-700 mb-2">Tableau de Bord</h2>
+            <p class="text-slate-500">Sélectionnez une spécialité pour accéder aux outils.</p>
         </div>
 
-    </div>
+        <!-- GRILLE DES SPECIALITES -->
+        <div id="main-menu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- CARTE PÉDIATRIE -->
+            <button onclick="showSection('pediatrie')" class="card-btn bg-white p-8 rounded-xl shadow-md border-l-8 border-blue-500 text-left group hover:bg-blue-50">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-3 bg-blue-100 rounded-full text-blue-600 group-hover:bg-blue-200">
+                        <!-- Icone Bébé -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <span class="text-blue-500 font-semibold group-hover:translate-x-1 transition-transform">Ouvrir &rarr;</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-1">Suivi Pédiatrique</h3>
+                <p class="text-sm text-slate-500">Examens obligatoires, courbes de croissance, développement psychomoteur.</p>
+            </button>
 
-    <footer>
-        © 2025 Dr Rémi Brochot - Usage Professionnel
+            <!-- AUTRES CARTES (EXISTANTES) -->
+            <a href="questionnaire-cure-thermale.html" class="card-btn bg-white p-8 rounded-xl shadow-md border-l-8 border-cyan-500 text-left group hover:bg-cyan-50">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-3 bg-cyan-100 rounded-full text-cyan-600 group-hover:bg-cyan-200">
+                        <span class="text-2xl">💧</span>
+                    </div>
+                    <span class="text-cyan-500 font-semibold group-hover:translate-x-1 transition-transform">Ouvrir &rarr;</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-1">Cure Thermale</h3>
+                <p class="text-sm text-slate-500">Check-list des CI</p>
+            </a>
+
+            <a href="wood.html" class="card-btn bg-white p-8 rounded-xl shadow-md border-l-8 border-green-500 text-left group hover:bg-green-50">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-3 bg-green-100 rounded-full text-green-600 group-hover:bg-green-200">
+                        <span class="text-2xl">📝</span>
+                    </div>
+                    <span class="text-green-500 font-semibold group-hover:translate-x-1 transition-transform">Ouvrir &rarr;</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-1">Grille de Wood</h3>
+                <p class="text-sm text-slate-500">Évaluation ALD</p>
+            </a>
+
+            <a href="questionnaire-denutrition.html" class="card-btn bg-white p-8 rounded-xl shadow-md border-l-8 border-orange-500 text-left group hover:bg-orange-50">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="p-3 bg-orange-100 rounded-full text-orange-600 group-hover:bg-orange-200">
+                        <span class="text-2xl">🍎</span>
+                    </div>
+                    <span class="text-orange-500 font-semibold group-hover:translate-x-1 transition-transform">Ouvrir &rarr;</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-1">Dénutrition</h3>
+                <p class="text-sm text-slate-500">Outil de dépistage</p>
+            </a>
+
+        </div>
+
+        <!-- SECTION PÉDIATRIE (Cachée par défaut) -->
+        <div id="pediatrie-section" class="hidden">
+            <!-- Fil d'ariane -->
+            <button onclick="showSection('main')" class="mb-6 flex items-center text-slate-500 hover:text-blue-600 transition font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Retour au menu principal
+            </button>
+
+            <h2 class="text-2xl font-bold text-medical mb-6 border-b pb-2">Consultations Pédiatriques</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                
+                <!-- 2 SEMAINES -->
+                <a href="consultation_2_semaines.html" class="block p-6 bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md hover:border-blue-400 transition group text-center">
+                    <div class="text-3xl mb-2">👶</div>
+                    <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">2 Semaines</h3>
+                    <p class="text-xs text-slate-500 mt-1">J8 - J15</p>
+                </a>
+
+                <!-- 1 MOIS -->
+                <a href="consultation_1_mois.html" class="block p-6 bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md hover:border-blue-400 transition group text-center">
+                    <div class="text-3xl mb-2">🧸</div>
+                    <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">1 Mois</h3>
+                    <p class="text-xs text-slate-500 mt-1">Croissance & Dépistages</p>
+                </a>
+
+                <!-- 2 MOIS -->
+                <a href="consultation_2_mois.html" class="block p-6 bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md hover:border-blue-400 transition group text-center">
+                    <div class="text-3xl mb-2">💉</div>
+                    <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">2 Mois</h3>
+                    <p class="text-xs text-slate-500 mt-1">Vaccinations Obligatoires</p>
+                </a>
+
+                <!-- 3 MOIS (Placeholder) -->
+                <div class="block p-6 bg-slate-50 border border-slate-100 rounded-lg text-center opacity-50">
+                    <div class="text-3xl mb-2 grayscale">📅</div>
+                    <h3 class="font-bold text-lg text-slate-400">3 Mois</h3>
+                    <p class="text-xs text-slate-400 mt-1">À venir</p>
+                </div>
+
+                <!-- 4 MOIS (Placeholder) -->
+                <div class="block p-6 bg-slate-50 border border-slate-100 rounded-lg text-center opacity-50">
+                    <div class="text-3xl mb-2 grayscale">🥣</div>
+                    <h3 class="font-bold text-lg text-slate-400">4 Mois</h3>
+                    <p class="text-xs text-slate-400 mt-1">Diversification</p>
+                </div>
+
+                <!-- 9 MOIS (Placeholder) -->
+                <div class="block p-6 bg-slate-50 border border-slate-100 rounded-lg text-center opacity-50">
+                    <div class="text-3xl mb-2 grayscale">👁️</div>
+                    <h3 class="font-bold text-lg text-slate-400">9 Mois (SBT)</h3>
+                    <p class="text-xs text-slate-400 mt-1">Bilan Sensoriel</p>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-400 py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center text-sm">
+            <p>&copy; 2025 Dr R. Brochot - Usage Professionnel</p>
+        </div>
     </footer>
 
+    <script>
+        function showSection(sectionName) {
+            const menu = document.getElementById('main-menu');
+            const ped = document.getElementById('pediatrie-section');
+
+            if (sectionName === 'pediatrie') {
+                menu.classList.add('hidden');
+                ped.classList.remove('hidden');
+            } else if (sectionName === 'main') {
+                ped.classList.add('hidden');
+                menu.classList.remove('hidden');
+            }
+        }
+    </script>
 </body>
 </html>
