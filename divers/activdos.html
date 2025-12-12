@@ -85,6 +85,31 @@
             font-size: 1.2em; 
             color: #888; 
             font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        /* --- BOUTON IMPRIMER --- */
+        .print-btn {
+            background-color: #10b981; /* Un beau vert qui incite à l'action */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .print-btn:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
 
         /* --- BOUTON RETOUR ACCUEIL --- */
@@ -113,7 +138,7 @@
         /* --- STYLES SPÉCIFIQUES MÉDIA PRINT --- */
         @media print {
             body {
-                /* On annule le flexcentrage vertical pour l'impression pour éviter les calculs bizarres */
+                /* On annule le flexcentrage vertical pour l'impression */
                 display: block;
                 height: auto;
                 background-color: white;
@@ -125,7 +150,8 @@
                 margin-top: 0; 
             }
 
-            .home-button {
+            /* On cache les boutons */
+            .home-button, .print-btn {
                 display: none !important;
             }
             
@@ -166,6 +192,11 @@
         <div class="footer">
             Ouvrez l'appareil photo de votre téléphone et pointez le code pour télécharger.
         </div>
+
+        <!-- BOUTON D'IMPRESSION -->
+        <button class="print-btn" onclick="window.print()">
+            🖨️ Imprimer au format A4
+        </button>
     </div>
 
 </body>
