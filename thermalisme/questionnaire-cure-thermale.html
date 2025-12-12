@@ -28,6 +28,12 @@
       color: var(--text);
     }
 
+    /* --- CONFIGURATION STANDARD IMPRESSION --- */
+    @page {
+        size: A4;
+        margin: 15mm;
+    }
+
     .app {
       max-width: 960px;
       margin: 0 auto;
@@ -224,6 +230,23 @@
     button.secondary:hover {
       background: #d1d5db;
     }
+    
+    /* Bouton d'impression (Vert) */
+    button.print-btn {
+        background: #059669;
+        color: white;
+        box-shadow: 0 8px 15px rgba(5, 150, 105, 0.35);
+    }
+    button.print-btn:hover {
+        background: #047857;
+        transform: translateY(-1px);
+    }
+    
+    .print-container {
+        margin-top: 15px; 
+        text-align: center;
+        width: 100%;
+    }
 
     .result {
       margin-top: 8px;
@@ -264,45 +287,95 @@
       text-align: right;
     }
 
-	/* --- Bouton Retour Accueil (Ajout) --- */
-	.home-button {
-	    position: fixed;
-	    top: 15px;
-	    left: 15px;
-	    background-color: #2563eb; /* Couleur bleue de la checklist */
-	    color: white;
-	    padding: 8px 15px;
-	    border-radius: 5px;
-	    text-decoration: none;
-	    font-weight: 500;
-	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-	    z-index: 1000;
-	    font-size: 0.9rem; /* Cohérent avec la page */
-	}
-	.home-button:hover {
-	    background-color: #1d4ed8;
-	}
-	@media (max-width: 800px) {
-	    .home-button {
-	        padding: 6px 10px;
-	        font-size: 0.8rem;
-	    }
-	}
-        /*ZONE MAGIQUE IMPRESSION */
-    @page {
-        size: auto;
-        margin: 0mm;
+    /* --- Bouton Retour Accueil --- */
+    .home-button {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #2563eb;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      font-size: 0.9rem;
     }
+    .home-button:hover {
+      background-color: #1d4ed8;
+    }
+    @media (max-width: 800px) {
+      .home-button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* --- STYLES SPÉCIFIQUES MÉDIA PRINT --- */
     @media print {
         body {
-            padding: 1.5cm !important;
+            background: white !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            color: #000 !important;
         }
+        
+        .app {
+            padding: 0 !important;
+            max-width: 100% !important;
+        }
+
+        /* Suppression des éléments inutiles */
+        .home-button, footer, .actions, .hint {
+            display: none !important;
+        }
+        
+        /* On masque aussi le conteneur du bouton imprimer */
+        .print-container {
+            display: none !important;
+        }
+        
+        /* Mise en page linéaire pour éviter les coupures */
+        .grid {
+            display: block !important; /* Force une seule colonne */
+        }
+        
+        .card {
+            box-shadow: none !important;
+            border: 1px solid #ccc !important;
+            margin-bottom: 15px !important;
+            break-inside: avoid; /* Évite de couper une carte en deux */
+            page-break-inside: avoid;
+            background: white !important;
+        }
+
+        /* Nettoyage des champs de formulaire */
+        .field input, .field select, .field textarea {
+            border: 1px solid #999 !important; /* Bordure fine grise pour lisibilité */
+            background: transparent !important;
+        }
+        
+        h1 span.logo {
+            border: 1px solid #ccc;
+            background: none !important;
+            color: #000 !important;
+        }
+        
+        /* Gestion des badges */
+        .badge {
+            border: 1px solid #ccc;
+            background: none !important;
+            color: #000 !important;
+            font-weight: bold;
+        }
+    }
   </style>
 </head>
 <body>
-	<a href="index.html" class="home-button">
-	    🏠 Accueil
-	</a>
+  <a href="../index.html" class="home-button">
+    🏠 Accueil
+  </a>
   <div class="app">
     <header>
       <h1>
@@ -391,7 +464,7 @@
             <input type="checkbox" data-type="absolute" value="Insuffisance d’organe sévère" />
             <span>Insuffisance d’organe sévère (cardiaque, respiratoire, rénale, hépatique…)</span>
           </label>
-		            <label class="checkbox-item">
+            <label class="checkbox-item">
             <input type="checkbox" data-type="absolute" value="Pathologie inflammatoire en poussée" />
             <span>Pathologie inflammatoire en poussée</span>
           </label>
@@ -477,6 +550,13 @@
           <div class="result-body">
             Cochez les éléments pertinents puis cliquez sur <strong>« Évaluer »</strong>.
           </div>
+        </div>
+
+        <!-- BOUTON IMPRESSION DÉPLACÉ ICI -->
+        <div class="print-container">
+            <button class="print-btn" onclick="window.print()">
+                🖨️ Imprimer la synthèse
+            </button>
         </div>
       </section>
     </div>
