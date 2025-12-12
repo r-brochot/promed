@@ -319,6 +319,7 @@
             padding: 0 !important;
             margin: 0 !important;
             color: #000 !important;
+            font-size: 11px !important; /* On réduit un peu la police pour tout caser */
         }
         
         .app {
@@ -331,29 +332,37 @@
             display: none !important;
         }
         
-        /* On masque aussi le conteneur du bouton imprimer */
+        /* On masque le bouton d'impression */
         .print-container {
             display: none !important;
         }
         
-        /* Mise en page linéaire pour éviter les coupures */
+        /* FORCE L'AFFICHAGE EN 2 COLONNES À L'IMPRESSION (Comme pour Dénutrition) */
         .grid {
-            display: block !important; /* Force une seule colonne */
+            display: grid !important; 
+            grid-template-columns: 1fr 1fr !important;
+            gap: 10px !important;
         }
         
         .card {
             box-shadow: none !important;
             border: 1px solid #ccc !important;
-            margin-bottom: 15px !important;
+            margin-bottom: 0 !important; /* Le gap de la grid gère l'espacement */
             break-inside: avoid; /* Évite de couper une carte en deux */
             page-break-inside: avoid;
             background: white !important;
+            padding: 10px !important;
         }
+        
+        h2 { font-size: 1.1rem !important; margin-bottom: 5px !important; }
+        .field-row { margin-bottom: 5px !important; }
+        .checkbox-group { gap: 2px !important; }
 
         /* Nettoyage des champs de formulaire */
         .field input, .field select, .field textarea {
             border: 1px solid #999 !important; /* Bordure fine grise pour lisibilité */
             background: transparent !important;
+            padding: 2px 4px !important;
         }
         
         h1 span.logo {
@@ -552,7 +561,6 @@
           </div>
         </div>
 
-        <!-- BOUTON IMPRESSION DÉPLACÉ ICI -->
         <div class="print-container">
             <button class="print-btn" onclick="window.print()">
                 🖨️ Imprimer la synthèse
