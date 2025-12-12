@@ -9,12 +9,16 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f4f4f7;
+            /* On assure une marge de lecture confortable à l'écran */
+            padding: 20px;
         }
 
-        /* --- CONFIGURATION D'IMPRESSION SIMPLE & ROBUSTE --- */
+        /* --- CONFIGURATION D'IMPRESSION STANDARD --- */
         @page {
             size: A4;
-            margin: 2cm; /* Marge standard : aucun risque de coupure */
+            /* On ne force pas de marge ici, on laisse le navigateur gérer.
+               Cela évite les conflits et assure que les marges se répètent sur chaque page. */
+            margin: 15mm; 
         }
 
         .fillable-input {
@@ -59,6 +63,8 @@
         @media print {
             body {
                 background-color: #fff;
+                padding: 0; /* On retire le padding écran pour l'impression */
+                margin: 0;
             }
             /* On cache les boutons et aides à la navigation */
             .no-print, .home-button {
@@ -70,13 +76,18 @@
                 padding: 0 !important;
                 margin: 0 !important;
             }
-            
-            /* FORCE LE SAUT DE PAGE */
+             
+            /* GESTION DES SAUTS DE PAGE */
             .page-break-before {
                 break-before: page;
                 page-break-before: always;
                 display: block;
                 height: 0;
+            }
+            
+            /* Évite de couper un bloc en deux */
+            .screening-section, .grid {
+                break-inside: avoid;
             }
         }
 
@@ -302,7 +313,7 @@
         </div>
 
         <div class="mt-8 text-right no-print">
-            <button onclick="imprimerPage()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-xl transition duration-150 inline-flex items-center">
+            <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-xl transition duration-150 inline-flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v7a2 2 0 002 2h12a2 2 0 002-2v-7a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm4 2h2v1H9V6zm1 4a1 1 0 100 2 1 1 0 000-2zm1.755 4.346a.75.75 0 00-1.51 0l-.369 1.476a.75.75 0 00.985.985l1.476-.369a.75.75 0 000-1.51l-.369-1.476z" clip-rule="evenodd" />
                 </svg>
@@ -311,14 +322,6 @@
         </div>
         
     </div>
-
-    <!-- Script pour l'alerte d'impression -->
-    <script>
-        function imprimerPage() {
-            alert("⚠️ Conseil d'impression :\n\nPensez à décocher 'En-têtes et pieds de page' dans les paramètres de votre navigateur pour éviter d'imprimer la date et l'adresse web.");
-            window.print();
-        }
-    </script>
 
 </body>
 </html>
