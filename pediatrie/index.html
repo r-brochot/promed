@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pédiatrie - Dr BROCHOT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medical: '#2c3e50',
+                        accent: '#3498db',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f8fafc; }
+        /* Animation douce au survol des cartes */
+        .tool-card {
+            transition: all 0.2s ease-in-out;
+        }
+        .tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6; /* Bleu plus vif au survol */
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800">
+
+    <!-- EN-TÊTE SIMPLIFIÉ -->
+    <header class="bg-blue-600 text-white shadow-md">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">👶</span>
+                    <div>
+                        <h1 class="text-xl font-bold tracking-wide">Pédiatrie</h1>
+                        <p class="text-blue-100 text-xs">Suivi & Dépistages</p>
+                    </div>
+                </div>
+                <!-- Bouton Retour -->
+                <a href="../index.html" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm transition flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Retour Menu
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="max-w-6xl mx-auto px-4 py-10">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+            <!-- 2 SEMAINES -->
+            <!-- Lien direct car on est dans le même dossier -->
+            <a href="consultation_2_semaines.html" class="tool-card block p-6 bg-white border border-slate-200 rounded-xl shadow-sm text-center group">
+                <div class="text-4xl mb-3">👶</div>
+                <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">2 Semaines</h3>
+                <p class="text-xs text-slate-500 mt-2">J8 - J15</p>
+            </a>
+
+            <!-- 1 MOIS -->
+            <a href="consultation_1_mois.html" class="tool-card block p-6 bg-white border border-slate-200 rounded-xl shadow-sm text-center group">
+                <div class="text-4xl mb-3">🧸</div>
+                <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">1 Mois</h3>
+                <p class="text-xs text-slate-500 mt-2">Croissance & Dépistages</p>
+            </a>
+
+            <!-- 2 MOIS -->
+            <a href="consultation_2_mois.html" class="tool-card block p-6 bg-white border border-slate-200 rounded-xl shadow-sm text-center group">
+                <div class="text-4xl mb-3">💉</div>
+                <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">2 Mois</h3>
+                <p class="text-xs text-slate-500 mt-2">Vaccinations</p>
+            </a>
+
+            <!-- 3 MOIS (Placeholder) -->
+            <div class="block p-6 bg-slate-50 border border-slate-200 border-dashed rounded-xl text-center opacity-60">
+                <div class="text-4xl mb-3 grayscale">📅</div>
+                <h3 class="font-bold text-lg text-slate-400">3 Mois</h3>
+                <p class="text-xs text-slate-400 mt-2">À venir</p>
+            </div>
+
+            <!-- 4 MOIS (Placeholder) -->
+            <div class="block p-6 bg-slate-50 border border-slate-200 border-dashed rounded-xl text-center opacity-60">
+                <div class="text-4xl mb-3 grayscale">🥣</div>
+                <h3 class="font-bold text-lg text-slate-400">4 Mois</h3>
+                <p class="text-xs text-slate-400 mt-2">À venir</p>
+            </div>
+
+            <!-- 9 MOIS (Placeholder) -->
+            <div class="block p-6 bg-slate-50 border border-slate-200 border-dashed rounded-xl text-center opacity-60">
+                <div class="text-4xl mb-3 grayscale">👁️</div>
+                <h3 class="font-bold text-lg text-slate-400">9 Mois (SBT)</h3>
+                <p class="text-xs text-slate-400 mt-2">À venir</p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="text-center text-slate-400 py-8 text-sm">
+        <p>&copy; 2025 Dr R. Brochot - Pédiatrie</p>
+    </footer>
+
+</body>
+</html>
