@@ -52,21 +52,58 @@
         .footer {
             margin-top: 3cm; font-size: 1.2em; color: #888; font-style: italic;
         }
+
+        /* --- BOUTON RETOUR ACCUEIL --- */
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #0055A4; /* Bleu Ameli */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-family: sans-serif;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .home-button:hover {
+            background-color: #003c75; /* Bleu plus foncé au survol */
+        }
+
+        /* --- MASQUER À L'IMPRESSION --- */
+        @media print {
+            .home-button {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <!-- BOUTON ACCUEIL -->
+    <a href="../index.html" class="home-button">
+        🏠 Accueil
+    </a>
 
     <div class="container">
         <h1>ACTIV'DOS</h1>
         <div class="subtitle">L'application de l'Assurance Maladie<br>pour prendre soin de votre dos</div>
 
         <div class="qr-section">
+            <!-- iOS -->
             <div class="qr-block">
                 <img src="../images/qrcode_apps.apple.com.png" alt="QR Code iOS" class="qr-image">
                 <span class="qr-label">iPhone</span>
                 <span class="qr-sublabel">(App Store)</span>
             </div>
 
+            <!-- Android -->
             <div class="qr-block">
                 <img src="../images/qrcode_play.google.com.png" alt="QR Code Android" class="qr-image">
                 <span class="qr-label">Android</span>
