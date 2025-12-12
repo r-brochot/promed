@@ -135,7 +135,7 @@
         /* --- Footer (Signature/Date) --- */
         .footer-info {
             max-width: 1000px;
-            margin: 20px auto 0;
+            margin: 20px auto 20px; /* Marge bas ajoutée pour séparer du bouton */
             text-align: right;
             font-weight: bold;
             display: flex;
@@ -179,7 +179,8 @@
         /* --- Contrôles (Bouton d'impression principal) --- */
         .controls {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 40px; /* Marge pour l'espace en bas de page écran */
+            margin-top: 20px;
         }
         
         .controls button {
@@ -356,16 +357,16 @@
         <textarea placeholder="Utilisez cet espace pour toute observation complémentaire pertinente non couverte par la grille d'évaluation."></textarea>
     </div>
     
-    <div class="controls">
-        <button onclick="window.print()">Exporter en PDF / Imprimer la grille remplie</button>
-    </div>
-
     <div class="footer-info">
         <div class="signature-line">
             <label for="signature_date">Date & signature:</label>
             <input type="text" id="signature_date" placeholder="Lieu, JJ/MM/AAAA et Signature">
             <button type="button" onclick="fillDate()">Mettre la date du jour</button>
         </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="window.print()">Exporter en PDF / Imprimer la grille remplie</button>
     </div>
 
     <script>
