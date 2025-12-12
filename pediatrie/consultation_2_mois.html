@@ -49,6 +49,15 @@
             border-color: #3b82f6;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
+        /*ZONE MAGIQUE IMPRESSION */
+    @page {
+        size: auto;
+        margin: 0mm;
+    }
+    @media print {
+        body {
+            padding: 1.5cm !important;
+        }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 p-4 md:p-8 font-sans">
