@@ -58,10 +58,36 @@
         body {
             padding: 1.5cm !important;
         }
+        /* Cache le bouton accueil à l'impression */
+        .home-button {
+            display: none !important;
+        }
+    }
+    
+    /* STYLE BOUTON ACCUEIL */
+    .home-button {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        background-color: #2c3e50; /* Bleu Medical */
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        font-size: 0.9rem;
+    }
+    .home-button:hover {
+        background-color: #34495e;
+    }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 p-4 md:p-8 font-sans">
-
+    <a href="../index.html" class="home-button">
+        🏠 Accueil
+    </a>
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden print:max-w-none print:shadow-none">
         
         <header class="bg-medical text-white p-6 print:bg-white print:text-black print:border-b-2 print:border-black">
@@ -360,7 +386,7 @@
             </footer>
 
             <!-- MENTIONS LEGALES (Ecran & Impression) -->
-            <div class="mt-12 pt-4 border-t border-gray-200 text-center text-xs text-gray-400">
+            <div class="mt-12 pt-4 border-t border-gray-200 text-center text-xs text-gray-400 print:hidden">
                 <p>Outil pédagogique local – à adapter à votre pratique. Ne remplace pas la décision clinique.</p>
                 <p>© 2025 – Dr Rémi Brochot. Reproduction ou diffusion interdite sans autorisation.</p>
             </div>
