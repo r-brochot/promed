@@ -12,6 +12,13 @@
             font-family: 'Inter', sans-serif;
             background-color: #f4f4f7;
         }
+
+        /* --- SUPPRESSION DES EN-TÊTES/PIEDS DE PAGE NAVIGATEUR --- */
+        @page {
+            size: auto;   /* auto is the initial value */
+            margin: 0mm;  /* C'est ça qui supprime date/titre/url */
+        }
+
         /* Style pour les sections à remplir par l'utilisateur */
         .fillable-input {
             border-bottom: 1px solid #9ca3af; /* Gris subtil pour la ligne */
@@ -62,7 +69,8 @@
         @media print {
             body {
                 background-color: #fff; /* Fond blanc pour l'impression */
-                padding: 0;
+                /* On remet une marge interne car on a supprimé la marge externe du navigateur */
+                padding: 1.5cm !important; 
                 margin: 0;
             }
             .no-print {
@@ -73,8 +81,18 @@
                 box-shadow: none; /* Supprime l'ombre */
                 padding: 0 !important;
             }
+            /* Masquer le bouton accueil à l'impression */
+            .home-button {
+                display: none !important;
+            }
+            /* CLASSE POUR FORCER LE SAUT DE PAGE */
+            .page-break {
+                break-before: page;
+                page-break-before: always;
+            }
         }
-        /* --- Bouton Retour Accueil (Ajout) --- */
+
+        /* --- Bouton Retour Accueil --- */
         .home-button {
             position: fixed;
             top: 15px;
@@ -98,22 +116,6 @@
                 font-size: 0.8rem;
             }
         }
-        /* --- Masquer les éléments de navigation à l'impression --- */
-        @media print {
-            .home-button {
-                display: none !important;
-            }
-        }
-        /*ZONE MAGIQUE IMPRESSION */
-    @page {
-        size: auto;
-        margin: 0mm;
-    }
-    @media print {
-        body {
-            padding: 1.5cm !important;
-        }
-    }
     </style>
 </head>
 <body class="p-4 sm:p-8">
@@ -439,10 +441,12 @@
         </div>
 
         <!-- Saut de page visuel (si besoin d'imprimer) et continuation du document -->
-        <div class="my-8 border-t-4 border-dashed border-gray-200"></div>
+        <!-- AJOUT DE 'print:hidden' pour cacher cette ligne à l'impression car on force le saut -->
+        <div class="my-8 border-t-4 border-dashed border-gray-200 print:hidden"></div>
 
         <!-- PAGE 3: CERTIFICAT DE CONSENTEMENT AU PARTAGE DE DONNÉES MÉDICALES (Statique) -->
-        <div class="text-center mb-6">
+        <!-- AJOUT DE LA CLASSE 'page-break' ICI -->
+        <div class="text-center mb-6 page-break">
             <h1 class="text-2xl font-bold text-gray-800 uppercase">
                 CERTIFICAT DE CONSENTEMENT AU PARTAGE DE DONNÉES MÉDICALES
             </h1>
