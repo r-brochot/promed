@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Télécharger Activ'Dos</title>
+    <style>
+        /* Configuration pour l'impression A4 */
+        @page { size: A4 portrait; margin: 0; }
+        
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white; color: #333;
+            display: flex; flex-direction: column; align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 80%; margin-top: 5cm; text-align: center;
+        }
+
+        h1 {
+            color: #0055A4; /* Bleu Ameli */
+            font-size: 5em; margin: 0;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 2em; color: #555;
+            margin-top: 10px; margin-bottom: 2cm;
+            font-weight: 300;
+        }
+
+        .qr-section {
+            display: flex; justify-content: space-around; width: 100%;
+        }
+
+        .qr-block { text-align: center; width: 45%; }
+
+        .qr-image {
+            width: 100%; max-width: 350px; height: auto;
+            border: 2px solid #eee; padding: 10px; border-radius: 10px;
+        }
+
+        .qr-label {
+            display: block; margin-top: 20px;
+            font-size: 2em; font-weight: bold; color: #0055A4;
+        }
+        
+        .qr-sublabel { display: block; font-size: 1.2em; color: #666; }
+
+        .footer {
+            margin-top: 3cm; font-size: 1.2em; color: #888; font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ACTIV'DOS</h1>
+        <div class="subtitle">L'application de l'Assurance Maladie<br>pour prendre soin de votre dos</div>
+
+        <div class="qr-section">
+            <div class="qr-block">
+                <img src="../qrcode_apps.apple.com.png" alt="QR Code iOS" class="qr-image">
+                <span class="qr-label">iPhone</span>
+                <span class="qr-sublabel">(App Store)</span>
+            </div>
+
+            <div class="qr-block">
+                <img src="../qrcode_play.google.com.png" alt="QR Code Android" class="qr-image">
+                <span class="qr-label">Android</span>
+                <span class="qr-sublabel">(Google Play)</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            Ouvrez l'appareil photo de votre téléphone et pointez le code pour télécharger.
+        </div>
+    </div>
+
+</body>
+</html>
