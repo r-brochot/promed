@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grille de Wood - ALD Polypathologies - CPAM (Formulaire Final)</title>
     <style>
+        /* --- CONFIGURATION STANDARD IMPRESSION --- */
+        @page {
+            size: A4;
+            margin: 15mm; /* Marge propre et standard */
+        }
+
         /* --- Styles Généraux --- */
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0; /* On laisse la marge @page gérer l'espacement externe */
+            padding: 20px; /* Padding pour l'écran uniquement */
             background-color: #ffffff;
             font-size: 13px;
         }
@@ -37,6 +44,8 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
+            /* Box-sizing pour éviter que le padding n'élargisse le bloc au-delà de 100% */
+            box-sizing: border-box; 
         }
 
         .patient-info .field {
@@ -60,7 +69,6 @@
         }
 
         /* --- Grille Principale (Tableau) --- */
-        /* NOUVEAU: Wrapper pour le défilement horizontal sur mobile */
         .table-wrapper {
             overflow-x: auto;
             width: 100%;
@@ -70,7 +78,7 @@
 
         .grid-container {
             width: 100%;
-            min-width: 600px; /* Assure que le tableau reste lisible sur mobile */
+            min-width: 600px;
             border-collapse: collapse;
         }
 
@@ -88,47 +96,22 @@
             color: #333;
         }
         
-        /* En-têtes spécifiques (Domaines, Codes) */
-        .domain-header-cell {
-            width: 35%; 
-            text-align: left;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .code-header-cell, .code-cell {
-            width: 5%; 
-            font-size: 12px;
-            font-weight: bold;
-        }
+        /* En-têtes spécifiques */
+        .domain-header-cell { width: 35%; text-align: left; font-size: 12px; font-weight: bold; }
+        .code-header-cell, .code-cell { width: 5%; font-size: 12px; font-weight: bold; }
+        .degree-header-group { font-size: 12px; }
+        .domain-cell { text-align: left !important; padding-left: 8px !important; font-weight: normal; }
+        .rating-cell { width: 10%; }
+        input[type="checkbox"] { transform: scale(1.2); }
 
-        /* En-tête des degrés */
-        .degree-header-group {
-            font-size: 12px;
-        }
-        
-        /* Cellules de Domaines (texte fixe) */
-        .domain-cell {
-            text-align: left !important;
-            padding-left: 8px !important;
-            font-weight: normal;
-        }
-
-        .rating-cell {
-            width: 10%; /* 5 colonnes */
-        }
-        
-        /* Assurer que les cases à cocher sont centrées */
-        input[type="checkbox"] {
-            transform: scale(1.2);
-        }
-
-        /* --- Zone d'Observations (Nouvelle Section) --- */
+        /* --- Zone d'Observations --- */
         .observations-section {
             width: 100%;
             max-width: 1000px;
             margin: 20px auto;
             border: 1px solid #000;
             padding: 10px;
+            box-sizing: border-box;
         }
 
         .observations-section h3 {
@@ -139,7 +122,7 @@
         }
 
         .observations-section textarea {
-            width: 99%;
+            width: 100%;
             min-height: 150px;
             border: 1px solid #ccc;
             padding: 10px;
@@ -148,7 +131,6 @@
             font-family: inherit;
             font-size: 13px;
         }
-
 
         /* --- Footer (Signature/Date) --- */
         .footer-info {
@@ -194,14 +176,7 @@
             font-size: 12px;
         }
 
-
-        /* --- Contrôles et Impression --- */
-        @media print {
-            .controls {
-                display: none;
-            }
-        }
-
+        /* --- Contrôles (Bouton d'impression principal) --- */
         .controls {
             text-align: center;
             margin-bottom: 20px;
@@ -217,51 +192,52 @@
             font-size: 16px;
         }
 
-        /* --- Bouton Retour Accueil (Ajout) --- */
+        /* --- Bouton Retour Accueil --- */
         .home-button {
             position: fixed;
             top: 15px;
             left: 15px;
-            background-color: #0ea5e9; /* Bleu cohérent avec le menu */
+            background-color: #0ea5e9;
             color: white;
             padding: 8px 15px;
             border-radius: 5px;
             text-decoration: none;
             font-weight: bold;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 1000; /* Reste toujours au-dessus */
+            z-index: 1000;
             font-size: 14px;
         }
         .home-button:hover {
             background-color: #0284c7;
         }
-        /* Pour les écrans plus petits, on peut le rendre moins intrusif */
         @media (max-width: 600px) {
-            .home-button {
-                padding: 5px 10px;
-                font-size: 12px;
-            }
-            /* Adaptation du tableau pour mobile */
-            .grid-container th, .grid-container td {
-                padding: 3px 2px;
-                font-size: 11px;
-            }
+            .home-button { padding: 5px 10px; font-size: 12px; }
+            .grid-container th, .grid-container td { padding: 3px 2px; font-size: 11px; }
         }
-        /* --- Masquer les éléments de navigation à l'impression --- */
+
+        /* --- STYLES SPÉCIFIQUES MÉDIA PRINT --- */
         @media print {
-            .home-button {
+            body {
+                padding: 0; /* On annule le padding écran */
+                margin: 0;
+            }
+            
+            /* On masque : 
+               - le bouton Accueil
+               - le bouton d'impression (bleu)
+               - ET le bouton de date (dans la signature)
+            */
+            .home-button, 
+            .controls, 
+            .signature-line button {
                 display: none !important;
             }
-        }
-        
-        /*ZONE MAGIQUE IMPRESSION */
-    @page {
-        size: auto;
-        margin: 0mm;
-    }
-    @media print {
-        body {
-            padding: 1.5cm !important;
+
+            /* Assurer que les éléments larges s'adaptent à la largeur papier */
+            .cpam-warning, .patient-info, .table-wrapper, .observations-section, .footer-info {
+                max-width: 100% !important;
+                width: 100% !important;
+            }
         }
     </style>
 </head>
@@ -381,7 +357,7 @@
     </div>
     
     <div class="controls">
-        <button onclick="exportToPDF()">Exporter en PDF / Imprimer la grille remplie</button>
+        <button onclick="window.print()">Exporter en PDF / Imprimer la grille remplie</button>
     </div>
 
     <div class="footer-info">
@@ -414,12 +390,6 @@
 
             const formattedDate = `${dd}/${mm}/${yyyy}`;
             document.getElementById('signature_date').value = formattedDate; // Seulement la date
-        }
-
-
-        // SCRIPT: Fonction d'exportation en PDF/Impression
-        function exportToPDF() {
-            window.print();
         }
     </script>
 
