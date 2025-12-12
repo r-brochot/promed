@@ -147,7 +147,7 @@
             <!-- IDENTITÉ & CONSTANTES -->
             <section class="grid grid-cols-1 md:grid-cols-2 gap-6 print-force-col">
                 <!-- Identité -->
-                <div class="space-y-3 p-4 bg-slate-50 rounded border border-slate-200 print:border-none print:p-0">
+                <div class="space-y-3 p-4 bg-slate-50 rounded border border-slate-200 print:border print:p-0">
                     <h2 class="font-bold text-medical border-b pb-1 mb-2">Identité</h2>
                     <div class="grid grid-cols-1 gap-3">
                         <div>
@@ -171,7 +171,7 @@
                 </div>
 
                 <!-- Constantes -->
-                <div class="space-y-3 p-4 bg-blue-50 rounded border border-blue-100 print:bg-transparent print:border-none print:p-0">
+                <div class="space-y-3 p-4 bg-blue-50 rounded border border-blue-100 print:bg-transparent print:border print:p-0">
                     <h2 class="font-bold text-medical border-b pb-1 mb-2">Constantes</h2>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
@@ -215,7 +215,7 @@
                         <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="alim" value="artificiel"> Artificiel</label>
                     </div>
                     
-                    <div class="bg-orange-50 p-3 rounded border border-orange-200 print:border-none print:p-0">
+                    <div class="bg-orange-50 p-3 rounded border border-orange-200 print:border print:p-0">
                         <div class="flex flex-col gap-2">
                             <h4 class="font-bold text-medical text-sm">Difficultés rapportées</h4>
                             <div class="flex gap-4 text-sm items-center">
@@ -228,7 +228,7 @@
                 </div>
 
                 <!-- Selles -->
-                <div class="space-y-4 border p-4 rounded bg-yellow-50/50 border-yellow-200 print:bg-transparent print:border-none print:p-0">
+                <div class="space-y-4 border p-4 rounded bg-yellow-50/50 border-yellow-200 print:bg-transparent print:border print:p-0">
                     <h3 class="font-bold text-medical mb-2 border-b">Colorimétrie des Selles</h3>
                     
                     <div class="flex flex-col gap-3">
@@ -289,7 +289,7 @@
                         </div>
 
                         <!-- Hanches -->
-                        <div class="bg-slate-50 p-3 rounded border border-slate-200 print:bg-transparent print:border-none print:p-0">
+                        <div class="bg-slate-50 p-3 rounded border border-slate-200 print:bg-transparent print:border print:p-0">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-sm font-bold text-gray-700">Hanches (Instabilité/Abduction)</span>
                                 <div class="flex gap-3 text-sm">
@@ -316,7 +316,7 @@
             <!-- VISION & AUDITION -->
             <section class="grid grid-cols-1 md:grid-cols-2 gap-6 print-force-col">
                 <!-- Vision -->
-                <div class="border p-4 rounded print:border-none print:p-0">
+                <div class="border p-4 rounded print:border print:p-0">
                     <h3 class="font-bold text-medical mb-3 border-b pb-1">Vision</h3>
                     <div class="space-y-2" id="grid-vision">
                         <!-- Généré par JS -->
@@ -324,7 +324,7 @@
                 </div>
 
                 <!-- Audition -->
-                <div class="border p-4 rounded print:border-none print:p-0">
+                <div class="border p-4 rounded print:border print:p-0">
                     <h3 class="font-bold text-medical mb-2 border-b pb-1">Audition</h3>
                     <p class="text-xs text-gray-500 mb-2 italic">Réagit, sursaute, arrête son activité :</p>
                     <div class="space-y-2" id="grid-audition">
@@ -353,7 +353,7 @@
             <section class="grid grid-cols-1 md:grid-cols-2 gap-6 print-force-col">
                 
                 <!-- Dépistage Néonatal -->
-                <div class="bg-blue-50 p-4 rounded border border-blue-200 print:bg-transparent print:border-none print:p-0">
+                <div class="bg-blue-50 p-4 rounded border border-blue-200 print:bg-transparent print:border print:p-0">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="font-bold text-medical">Dépistage Néonatal</h3>
                         <button type="button" onclick="openModal('modal-guthrie')" class="text-blue-500 hover:text-blue-700 no-print" title="Liste des maladies dépistées">
@@ -378,7 +378,7 @@
                 </div>
 
                 <!-- Vaccinations (Info) -->
-                <div class="bg-blue-50 p-4 rounded border border-blue-200 print:bg-transparent print:border-none print:p-0">
+                <div class="bg-blue-50 p-4 rounded border border-blue-200 print:bg-transparent print:border print:p-0">
                     <h3 class="font-bold text-medical mb-2">Vaccinations</h3>
                     <div class="flex items-start gap-2">
                         <input type="checkbox" id="infoVaccin" class="mt-1">
@@ -390,9 +390,9 @@
             <!-- CONCLUSION -->
             <section>
                 <h3 class="font-bold text-medical mb-2">Synthèse & Orientation</h3>
-                <textarea class="w-full border border-gray-300 rounded p-2 text-sm h-24 print:border-none print:h-auto print:resize-none mb-4" placeholder="Examen clinique sans particularité. Croissance satisfaisante. Conseils donnés."></textarea>
+                <textarea class="w-full border border-gray-300 rounded p-2 text-sm h-24 print:border print:h-auto print:resize-none mb-4" placeholder="Examen clinique sans particularité. Croissance satisfaisante. Conseils donnés."></textarea>
                 
-                <div class="space-y-3 bg-gray-50 p-4 rounded border border-gray-200 print:bg-transparent print:border-none print:p-0">
+                <div class="space-y-3 bg-gray-50 p-4 rounded border border-gray-200 print:bg-transparent print:border print:p-0">
                     <div class="flex flex-col md:flex-row md:items-center gap-3">
                         <span class="text-sm font-bold text-gray-700 w-64">Avis médical spécialisé demandé</span>
                         <div class="flex items-center gap-4 text-sm">
