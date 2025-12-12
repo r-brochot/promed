@@ -4,53 +4,87 @@
     <meta charset="UTF-8">
     <title>Télécharger Activ'Dos</title>
     <style>
-        /* Configuration pour l'impression A4 */
-        @page { size: A4 portrait; margin: 0; }
+        /* --- CONFIGURATION STANDARD IMPRESSION --- */
+        @page { 
+            size: A4 portrait; 
+            margin: 15mm; 
+        }
         
         body {
-            margin: 0; padding: 0;
+            margin: 0; 
+            padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: white; color: #333;
-            display: flex; flex-direction: column; align-items: center;
-            height: 100vh;
+            background: white; 
+            color: #333;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            /* On utilise min-height pour éviter de forcer une hauteur fixe qui crée des pages blanches */
+            min-height: 100vh;
         }
 
         .container {
-            width: 80%; margin-top: 5cm; text-align: center;
+            width: 80%; 
+            text-align: center;
+            /* Pour l'écran, on met une marge, mais on l'enlèvera à l'impression */
+            margin-top: 5cm; 
         }
 
         h1 {
             color: #0055A4; /* Bleu Ameli */
-            font-size: 5em; margin: 0;
-            text-transform: uppercase; letter-spacing: 2px;
+            font-size: 5em; 
+            margin: 0;
+            text-transform: uppercase; 
+            letter-spacing: 2px;
         }
         
         .subtitle {
-            font-size: 2em; color: #555;
-            margin-top: 10px; margin-bottom: 2cm;
+            font-size: 2em; 
+            color: #555;
+            margin-top: 10px; 
+            margin-bottom: 2cm;
             font-weight: 300;
         }
 
         .qr-section {
-            display: flex; justify-content: space-around; width: 100%;
+            display: flex; 
+            justify-content: space-around; 
+            width: 100%;
         }
 
-        .qr-block { text-align: center; width: 45%; }
+        .qr-block { 
+            text-align: center; 
+            width: 45%; 
+        }
 
         .qr-image {
-            width: 100%; max-width: 350px; height: auto;
-            border: 2px solid #eee; padding: 10px; border-radius: 10px;
+            width: 100%; 
+            max-width: 350px; 
+            height: auto;
+            border: 2px solid #eee; 
+            padding: 10px; 
+            border-radius: 10px;
         }
 
         .qr-label {
-            display: block; margin-top: 20px;
-            font-size: 2em; font-weight: bold; color: #0055A4;
+            display: block; 
+            margin-top: 20px;
+            font-size: 2em; 
+            font-weight: bold; 
+            color: #0055A4;
         }
         
-        .qr-sublabel { display: block; font-size: 1.2em; color: #666; }
+        .qr-sublabel { 
+            display: block; 
+            font-size: 1.2em; 
+            color: #666; 
+        }
 
         .footer {
-            margin-top: 3cm; font-size: 1.2em; color: #888; font-style: italic;
+            margin-top: 3cm; 
+            font-size: 1.2em; 
+            color: #888; 
+            font-style: italic;
         }
 
         /* --- BOUTON RETOUR ACCUEIL --- */
@@ -58,7 +92,7 @@
             position: fixed;
             top: 20px;
             left: 20px;
-            background-color: #0055A4; /* Bleu Ameli */
+            background-color: #0055A4;
             color: white;
             padding: 10px 20px;
             border-radius: 8px;
@@ -73,24 +107,32 @@
             gap: 8px;
         }
         .home-button:hover {
-            background-color: #003c75; /* Bleu plus foncé au survol */
+            background-color: #003c75;
         }
 
-        /* --- MASQUER À L'IMPRESSION --- */
+        /* --- STYLES SPÉCIFIQUES MÉDIA PRINT --- */
         @media print {
+            body {
+                /* On annule le flexcentrage vertical pour l'impression pour éviter les calculs bizarres */
+                display: block;
+                height: auto;
+                background-color: white;
+            }
+            
+            .container {
+                width: 100%;
+                /* On supprime la grosse marge du haut pour l'impression, la marge @page suffit */
+                margin-top: 0; 
+            }
+
             .home-button {
                 display: none !important;
             }
-        }
-        
-        /*ZONE MAGIQUE IMPRESSION */
-    @page {
-        size: auto;
-        margin: 0mm;
-    }
-    @media print {
-        body {
-            padding: 1.5cm !important;
+            
+            /* On s'assure que les images ne sont pas coupées */
+            img {
+                break-inside: avoid;
+            }
         }
     </style>
 </head>
