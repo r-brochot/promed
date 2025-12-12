@@ -20,25 +20,12 @@
         }
     </script>
     <style>
-        @media print {
-            body { background: white; padding: 0; }
-            .no-print { display: none !important; }
-            .print-only { display: block !important; }
-            .shadow-lg { box-shadow: none !important; }
-            .bg-white { background: transparent !important; }
-            input, select, textarea { 
-                border: none !important; 
-                border-bottom: 1px dotted #000 !important; 
-                padding: 0 !important;
-                background: transparent !important;
-            }
-            .hidden { display: none !important; }
-            .page-break { page-break-before: always; }
-            
-            .text-red-700 { color: #b91c1c !important; font-weight: bold; }
-            .bg-orange-100 { background-color: #ffedd5 !important; -webkit-print-color-adjust: exact; }
+        /* --- CONFIGURATION STANDARD IMPRESSION --- */
+        @page {
+            size: A4;
+            margin: 15mm;
         }
-        
+
         .input-std {
             width: 100%;
             border: 1px solid #d1d5db;
@@ -62,39 +49,77 @@
             margin-right: 4px;
             vertical-align: middle;
         }
-        /*ZONE MAGIQUE IMPRESSION */
-    @page {
-        size: auto;
-        margin: 0mm;
-    }
-    @media print {
-        body {
-            padding: 1.5cm !important;
-        }
-        /* Cache le bouton accueil à l'impression */
+
+        /* STYLE BOUTON ACCUEIL */
         .home-button {
-            display: none !important;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-size: 0.9rem;
         }
-    }
-    
-    /* STYLE BOUTON ACCUEIL */
-    .home-button {
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        background-color: #2c3e50; /* Bleu Medical */
-        color: white;
-        padding: 8px 15px;
-        border-radius: 5px;
-        text-decoration: none;
-        font-weight: 500;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        font-size: 0.9rem;
-    }
-    .home-button:hover {
-        background-color: #34495e;
-    }        
+        .home-button:hover {
+            background-color: #34495e;
+        }
+
+        /* --- STYLES SPÉCIFIQUES MÉDIA PRINT --- */
+        @media print {
+            body { 
+                background: white; 
+                padding: 0; 
+                margin: 0;
+                font-size: 11px;
+            }
+            
+            .no-print, .home-button { display: none !important; }
+            .print-only { display: block !important; }
+            .shadow-lg { box-shadow: none !important; }
+            .bg-white { background: transparent !important; }
+            
+            input, select, textarea { 
+                border: none !important; 
+                border-bottom: 1px dotted #ccc !important; 
+                padding: 0 !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                font-size: 11px !important;
+            }
+            input[type="radio"], input[type="checkbox"] {
+                border: 1px solid #ccc !important;
+            }
+
+            .hidden { display: none !important; }
+            .page-break { page-break-before: always; }
+            
+            .text-red-700 { color: #b91c1c !important; font-weight: bold; }
+            .bg-orange-100 { background-color: #ffedd5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+            /* FORCE L'AFFICHAGE EN 2 COLONNES À L'IMPRESSION */
+            .print-force-col {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 1.5rem !important;
+            }
+            
+            section, .border {
+                break-inside: avoid;
+            }
+            
+            .p-6 { padding: 0 !important; }
+            .space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem !important; }
+            
+            header { padding: 10px 0 !important; border-bottom: 2px solid #000; margin-bottom: 10px; }
+            header h1 { font-size: 1.2rem !important; color: #000 !important; }
+            .text-white { color: #000 !important; }
+            .bg-medical { background: transparent !important; }
+        }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 p-4 md:p-8 font-sans">
@@ -104,7 +129,7 @@
  
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden print:max-w-none print:shadow-none">
         
-        <header class="bg-medical text-white p-6 print:bg-white print:text-black print:border-b-2 print:border-black">
+        <header class="bg-medical text-white p-6 print:p-4">
             <div class="flex justify-between items-center">
                 <div>
                     <h1 class="text-2xl font-bold uppercase tracking-wider">Examen du 1er Mois</h1>
@@ -112,7 +137,7 @@
                 </div>
                 <div class="text-right text-sm">
                     <p>Carnet de Santé 2025 (p.35)</p>
-                    <p class="print:block hidden">Dr. [Nom du Médecin]</p>
+                    <p class="print:block hidden font-bold">Dr. [Nom du Médecin]</p>
                 </div>
             </div>
         </header>
@@ -120,7 +145,7 @@
         <div class="p-6 space-y-6">
 
             <!-- IDENTITÉ & CONSTANTES -->
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6 print-force-col">
                 <!-- Identité -->
                 <div class="space-y-3 p-4 bg-slate-50 rounded border border-slate-200 print:border-none print:p-0">
                     <h2 class="font-bold text-medical border-b pb-1 mb-2">Identité</h2>
@@ -180,7 +205,7 @@
             </section>
 
             <!-- ALIMENTATION & SELLES -->
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6 print-force-col">
                 <!-- Alimentation -->
                 <div class="space-y-4">
                     <h3 class="font-bold text-medical mb-2 border-b">Alimentation</h3>
@@ -190,7 +215,7 @@
                         <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="alim" value="artificiel"> Artificiel</label>
                     </div>
                     
-                    <div class="bg-orange-50 p-3 rounded border border-orange-200">
+                    <div class="bg-orange-50 p-3 rounded border border-orange-200 print:border-none print:p-0">
                         <div class="flex flex-col gap-2">
                             <h4 class="font-bold text-medical text-sm">Difficultés rapportées</h4>
                             <div class="flex gap-4 text-sm items-center">
@@ -203,12 +228,12 @@
                 </div>
 
                 <!-- Selles -->
-                <div class="space-y-4 border p-4 rounded bg-yellow-50/50 border-yellow-200">
+                <div class="space-y-4 border p-4 rounded bg-yellow-50/50 border-yellow-200 print:bg-transparent print:border-none print:p-0">
                     <h3 class="font-bold text-medical mb-2 border-b">Colorimétrie des Selles</h3>
                     
                     <div class="flex flex-col gap-3">
                         <!-- Normales -->
-                        <label class="flex items-start gap-2 cursor-pointer p-2 rounded hover:bg-green-100 border border-transparent hover:border-green-200">
+                        <label class="flex items-start gap-2 cursor-pointer p-2 rounded hover:bg-green-100 border border-transparent hover:border-green-200 print:p-0">
                             <input type="radio" name="selles" value="normal" checked onchange="checkSelles(this)" class="mt-1">
                             <div>
                                 <span class="font-bold text-green-700 block mb-1">Normales (Colorées)</span>
@@ -222,7 +247,7 @@
                         </label>
                         
                         <!-- Anormales -->
-                        <label class="flex items-start gap-2 cursor-pointer p-2 rounded hover:bg-red-100 border border-transparent hover:border-red-200 bg-white">
+                        <label class="flex items-start gap-2 cursor-pointer p-2 rounded hover:bg-red-100 border border-transparent hover:border-red-200 bg-white print:bg-transparent print:p-0">
                             <input type="radio" name="selles" value="anormal" onchange="checkSelles(this)" class="mt-1">
                             <div>
                                 <span class="font-bold text-red-600 block mb-1">Anormales (Décolorées)</span>
@@ -242,13 +267,13 @@
                 </div>
             </section>
 
-            <hr class="border-gray-200">
+            <hr class="border-gray-200 print:hidden">
 
             <!-- EXAMEN CLINIQUE -->
             <section>
                 <h3 class="font-bold text-lg text-medical mb-4 border-l-4 border-blue-500 pl-2">Examen Clinique</h3>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-6 print-force-col">
                     
                     <!-- Colonne Gauche -->
                     <div class="space-y-4">
@@ -264,7 +289,7 @@
                         </div>
 
                         <!-- Hanches -->
-                        <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <div class="bg-slate-50 p-3 rounded border border-slate-200 print:bg-transparent print:border-none print:p-0">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-sm font-bold text-gray-700">Hanches (Instabilité/Abduction)</span>
                                 <div class="flex gap-3 text-sm">
@@ -288,10 +313,10 @@
                 </div>
             </section>
 
-            <!-- VISION & AUDITION (Page 32 PDF) -->
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- VISION & AUDITION -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6 print-force-col">
                 <!-- Vision -->
-                <div class="border p-4 rounded print:border-black">
+                <div class="border p-4 rounded print:border-none print:p-0">
                     <h3 class="font-bold text-medical mb-3 border-b pb-1">Vision</h3>
                     <div class="space-y-2" id="grid-vision">
                         <!-- Généré par JS -->
@@ -299,7 +324,7 @@
                 </div>
 
                 <!-- Audition -->
-                <div class="border p-4 rounded print:border-black">
+                <div class="border p-4 rounded print:border-none print:p-0">
                     <h3 class="font-bold text-medical mb-2 border-b pb-1">Audition</h3>
                     <p class="text-xs text-gray-500 mb-2 italic">Réagit, sursaute, arrête son activité :</p>
                     <div class="space-y-2" id="grid-audition">
@@ -311,7 +336,7 @@
             <!-- DÉVELOPPEMENT -->
             <section class="bg-green-50 p-4 rounded print:bg-transparent print:p-0">
                 <h3 class="font-bold text-lg text-medical mb-4 border-l-4 border-green-500 pl-2">Développement Psychomoteur</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="grid-dev">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 print-force-col" id="grid-dev">
                     <!-- Généré par JS -->
                 </div>
             </section>
@@ -325,10 +350,10 @@
             </section>
 
             <!-- DÉPISTAGE & VACCINS -->
-            <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6 print-force-col">
                 
                 <!-- Dépistage Néonatal -->
-                <div class="bg-blue-50 p-4 rounded border border-blue-200">
+                <div class="bg-blue-50 p-4 rounded border border-blue-200 print:bg-transparent print:border-none print:p-0">
                     <div class="flex justify-between items-center mb-2">
                         <h3 class="font-bold text-medical">Dépistage Néonatal</h3>
                         <button type="button" onclick="openModal('modal-guthrie')" class="text-blue-500 hover:text-blue-700 no-print" title="Liste des maladies dépistées">
@@ -353,7 +378,7 @@
                 </div>
 
                 <!-- Vaccinations (Info) -->
-                <div class="bg-blue-50 p-4 rounded border border-blue-200">
+                <div class="bg-blue-50 p-4 rounded border border-blue-200 print:bg-transparent print:border-none print:p-0">
                     <h3 class="font-bold text-medical mb-2">Vaccinations</h3>
                     <div class="flex items-start gap-2">
                         <input type="checkbox" id="infoVaccin" class="mt-1">
@@ -410,7 +435,7 @@
                     <div class="w-32 h-16 border border-gray-200 mx-auto"></div>
                 </div>
             </footer>
-
+            
             <!-- MENTIONS LEGALES (Ecran & Impression) -->
             <div class="mt-12 pt-4 border-t border-gray-200 text-center text-xs text-gray-400 print:hidden">
                 <p>Outil pédagogique local – à adapter à votre pratique. Ne remplace pas la décision clinique.</p>
@@ -451,16 +476,23 @@
                     <div class="bg-red-50 p-4 rounded-lg border border-red-100">
                         <h4 class="font-bold text-lg text-red-800 mb-3">Pathologie Visuelle ORGANIQUE</h4>
                         <ul class="list-disc pl-5 space-y-2">
-                            <li><strong>Antécédents familiaux</strong> de maladies oculaires potentiellement héréditaires...</li>
-                            <li><strong>Prématurité</strong> < 31 semaines...</li>
-                            <!-- ... -->
+                            <li><strong>Antécédents familiaux</strong> de maladies oculaires potentiellement héréditaires et congénitales (cataracte congénitale, glaucome congénital, rétinoblastome, malformations oculaires, craniofaciales)</li>
+                            <li><strong>Prématurité</strong> < 31 semaines et/ou petit poids de naissance < 1250 g (ROP)</li>
+                            <li><strong>Craniosténoses</strong> héréditaires</li>
+                            <li><strong>Infections</strong> materno-fœtales</li>
                         </ul>
                     </div>
                     <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
                         <h4 class="font-bold text-lg text-blue-800 mb-3">Pathologie Visuelle FONCTIONNELLE</h4>
                         <ul class="list-disc pl-5 space-y-2">
-                            <li><strong>Antécédents familiaux au 1er degré</strong> d’amétropie forte...</li>
-                            <!-- ... -->
+                            <li><strong>Antécédents familiaux au 1er degré</strong> d’amétropie forte apparue dans la petite enfance, de strabisme, de nystagmus ou d’amblyopie</li>
+                            <li><strong>Prématurité</strong> < 37 semaines et/ou petit poids de naissance < 2500 g</li>
+                            <li><strong>Souffrance neurologique</strong> néonatale et séquelles ultérieures (IMC, retard PM)</li>
+                            <li><strong>Anomalies chromosomiques</strong>, notamment la T21</li>
+                            <li><strong>Craniosténoses</strong> et malformations de la face</li>
+                            <li><strong>Exposition toxique</strong> durant la grossesse (tabac, alcool, cocaïne)</li>
+                            <li><strong>Pathologie générale</strong> avec atteinte oculaire ou neuro ophtalmologique potentielle</li>
+                            <li>Autres handicaps neurosensoriels</li>
                         </ul>
                     </div>
                 </div>
