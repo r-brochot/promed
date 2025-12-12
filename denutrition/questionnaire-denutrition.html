@@ -9,15 +9,12 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f4f4f7;
-            /* On assure une marge de lecture confortable à l'écran */
             padding: 20px;
         }
 
         /* --- CONFIGURATION D'IMPRESSION STANDARD --- */
         @page {
             size: A4;
-            /* On ne force pas de marge ici, on laisse le navigateur gérer.
-               Cela évite les conflits et assure que les marges se répètent sur chaque page. */
             margin: 15mm; 
         }
 
@@ -33,6 +30,9 @@
             border-radius: 0.5rem;
             margin-top: 1rem;
             background-color: #ffffff;
+            /* Empêche de couper un cadre en deux */
+            break-inside: avoid;
+            page-break-inside: avoid;
         }
         .screening-item {
             display: flex;
@@ -63,10 +63,10 @@
         @media print {
             body {
                 background-color: #fff;
-                padding: 0; /* On retire le padding écran pour l'impression */
+                padding: 0;
                 margin: 0;
+                font-size: 12px; /* On réduit légèrement la police globale pour tout faire rentrer proprement */
             }
-            /* On cache les boutons et aides à la navigation */
             .no-print, .home-button {
                 display: none !important;
             }
@@ -77,7 +77,6 @@
                 margin: 0 !important;
             }
              
-            /* GESTION DES SAUTS DE PAGE */
             .page-break-before {
                 break-before: page;
                 page-break-before: always;
@@ -85,10 +84,22 @@
                 height: 0;
             }
             
-            /* Évite de couper un bloc en deux */
-            .screening-section, .grid {
-                break-inside: avoid;
+            /* FORCE L'AFFICHAGE EN 2 COLONNES À L'IMPRESSION */
+            .print-force-col {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 1.5rem !important;
             }
+            
+            /* Ajustements d'espacement pour l'impression */
+            .screening-section {
+                margin-top: 0.5rem !important;
+                padding: 0.5rem !important;
+                border: 1px solid #ccc !important;
+            }
+            h1 { font-size: 1.5rem !important; }
+            h2 { font-size: 1.1rem !important; margin-bottom: 0.25rem !important; }
+            .mb-6, .my-8 { margin-bottom: 1rem !important; margin-top: 1rem !important; }
         }
 
         /* --- Bouton Retour Accueil --- */
@@ -118,10 +129,7 @@
     </style>
 </head>
 <body class="p-4 sm:p-8">
-    <!-- Bouton retour vers l'accueil global car Dénutrition est un outil isolé -->
-    <a href="../index.html" class="home-button">
-        🏠 Accueil
-    </a>
+    <a href="../index.html" class="home-button">🏠 Accueil</a>
 
     <div class="max-w-4xl mx-auto bg-white p-6 sm:p-10 shadow-xl rounded-lg">
         
@@ -131,9 +139,6 @@
             </h1>
             <p class="mt-2 text-sm text-gray-600">
                 Pour les professionnels de santé: pharmacien, dentiste, IDEL, médecin traitant, biologiste, orthophoniste, psychologue, diététicien, kinésithérapeute, médecin spécialisé.
-            </p>
-            <p class="mt-2 text-xs italic text-gray-500">
-                Cette grille de repérage découlera d'une bonne observation du patient, de son environnement et de son mode de vie.
             </p>
         </header>
 
@@ -147,8 +152,8 @@
                 <input type="date" id="date" class="fillable-input outline-none focus:border-green-500 transition duration-150">
             </div>
             <div class="flex flex-col sm:flex-row sm:items-center">
-                <label for="caregiver" class="w-32 flex-shrink-0">SOIGNANT (NOM ET FONCTION):</label>
-                <input type="text" id="caregiver" class="fillable-input outline-none focus:border-green-500 transition duration-150" placeholder="Nom, Prénom et Fonction du soignant">
+                <label for="caregiver" class="w-32 flex-shrink-0">SOIGNANT:</label>
+                <input type="text" id="caregiver" class="fillable-input outline-none focus:border-green-500 transition duration-150" placeholder="Nom, Prénom et Fonction">
             </div>
         </form>
 
@@ -159,7 +164,8 @@
         <!-- Bloc 1 -->
         <div class="screening-section">
             <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Discours caractéristique</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+            <!-- Note: J'ai ajouté 'print-force-col' ici aussi pour garder 2 colonnes même si l'écran est petit -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 print-force-col">
                 <label class="screening-item"><input type="checkbox" name="discours" value="plus_appetit" class="mr-3"> Je n'ai plus beaucoup d'appétit</label>
                 <label class="screening-item"><input type="checkbox" name="discours" value="mal_a_mastiquer" class="mr-3"> J'ai du mal à mastiquer</label>
                 <label class="screening-item"><input type="checkbox" name="discours" value="viande_trop_chere" class="mr-3"> Je n'aime plus la viande / c'est trop cher</label>
@@ -174,14 +180,15 @@
         </div>
         
         <!-- Bloc 2 & 3 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <!-- AJOUT DE 'print-force-col' SUR LE CONTENEUR GLOBAL POUR METTRE LES DEUX BLOCS COTE A COTE -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 print-force-col">
             <div class="screening-section !mt-0">
                 <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Etat cutané</h2>
                 <div class="space-y-2">
                     <label class="screening-item"><input type="checkbox" name="etat_cutane" value="escarres" class="mr-3"> Escarres</label>
                     <label class="screening-item"><input type="checkbox" name="etat_cutane" value="plaies_cutanees" class="mr-3"> Plaies cutanées</label>
                     <label class="screening-item"><input type="checkbox" name="etat_cutane" value="difficulte_cicatrisation" class="mr-3"> Difficulté de cicatrisation</label>
-                    <label class="screening-item"><input type="checkbox" name="etat_cutane" value="coagulation_tardive" class="mr-3"> Coagulation tardive lors du vaccin ou de la prise de sang</label>
+                    <label class="screening-item"><input type="checkbox" name="etat_cutane" value="coagulation_tardive" class="mr-3"> Coagulation tardive (vaccin/sang)</label>
                 </div>
             </div>
             <div class="screening-section !mt-0">
@@ -198,13 +205,13 @@
         <div class="my-8 border-t-4 border-dashed border-gray-200 print:hidden"></div>
 
         <!-- Bloc 4 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 print-force-col">
             <div class="screening-section !mt-0">
                 <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Au domicile</h2>
                 <div class="space-y-2">
                     <label class="screening-item"><input type="checkbox" name="environnement" value="refrigerateur_vide" class="mr-3"> Réfrigérateur vide / peu rempli</label>
                     <label class="screening-item"><input type="checkbox" name="environnement" value="placards_vides" class="mr-3"> Placards vides / peu remplis</label>
-                    <label class="screening-item"><input type="checkbox" name="environnement" value="appareil_non_porte" class="mr-3"> Ne porte pas / plus son appareil dentaire</label>
+                    <label class="screening-item"><input type="checkbox" name="environnement" value="appareil_non_porte" class="mr-3"> Ne porte pas son appareil dentaire</label>
                     <label class="screening-item"><input type="checkbox" name="environnement" value="reste_poubelle" class="mr-3"> Restes alimentaires dans la poubelle</label>
                     <label class="screening-item"><input type="checkbox" name="environnement" value="aliments_perimes" class="mr-3"> Aliments périmés</label>
                     <label class="screening-item"><input type="checkbox" name="environnement" value="repas_intact" class="mr-3"> Repas non consommé resté intact</label>
@@ -225,14 +232,14 @@
         </div>
         
         <!-- Bloc 5 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 print-force-col">
             <div class="screening-section !mt-0">
                 <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Anthropométrie</h2>
                 <div class="space-y-2">
                     <label class="screening-item"><input type="checkbox" name="anthropometrie" value="silhouette_maigre" class="mr-3"> Silhouette mince / maigre</label>
                     <label class="screening-item"><input type="checkbox" name="anthropometrie" value="circonference_brachiale" class="mr-3"> Circonférence brachiale < 22cm</label>
                     <label class="screening-item"><input type="checkbox" name="anthropometrie" value="circonference_mollet" class="mr-3"> Circonférence du mollet < 31 cm</label>
-                    <label class="screening-item"><input type="checkbox" name="anthropometrie" value="perte_poids" class="mr-3"> Perte de poids involontaire, avec ou sans pathologie, même en situation d'obésité</label>
+                    <label class="screening-item"><input type="checkbox" name="anthropometrie" value="perte_poids" class="mr-3"> Perte de poids involontaire</label>
                 </div>
             </div>
             <div class="screening-section !mt-0">
@@ -240,7 +247,7 @@
                 <div class="space-y-2">
                     <label class="screening-item"><input type="checkbox" name="mobilite" value="sarcopenie" class="mr-3"> Sarcopénie</label>
                     <label class="screening-item"><input type="checkbox" name="mobilite" value="mal_a_se_lever" class="mr-3"> Difficultés à se lever seul / à se déplacer</label>
-                    <label class="screening-item"><input type="checkbox" name="mobilite" value="mal_a_ouvrir" class="mr-3"> Difficultés à ouvrir une bouteille / une boite de médicaments / un plat préparé...</label>
+                    <label class="screening-item"><input type="checkbox" name="mobilite" value="mal_a_ouvrir" class="mr-3"> Difficultés à ouvrir (bouteille/médicaments)</label>
                     <label class="screening-item"><input type="checkbox" name="mobilite" value="dependance_alimentation" class="mr-3"> Dépendance pour l'alimentation</label>
                     <label class="screening-item"><input type="checkbox" name="mobilite" value="dependance_mobilite" class="mr-3"> Dépendance pour la mobilité</label>
                 </div>
@@ -250,18 +257,18 @@
         <!-- Bloc 6 -->
         <div class="screening-section !mt-4">
             <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Pathologies ou signes cliniques</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 print-force-col">
                 <div class="space-y-2">
-                    <label class="screening-item"><input type="checkbox" name="pathologies" value="maladies_neurologiques" class="mr-3"><span class="patho-text">Maladies neurologiques / neuro-dégénératives / déambulations</span></label>
+                    <label class="screening-item"><input type="checkbox" name="pathologies" value="maladies_neurologiques" class="mr-3"><span class="patho-text">Maladies neurologiques / dégénératives</span></label>
                     <label class="screening-item"><input type="checkbox" name="pathologies" value="pathologie_chronique_aigue" class="mr-3"><span class="patho-text">Pathologie chronique ou aiguë</span></label>
                     <label class="screening-item"><input type="checkbox" name="pathologies" value="hypercatabolisme" class="mr-3"><span class="patho-text">Hypercatabolisme / infection / cancer</span></label>
                     <label class="screening-item"><input type="checkbox" name="pathologies" value="troubles_psychologiques" class="mr-3"><span class="patho-text">Troubles psychologiques / dépression</span></label>
                     <label class="screening-item"><input type="checkbox" name="pathologies" value="troubles_deglutition" class="mr-3"><span class="patho-text">Troubles de la déglutition</span></label>
                     <label class="screening-item"><input type="checkbox" name="pathologies" value="troubles_mastication" class="mr-3"><span class="patho-text">Troubles de la mastication</span></label>
-                    <label class="screening-item"><input type="checkbox" name="pathologies" value="baisse_vision" class="mr-3"><span class="patho-text">Baisse de la vision entraînant des difficultés pour faire à manger</span></label>
+                    <label class="screening-item"><input type="checkbox" name="pathologies" value="baisse_vision" class="mr-3"><span class="patho-text">Baisse vision (gêne pour manger/cuisiner)</span></label>
                 </div>
                 <div class="space-y-2">
-                    <label class="screening-item"><input type="checkbox" name="pathologies" value="douleurs_articulaires" class="mr-3"><span class="patho-text">Douleurs articulaires aux mains entraînant des difficultés pour manger ou faire à manger</span></label>
+                    <label class="screening-item"><input type="checkbox" name="pathologies" value="douleurs_articulaires" class="mr-3"><span class="patho-text">Douleurs articulaires aux mains</span></label>
                     <label class="screening-item"><input type="checkbox" name="pathologies" value="malabsorption" class="mr-3"><span class="patho-text">Malabsorption / Maldigestion</span></label>
                     <label class="screening-item"><input type="checkbox" name="pathologies" value="constipation" class="mr-3"><span class="patho-text">Constipation</span></label>
                     <label class="screening-item"><input type="checkbox" name="pathologies" value="douleurs" class="mr-3"><span class="patho-text">Douleurs</span></label>
@@ -270,12 +277,12 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 print-force-col">
             <div class="screening-section !mt-0">
                 <h2 class="text-lg font-semibold mb-3 border-b pb-1 text-green-700">Vêtements</h2>
                 <div class="space-y-2">
                     <label class="screening-item"><input type="checkbox" name="vetements" value="trop_larges" class="mr-3"> Trop larges / ne tiennent plus</label>
-                    <label class="screening-item"><input type="checkbox" name="vetements" value="ceinture_resserre" class="mr-3"> Marques sur la ceinture qui montrent qu'elle a été resserrée</label>
+                    <label class="screening-item"><input type="checkbox" name="vetements" value="ceinture_resserre" class="mr-3"> Marques sur la ceinture (resserrée)</label>
                 </div>
             </div>
             <div class="screening-section !mt-0">
