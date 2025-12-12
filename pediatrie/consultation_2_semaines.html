@@ -64,6 +64,15 @@
             margin-right: 4px;
             vertical-align: middle;
         }
+        /*ZONE MAGIQUE IMPRESSION */
+    @page {
+        size: auto;
+        margin: 0mm;
+    }
+    @media print {
+        body {
+            padding: 1.5cm !important;
+        }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 p-4 md:p-8 font-sans">
