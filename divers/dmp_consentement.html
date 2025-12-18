@@ -7,11 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @media print {
-            /* Masquer les éléments inutiles à l'impression */
             .no-print { display: none !important; }
             body { background-color: white !important; padding: 0 !important; }
-            .content-box { border: none !important; box-shadow: none !important; margin: 0 !important; }
-            @page { margin: 1.5cm; }
+            .content-box { border: none !important; box-shadow: none !important; margin: 0 !important; width: 100% !important; }
+            @page { size: A4; margin: 1cm; }
         }
         input[type="text"], input[type="date"] {
             border-bottom: 1px dotted #000;
@@ -23,57 +22,57 @@
         input:focus { outline: none; border-bottom: 1px solid #2563eb; }
     </style>
 </head>
-<body class="bg-gray-100 p-4 md:p-8 font-sans text-gray-900">
+<body class="bg-gray-100 p-4 font-sans text-gray-900">
 
-    <div class="max-w-3xl mx-auto bg-white p-8 shadow-lg content-box border border-gray-200">
+    <div class="max-w-3xl mx-auto bg-white p-6 shadow-lg content-box border border-gray-200">
         
         <!-- Header -->
-        <div class="flex justify-between items-start border-b-2 border-blue-600 pb-4 mb-6">
+        <div class="flex justify-between items-start border-b-2 border-blue-600 pb-2 mb-4">
             <div>
-                <h1 class="text-2xl font-bold text-blue-800 uppercase">Consentement Éclairé</h1>
-                <p class="text-sm text-gray-600 uppercase tracking-wide">Dossier Médical Partagé (DMP) / Mon Espace Santé</p>
+                <h1 class="text-xl font-bold text-blue-800 uppercase">Consentement Éclairé</h1>
+                <p class="text-xs text-gray-600 uppercase tracking-wide">Dossier Médical Partagé (DMP) / Mon Espace Santé</p>
             </div>
-            <div class="text-right text-xs text-gray-500 italic">
+            <div class="text-right text-[10px] text-gray-500 italic">
                 Document à conserver dans le dossier patient
             </div>
         </div>
 
         <!-- Patient Info -->
-        <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
             <div class="flex flex-col">
-                <label class="text-xs font-semibold uppercase text-gray-500">Nom du patient :</label>
-                <input type="text" class="p-1 w-full" placeholder="............................................................">
+                <label class="text-[10px] font-semibold uppercase text-gray-500">Nom du patient :</label>
+                <input type="text" class="p-1 w-full text-sm" placeholder="............................................................">
             </div>
             <div class="flex flex-col">
-                <label class="text-xs font-semibold uppercase text-gray-500">Prénom :</label>
-                <input type="text" class="p-1 w-full" placeholder="............................................................">
+                <label class="text-[10px] font-semibold uppercase text-gray-500">Prénom :</label>
+                <input type="text" class="p-1 w-full text-sm" placeholder="............................................................">
             </div>
             <div class="flex flex-col">
-                <label class="text-xs font-semibold uppercase text-gray-500">Date de naissance :</label>
-                <input type="date" class="p-1 w-full">
+                <label class="text-[10px] font-semibold uppercase text-gray-500">Date de naissance :</label>
+                <input type="date" class="p-1 w-full text-sm">
             </div>
             <div class="flex flex-col">
-                <label class="text-xs font-semibold uppercase text-gray-500">N° de Sécurité Sociale (optionnel) :</label>
-                <input type="text" class="p-1 w-full" placeholder="............................................................">
+                <label class="text-[10px] font-semibold uppercase text-gray-500">N° de Sécurité Sociale (optionnel) :</label>
+                <input type="text" class="p-1 w-full text-sm" placeholder="............................................................">
             </div>
         </div>
 
         <!-- Body -->
-        <div class="space-y-4 text-sm leading-relaxed text-justify">
+        <div class="space-y-3 text-xs sm:text-sm leading-snug text-justify">
             <p>
                 Je soussigné(e), identifié(e) ci-dessus, certifie avoir reçu une <strong>information claire, loyale et appropriée</strong> de la part de mon médecin concernant le fonctionnement et l'utilité du Dossier Médical Partagé (DMP) intégré à <strong>Mon Espace Santé</strong>.
             </p>
 
-            <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
-                <p class="font-semibold mb-2">J'accepte que mon médecin :</p>
-                <ul class="list-disc ml-5 space-y-1 italic">
+            <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-400">
+                <p class="font-semibold mb-1">J'accepte que mon médecin :</p>
+                <ul class="list-disc ml-5 space-y-0.5 italic text-xs">
                     <li>Consulte mon Dossier Médical Partagé pour assurer la continuité de mes soins.</li>
                     <li>Alimente mon dossier avec les éléments pertinents (comptes-rendus, ordonnances, antécédents).</li>
                 </ul>
             </div>
 
             <p>
-                J'ai bien compris que le DMP est un carnet de santé numérique sécurisé qui permet à mes soignants d'accéder aux informations nécessaires à ma prise en charge, notamment en cas d'urgence.
+                Le DMP est un carnet de santé numérique sécurisé permettant à mes soignants d'accéder aux informations nécessaires à ma prise en charge, notamment en cas d'urgence.
             </p>
 
             <p class="font-bold text-blue-900">Informations légales et droits :</p>
@@ -81,31 +80,31 @@
                 Je suis informé(e) qu'une fois mon consentement à l'accès donné, je ne peux m'opposer — sauf <strong>motif légitime</strong> — au versement dans mon DMP des données utiles à la prévention, la coordination et la continuité de mes soins (Art. R. 1111-47 du Décret n° 2021-1047).
             </p>
             <p>
-                Je suis informé(e) que je peux à tout moment paramétrer mes accès, exercer mes droits ou <strong>fermer mon DMP</strong> en me rendant sur le site officiel : 
+                Je peux à tout moment paramétrer mes accès, exercer mes droits ou <strong>fermer mon DMP</strong> sur le site officiel : 
                 <a href="https://www.monespacesante.fr/" class="text-blue-600 underline font-medium">www.monespacesante.fr</a>.
             </p>
         </div>
 
         <!-- Signature -->
-        <div class="mt-12 flex justify-between items-end">
+        <div class="mt-6 flex justify-between items-end">
             <div class="w-1/2">
-                <p class="text-sm">Fait à <input type="text" class="w-32" placeholder="........................."></p>
-                <p class="text-sm mt-2">Le <input type="text" class="w-32" placeholder=".... / .... / 202..."></p>
+                <p class="text-xs">Fait à <input type="text" class="w-32" placeholder="........................."></p>
+                <p class="text-xs mt-2">Le <input type="text" class="w-32" placeholder=".... / .... / 202..."></p>
             </div>
-            <div class="w-1/2 border border-gray-300 h-32 p-2 flex flex-col justify-between">
-                <span class="text-xs font-bold text-gray-400 uppercase">Signature du patient (ou représentant légal) :</span>
+            <div class="w-1/2 border border-gray-300 h-24 p-2 flex flex-col justify-between">
+                <span class="text-[10px] font-bold text-gray-400 uppercase">Signature du patient :</span>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="mt-10 pt-4 border-t border-gray-200 text-[10px] text-gray-400 text-center uppercase tracking-tighter">
+        <div class="mt-4 pt-2 border-t border-gray-200 text-[9px] text-gray-400 text-center uppercase tracking-tighter">
             Conformément au RGPD et au Code de la Santé Publique - Recueil de consentement (Décret n° 2021-1047)
         </div>
 
     </div>
 
     <!-- Controls -->
-    <div class="max-w-3xl mx-auto mt-6 no-print flex justify-end space-x-4">
+    <div class="max-w-3xl mx-auto mt-4 no-print flex justify-end">
         <button onclick="window.print()" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition">
             🖨️ Imprimer le consentement
         </button>
