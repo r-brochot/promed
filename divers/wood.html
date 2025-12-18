@@ -3,396 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grille de Wood - ALD Polypathologies - CPAM (Formulaire Final)</title>
+    <title>Grille de Wood - ALD Polypathologies - CPAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* --- CONFIGURATION STANDARD IMPRESSION --- */
         @page {
             size: A4;
-            margin: 15mm; /* Marge propre et standard */
+            margin: 10mm;
         }
 
         /* --- Styles Généraux --- */
         body {
             font-family: Arial, sans-serif;
-            margin: 0; /* On laisse la marge @page gérer l'espacement externe */
-            padding: 20px; /* Padding pour l'écran uniquement */
-            background-color: #ffffff;
-            font-size: 13px;
+            background-color: #f8fafc;
+            color: #1e293b;
         }
 
-        h1 {
-            font-size: 16px;
-            text-align: left;
+        /* --- Mode Écran --- */
+        .page-container {
+            background-color: white;
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            border-radius: 8px;
         }
 
-        /* --- Zone d'Avertissement CPAM --- */
-        .cpam-warning {
-            max-width: 1000px;
-            margin: 0 auto 10px;
-            text-align: left;
-            padding: 5px 0;
-            line-height: 1.2;
-        }
-
-        /* --- Bandeau d'Identification Patient --- */
-        .patient-info {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto 30px;
-            padding: 10px;
-            border: 1px solid #000;
+        /* --- Identification Patient --- */
+        .patient-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            /* Box-sizing pour éviter que le padding n'élargisse le bloc au-delà de 100% */
-            box-sizing: border-box; 
+            gap: 15px;
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
         }
 
-        .patient-info .field {
-            display: flex;
-            align-items: center;
+        @media (max-width: 640px) {
+            .patient-grid { grid-template-columns: 1fr; }
+            .page-container { padding: 15px; margin: 10px; }
+            h1 { font-size: 1.1rem !important; }
         }
 
-        .patient-info label {
-            font-weight: bold;
-            margin-right: 5px;
-            white-space: nowrap;
-        }
-
-        .patient-info input[type="text"] {
-            flex-grow: 1;
-            padding: 3px;
-            border: none;
-            border-bottom: 1px dashed #555;
-            background: transparent;
-            font-size: 13px;
-        }
-
-        /* --- Grille Principale (Tableau) --- */
-        .table-wrapper {
-            overflow-x: auto;
+        /* --- Table Responsive & Structure --- */
+        .table-scroll-container {
             width: 100%;
-            max-width: 1000px;
-            margin: 0 auto; 
+            overflow-x: auto;
+            margin-bottom: 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
         }
 
         .grid-container {
             width: 100%;
-            min-width: 600px;
+            min-width: 850px;
             border-collapse: collapse;
+            table-layout: fixed; /* Indispensable pour forcer les largeurs colgroup */
         }
 
         .grid-container th, .grid-container td {
-            border: 1px solid #000;
-            padding: 4px;
+            border: 1px solid #94a3b8;
+            padding: 8px 4px;
             text-align: center;
-            vertical-align: middle;
-            height: 35px; 
+            font-size: 11px;
+            word-wrap: break-word;
         }
 
-        .grid-container th {
-            background-color: #ffffff;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        /* En-têtes spécifiques */
-        .domain-header-cell { width: 35%; text-align: left; font-size: 12px; font-weight: bold; }
-        .code-header-cell, .code-cell { width: 5%; font-size: 12px; font-weight: bold; }
-        .degree-header-group { font-size: 12px; }
-        .domain-cell { text-align: left !important; padding-left: 8px !important; font-weight: normal; }
-        .rating-cell { width: 10%; }
-        input[type="checkbox"] { transform: scale(1.2); }
+        .grid-container th { background-color: #f1f5f9; }
 
-        /* --- Zone d'Observations --- */
-        .observations-section {
-            width: 100%;
-            max-width: 1000px;
-            margin: 20px auto;
-            border: 1px solid #000;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        .observations-section h3 {
-            margin-top: 0;
-            font-size: 14px;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-
-        .observations-section textarea {
-            width: 100%;
-            min-height: 150px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            box-sizing: border-box;
-            resize: vertical;
-            font-family: inherit;
-            font-size: 13px;
-        }
-
-        /* --- Footer (Signature/Date) --- */
-        .footer-info {
-            max-width: 1000px;
-            margin: 20px auto 20px; /* Marge bas ajoutée pour séparer du bouton */
-            text-align: right;
-            font-weight: bold;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            font-size: 12px;
-        }
-        
-        .signature-line {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-
-        .signature-line label {
-            font-size: 14px;
-            font-weight: bold;
-            margin-right: 5px;
-        }
-        
-        .signature-line input[type="text"] {
-            width: 300px;
-            padding: 3px;
-            border: none;
-            border-bottom: 1px dashed #555;
-            background: transparent;
-            font-size: 14px;
-            margin-right: 10px;
-        }
-
-        .signature-line button {
-            padding: 5px 10px;
-            background-color: #f0f0f0;
-            color: #333;
-            border: 1px solid #ccc;
-            border-radius: 3px;
+        input[type="checkbox"] {
+            transform: scale(1.2);
             cursor: pointer;
-            font-size: 12px;
-        }
-
-        /* --- Contrôles (Bouton d'impression principal) --- */
-        .controls {
-            text-align: center;
-            margin-bottom: 40px; /* Marge pour l'espace en bas de page écran */
-            margin-top: 20px;
-        }
-        
-        .controls button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        /* --- Bouton Retour Accueil --- */
-        .home-button {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            background-color: #0ea5e9;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            font-size: 14px;
-        }
-        .home-button:hover {
-            background-color: #0284c7;
-        }
-        @media (max-width: 600px) {
-            .home-button { padding: 5px 10px; font-size: 12px; }
-            .grid-container th, .grid-container td { padding: 3px 2px; font-size: 11px; }
         }
 
         /* --- STYLES SPÉCIFIQUES MÉDIA PRINT --- */
         @media print {
-            body {
-                padding: 0; /* On annule le padding écran */
-                margin: 0;
+            .no-print { display: none !important; }
+            body { background-color: white; padding: 0; margin: 0; }
+            .page-container { 
+                box-shadow: none; 
+                margin: 0; 
+                padding: 0; 
+                max-width: 100%;
+                border: none;
             }
-            
-            /* On masque : 
-               - le bouton Accueil
-               - le bouton d'impression (bleu)
-               - ET le bouton de date (dans la signature)
-            */
-            .home-button, 
-            .controls, 
-            .signature-line button {
-                display: none !important;
-            }
+            .table-scroll-container { border: none; overflow: visible; }
+            .grid-container { min-width: 100%; border: 1px solid black; }
+            .grid-container th, .grid-container td { border: 1px solid black; color: black; }
+            .patient-grid { border: 1px solid black; }
+            textarea { border: 1px solid black !important; }
+        }
 
-            /* Assurer que les éléments larges s'adaptent à la largeur papier */
-            .cpam-warning, .patient-info, .table-wrapper, .observations-section, .footer-info {
-                max-width: 100% !important;
-                width: 100% !important;
-            }
+        .line-input {
+            border-bottom: 1px dashed #94a3b8;
+            width: 100%;
+            outline: none;
+            padding: 2px 5px;
+        }
+        .line-input::placeholder {
+            color: #cbd5e1;
+            font-style: italic;
         }
     </style>
 </head>
-<body>
-    <a href="../index.html" class="home-button">
-        🏠 Accueil
-    </a>
-    
-    <div class="cpam-warning">
-        <h1>GRILLE DE WOOD</h1>
-        A remplir par le médecin traitant en complément du protocole d'examen spécial dans le cadre d'une demande d'exonération du ticket modérateur pour "association d'affections caractérisées à l'origine de l'état pathologique invalidant - ALD (pathologies multiples)"
+<body class="p-2 sm:p-4 text-left">
+
+    <!-- Bouton Retour -->
+    <div class="max-w-4xl mx-auto mb-4 no-print text-left">
+        <a href="../index.html" class="inline-flex items-center gap-2 text-slate-500 hover:text-ameli transition font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Retour au tableau de bord
+        </a>
     </div>
 
-    <div class="patient-info">
-        <div class="field"><label>Nom patronyme:</label> <input type="text" placeholder="À remplir"></div>
-        <div class="field"><label>Nom marital:</label> <input type="text" placeholder="À remplir"></div>
-        <div class="field"><label>Prénom:</label> <input type="text" placeholder="À remplir"></div>
-        <div class="field"><label>Numéro d'immatriculation:</label> <input type="text" placeholder="À remplir"></div>
-    </div>
-    
-    <div class="table-wrapper">
-        <table class="grid-container">
-            <thead>
-                <tr>
-                    <th colspan="7" class="degree-header-group">Degrés d'incapacité</th>
-                </tr>
-                <tr>
-                    <th class="domain-header-cell" rowspan="2">Domaines d'incapacité<br>Incapacité concernant:</th>
-                    
-                    <th class="code-header-cell" rowspan="2">Codes</th>
-                    
-                    <th class="rating-cell">Nul</th>
-                    <th class="rating-cell">léger</th>
-                    <th class="rating-cell">moyen</th>
-                    <th class="rating-cell">important</th>
-                    <th class="rating-cell">très important</th>
-                </tr>
-                <tr>
-                    <th class="rating-cell">0</th>
-                    <th class="rating-cell">1</th>
-                    <th class="rating-cell">2</th>
-                    <th class="rating-cell">3</th>
-                    <th class="rating-cell">4</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="domain-cell">Comportement</td>
-                    <td class="code-cell">1</td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine1_cotation"></td>
-                </tr>
-                <tr>
-                    <td class="domain-cell">Communication</td>
-                    <td class="code-cell">2</td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine2_cotation"></td>
-                </tr>
-                <tr>
-                    <td class="domain-cell">Locomotion</td>
-                    <td class="code-cell">3</td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine3_cotation"></td>
-                </tr>
-                <tr>
-                    <td class="domain-cell">Manipulations</td>
-                    <td class="code-cell">4</td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine4_cotation"></td>
-                </tr>
-                <tr>
-                    <td class="domain-cell">Soins corporels</td>
-                    <td class="code-cell">5</td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine5_cotation"></td>
-                </tr>
-                <tr>
-                    <td class="domain-cell">Utilisation du corps dans certaines tâches</td>
-                    <td class="code-cell">6</td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine6_cotation"></td>
-                </tr>
-                <tr>
-                    <td class="domain-cell">L'incapacité revelée par certaines situations</td>
-                    <td class="code-cell">7</td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
-                    <td class="rating-cell"><input type="checkbox" name="domaine7_cotation"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <div class="page-container">
+        
+        <!-- Header Document -->
+        <div class="border-b-2 border-ameli pb-4 mb-6">
+            <div class="flex items-center gap-4 mb-2">
+                <!-- Logo Ameli en haut à gauche -->
+                <div class="h-10 w-auto flex-shrink-0 no-print">
+                    <img src="../images/logo-ameli.png" alt="Logo Ameli" class="h-full object-contain" onerror="this.style.display='none'">
+                </div>
+                <h1 class="text-xl font-bold text-ameli uppercase">GRILLE DE WOOD</h1>
+            </div>
+            <p class="text-[11px] text-slate-600 leading-tight text-justify">
+                A remplir par le médecin traitant en complément du protocole d'examen spécial dans le cadre d'une demande d'exonération du ticket modérateur pour "association d'affections caractérisées à l'origine de l'état pathologique invalidant - ALD (pathologies multiples)"
+            </p>
+        </div>
 
-    <div class="observations-section">
-        <h3>Observations / Commentaires Libres:</h3>
-        <textarea placeholder="Utilisez cet espace pour toute observation complémentaire pertinente non couverte par la grille d'évaluation."></textarea>
-    </div>
-    
-    <div class="footer-info">
-        <div class="signature-line">
-            <label for="signature_date">Date & signature:</label>
-            <input type="text" id="signature_date" placeholder="Lieu, JJ/MM/AAAA et Signature">
-            <button type="button" onclick="fillDate()">Mettre la date du jour</button>
+        <!-- Identification Patient -->
+        <div class="patient-grid">
+            <div class="flex flex-col">
+                <label class="text-[10px] font-bold uppercase text-slate-400">Nom patronyme</label>
+                <input type="text" class="line-input text-sm" placeholder="À remplir">
+            </div>
+            <div class="flex flex-col">
+                <label class="text-[10px] font-bold uppercase text-slate-400">Nom marital</label>
+                <input type="text" class="line-input text-sm" placeholder="À remplir">
+            </div>
+            <div class="flex flex-col">
+                <label class="text-[10px] font-bold uppercase text-slate-400">Prénom</label>
+                <input type="text" class="line-input text-sm" placeholder="À remplir">
+            </div>
+            <div class="flex flex-col">
+                <label class="text-[10px] font-bold uppercase text-slate-400">N° d'immatriculation</label>
+                <input type="text" class="line-input text-sm" placeholder="À remplir">
+            </div>
+        </div>
+
+        <!-- Grille -->
+        <div class="table-scroll-container">
+            <table class="grid-container">
+                <colgroup>
+                    <col style="width: 30%;">
+                    <col style="width: 5%;">
+                    <col style="width: 13%;">
+                    <col style="width: 13%;">
+                    <col style="width: 13%;">
+                    <col style="width: 13%;">
+                    <col style="width: 13%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th colspan="2" class="border-none bg-white"></th>
+                        <th colspan="5" class="py-1 text-[9px] uppercase tracking-wider font-bold">Degrés d'incapacité</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2" class="text-left pl-3">
+                            <span class="block">Domaines d'incapacité</span>
+                            <span class="text-[10px] font-normal italic leading-tight block mt-0.5">Incapacité concernant :</span>
+                        </th>
+                        <th rowspan="2" class="text-[8px]">Codes</th>
+                        <th class="text-[9px] uppercase font-bold leading-tight py-1">Nul</th>
+                        <th class="text-[9px] uppercase font-bold leading-tight py-1">léger</th>
+                        <th class="text-[9px] uppercase font-bold leading-tight py-1">moyen</th>
+                        <th class="text-[9px] uppercase font-bold leading-tight py-1">important</th>
+                        <th class="text-[9px] uppercase font-bold leading-tight py-1 whitespace-nowrap">très important</th>
+                    </tr>
+                    <tr class="bg-slate-50">
+                        <th class="text-[10px]">0</th>
+                        <th class="text-[10px]">1</th>
+                        <th class="text-[10px]">2</th>
+                        <th class="text-[10px]">3</th>
+                        <th class="text-[10px]">4</th>
+                    </tr>
+                </thead>
+                <tbody id="gridBody">
+                    <!-- Généré par JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <p class="text-[10px] text-slate-400 mb-4 italic sm:hidden no-print text-left">
+            💡 Glissez le tableau vers la droite pour voir toutes les colonnes.
+        </p>
+
+        <!-- Observations -->
+        <div class="mb-6">
+            <label class="block text-sm font-bold text-slate-700 mb-2 border-l-4 border-ameli pl-2">Observations / Commentaires Libres :</label>
+            <textarea class="w-full h-32 p-3 border border-slate-300 rounded focus:ring-2 focus:ring-ameli outline-none text-sm leading-relaxed" placeholder="Utilisez cet espace pour toute observation complémentaire pertinente non couverte par la grille d'évaluation."></textarea>
+        </div>
+
+        <!-- Signature -->
+        <div class="flex flex-col sm:flex-row justify-between items-end gap-6 mt-10">
+            <div class="w-full sm:w-1/2 space-y-4">
+                <div class="flex flex-col">
+                    <label class="text-[10px] font-bold text-slate-400 uppercase">Date & signature :</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="signature_date" class="line-input text-sm" placeholder="Lieu, le JJ/MM/AAAA">
+                        <button onclick="fillDate()" class="no-print bg-slate-100 hover:bg-slate-200 text-slate-600 p-1 rounded text-[10px] transition px-2">Aujourd'hui</button>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full sm:w-64 h-28 border border-slate-400 rounded p-2 relative">
+                <span class="text-[10px] font-bold text-slate-300 uppercase italic">Signature et cachet</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 pt-4 border-t border-slate-100 flex flex-col sm:flex-row justify-between gap-2">
+            <p class="text-[9px] text-slate-400 uppercase">Grille de Wood - Liaison ALD Polypathologies</p>
+            <p class="text-[9px] text-slate-300 italic text-right">© 2025 – Dr Rémi Brochot. Reproduction ou diffusion interdite sans autorisation.</p>
         </div>
     </div>
 
-    <div class="controls">
-        <button onclick="window.print()">Exporter en PDF / Imprimer la grille remplie</button>
+    <!-- Actions -->
+    <div class="max-w-4xl mx-auto mt-6 no-print flex justify-center pb-10">
+        <button onclick="window.print()" class="bg-ameli text-white px-8 py-3 rounded-full shadow-lg hover:bg-blue-800 transition transform hover:scale-105 flex items-center gap-2 font-bold text-sm">
+            <span>🖨️ Exporter en PDF / Imprimer la grille remplie</span>
+        </button>
     </div>
 
     <script>
-        // SCRIPT: Assure qu'une seule case est cochée par ligne (Domaine d'incapacité)
-        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                // Le nom du groupe est défini par le 'name' de la checkbox (ex: domaine1_cotation)
-                document.querySelectorAll('input[name="' + this.name + '"]').forEach(otherCheckbox => {
-                    if (otherCheckbox !== this) {
-                        otherCheckbox.checked = false;
-                    }
-                });
-            });
+        const domaines = [
+            { label: "Comportement", code: 1 },
+            { label: "Communication", code: 2 },
+            { label: "Locomotion", code: 3 },
+            { label: "Manipulations", code: 4 },
+            { label: "Soins corporels", code: 5 },
+            { label: "Utilisation du corps dans certaines tâches", code: 6 },
+            { label: "L'incapacité revelée par certaines situations", code: 7 }
+        ];
+
+        const gridBody = document.getElementById('gridBody');
+        
+        domaines.forEach(dom => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="text-left pl-4 font-medium text-slate-700">${dom.label}</td>
+                <td class="font-bold text-slate-400">${dom.code}</td>
+                ${[0,1,2,3,4].map(val => `
+                    <td>
+                        <input type="checkbox" name="dom_${dom.code}" 
+                               class="accent-ameli"
+                               onclick="onlyOne(this)">
+                    </td>
+                `).join('')}
+            `;
+            gridBody.appendChild(row);
         });
 
-        // SCRIPT: Ajout de la date du jour (sans la mention "Lieu")
+        function onlyOne(checkbox) {
+            const checkboxes = document.getElementsByName(checkbox.name);
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false;
+            });
+        }
+
         function fillDate() {
             const today = new Date();
-            const dd = String(today.getDate()).padStart(2, '0');
-            const mm = String(today.getMonth() + 1).padStart(2, '0'); 
-            const yyyy = today.getFullYear();
-
-            const formattedDate = `${dd}/${mm}/${yyyy}`;
-            document.getElementById('signature_date').value = formattedDate; // Seulement la date
+            const formatted = today.toLocaleDateString('fr-FR');
+            document.getElementById('signature_date').value = formatted;
         }
     </script>
-
 </body>
 </html>
