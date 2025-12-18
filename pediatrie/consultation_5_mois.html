@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilan 5 Mois - Dr R. BROCHOT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medical: '#2c3e50',
+                        alert: '#e74c3c',
+                        warning: '#fff3cd',
+                        success: '#d4edda'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            body { background: white; padding: 0; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            .shadow-lg { box-shadow: none !important; }
+            .bg-white { background: transparent !important; }
+            input, select, textarea { 
+                border: none !important; 
+                border-bottom: 1px dotted #000 !important; 
+                padding: 0 !important;
+                background: transparent !important;
+            }
+            section, .bg-white.border.rounded-lg, .bg-slate-50.p-4.rounded, .dev-container {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .hidden { display: none !important; }
+        }
+        
+        .input-std {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            transition: border-color 0.15s ease-in-out;
+        }
+        .input-std:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Styles par défaut (Vert) */
+        .dev-header-bg { background-color: #16a34a; transition: background-color 0.3s; }
+        .dev-block-1 { background: linear-gradient(to right, #f0fdf4, #dcfce7); transition: background 0.3s; }
+        .dev-block-2 { background: linear-gradient(to right, #dcfce7, #bbf7d0); transition: background 0.3s; }
+        .dev-block-3 { background: linear-gradient(to right, #bbf7d0, #86efac); transition: background 0.3s; }
+        .dev-block-4 { background: linear-gradient(to right, #86efac, #4ade80); transition: background 0.3s; }
+
+        /* Mode Alerte (Rouge) */
+        .pco-alert .dev-header-bg { background-color: #dc2626 !important; }
+        .pco-alert .dev-block-1 { background: linear-gradient(to right, #fef2f2, #fee2e2) !important; }
+        .pco-alert .dev-block-2 { background: linear-gradient(to right, #fee2e2, #fecaca) !important; }
+        .pco-alert .dev-block-3 { background: linear-gradient(to right, #fecaca, #fca5a5) !important; }
+        .pco-alert .dev-block-4 { background: linear-gradient(to right, #fca5a5, #f87171) !important; }
+
+        .tympan-anormal { background-color: #fee2e2; border-color: #ef4444; }
+        .tympan-nonvu { background-color: #fff7ed; border-color: #f97316; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 p-4 md:p-8 font-sans">
+
+    <a href="index.html" class="no-print fixed top-4 left-4 bg-medical text-white p-2 rounded-lg shadow-lg hover:bg-slate-700 transition-all z-50 flex items-center gap-2 text-sm font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        <span>Pédiatrie</span>
+    </a>
+
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden print:max-w-none print:shadow-none">
+        
+        <header class="bg-medical text-white p-6 print:bg-white print:text-black print:border-b-2 print:border-black">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold uppercase tracking-wider">Examen des 5 Mois</h1>
+                    <p class="text-sm opacity-80 print:hidden">Bilan systématique</p>
+                </div>
+                <div class="text-right text-sm font-semibold italic">
+                    <p>Carnet de Santé 2025</p>
+                    <p class="print:block hidden uppercase text-xs">Dr. R. BROCHOT</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-6 space-y-6">
+
+            <!-- IDENTITÉ & CONSTANTES -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-3 p-4 bg-slate-50 rounded border border-slate-200 print:border-none print:p-0">
+                    <h2 class="font-bold text-medical border-b pb-1 mb-2 text-sm uppercase tracking-wider">Identité</h2>
+                    <div class="grid grid-cols-1 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-tight">Nom Prénom</label>
+                            <input type="text" class="input-std font-bold uppercase" placeholder="NOM Prénom de l'enfant">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-tight">Né(e) le</label>
+                                <input type="date" id="dateNaissance" class="input-std" onchange="calculerAge()">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-tight">Sexe</label>
+                                <select class="input-std font-semibold">
+                                    <option value="M">Garçon</option>
+                                    <option value="F">Fille</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 p-4 bg-blue-50 rounded border border-blue-100 print:bg-transparent print:border-none print:p-0">
+                    <h2 class="font-bold text-medical border-b pb-1 mb-2 text-sm uppercase tracking-wider text-blue-800">Constantes</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-tight font-bold">Date Examen</label>
+                            <input type="date" id="dateExamen" class="input-std" onchange="calculerAge()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-tight font-bold">Âge Calculé</label>
+                            <input type="text" id="ageCalcul" class="input-std bg-gray-100 font-bold text-blue-600 text-xs" readonly>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 font-bold">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-tight">Poids (kg)</label>
+                            <input type="number" id="poids" step="0.01" class="input-std text-xs font-bold" oninput="calculerIMC()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-tight">Taille (cm)</label>
+                            <input type="number" id="taille" step="0.1" class="input-std text-xs font-bold" oninput="calculerIMC()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-tight">PC (cm)</label>
+                            <input type="number" id="pc" step="0.1" class="input-std text-xs font-bold">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-500 uppercase tracking-tight font-bold">IMC (Calculé)</label>
+                        <input type="text" id="imc" class="input-std bg-gray-100 font-bold text-xs" readonly>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIFFICULTÉS & ALIMENTATION -->
+            <section class="space-y-4">
+                <div class="bg-orange-50 p-4 rounded border border-orange-200 print:bg-transparent print:border-none print:p-0">
+                    <div class="flex flex-col md:flex-row md:items-center gap-4 text-sm font-bold">
+                        <h3 class="font-bold text-medical whitespace-nowrap uppercase text-xs tracking-tight">Difficultés rapportées</h3>
+                        <div class="flex gap-4 items-center uppercase text-xs">
+                            <label class="flex items-center gap-2 cursor-pointer font-bold"><input type="radio" name="difficulte" value="non" checked onchange="toggleField('detailsDifficulte', false)"> Non</label>
+                            <label class="flex items-center gap-2 cursor-pointer font-bold text-alert"><input type="radio" name="difficulte" value="oui" onchange="toggleField('detailsDifficulte', true)"> Oui</label>
+                        </div>
+                        <input type="text" id="detailsDifficulte" class="input-std flex-1 hidden border-orange-300 h-8 font-normal" placeholder="Préciser (sommeil, pleurs, digestion...)">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm font-bold uppercase text-xs tracking-wider">
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-bold text-medical mb-2 border-b">Alimentation</h3>
+                            <div class="flex flex-wrap gap-4 py-1">
+                                <label class="flex items-center gap-2 cursor-pointer font-bold uppercase"><input type="radio" name="alim" value="maternel"> Mat. Exclusif</label>
+                                <label class="flex items-center gap-2 cursor-pointer font-bold uppercase"><input type="radio" name="alim" value="mixte"> Mixte</label>
+                                <label class="flex items-center gap-2 cursor-pointer font-bold uppercase"><input type="radio" name="alim" value="artificiel"> Artificiel</label>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 p-2 rounded border border-blue-100">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                <span class="text-blue-800 tracking-tight text-[11px] font-black uppercase">Début de la diversification alimentaire ?</span>
+                                <div class="flex gap-3">
+                                    <label class="flex items-center gap-1 cursor-pointer font-bold text-green-700 uppercase"><input type="radio" name="diversif" value="oui" checked onchange="toggleField('detailsDiv', false)"> Oui</label>
+                                    <label class="flex items-center gap-1 cursor-pointer font-bold text-red-700 uppercase"><input type="radio" name="diversif" value="non" onchange="toggleField('detailsDiv', true)"> Non</label>
+                                </div>
+                            </div>
+                            <div id="detailsDiv" class="hidden mt-2 pt-2 border-t border-blue-200 w-full">
+                                <input type="text" class="input-std text-sm bg-white h-8 font-normal" placeholder="Préciser la raison du retard (allergie, choix parental...)">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-medical mb-2 border-b uppercase">Mode d'accueil</h3>
+                        <select class="input-std font-bold">
+                            <option value="">Sélectionner...</option>
+                            <option value="parents">Domicile (Parents)</option>
+                            <option value="assmat">Assistante Maternelle</option>
+                            <option value="creche">Crèche / Collectif</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-gray-200">
+
+            <!-- EXAMEN CLINIQUE -->
+            <section>
+                <h3 class="font-bold text-lg text-medical mb-4 border-l-4 border-blue-500 pl-2 uppercase text-sm tracking-wider">Examen Clinique</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-2 mb-4 font-bold">
+                    <div class="space-y-2" id="grid-somatic-left"></div>
+                    <div class="space-y-2" id="grid-somatic-right"></div>
+                </div>
+                <div class="bg-slate-50 p-4 rounded border border-slate-200 mt-4">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-bold text-gray-700 uppercase">
+                        <span>Examen des hanches (Instabilité / Limitation abduction)</span>
+                        <div class="flex gap-6 font-bold uppercase">
+                            <label class="flex items-center gap-2 cursor-pointer text-green-700"><input type="radio" name="hanches_global" value="normal" checked onchange="toggleHanches(false)"> Normal</label>
+                            <label class="flex items-center gap-2 cursor-pointer text-alert"><input type="radio" name="hanches_global" value="anormal" onchange="toggleHanches(true)"> Anomalie / Doute</label>
+                        </div>
+                    </div>
+                    <div id="detailsHanches" class="hidden mt-4 pt-4 border-t border-slate-300 space-y-4 text-xs font-bold uppercase tracking-tight">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex flex-col md:flex-row items-center gap-4 text-gray-500">
+                                <label class="flex items-center gap-2 font-bold"><input type="checkbox" class="w-4 h-4 text-alert"> Hanche droite anormale</label>
+                                <label class="flex items-center gap-2 font-bold"><input type="checkbox" class="w-4 h-4 text-alert"> Hanche gauche anormale</label>
+                            </div>
+                            <div class="flex items-center justify-center md:justify-start gap-4">
+                                <span class="text-medical font-black uppercase">Orientation :</span>
+                                <label class="flex items-center gap-1 font-bold"><input type="checkbox"> Échographie</label>
+                                <label class="flex items-center gap-1 font-bold"><input type="checkbox"> Avis spécialisé</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISION & AUDITION -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm font-bold">
+                <div class="border p-4 rounded print:border-black shadow-sm">
+                    <h3 class="font-bold text-medical mb-3 border-b pb-1 uppercase text-xs tracking-wider">Vision</h3>
+                    <div class="space-y-2" id="grid-vision"></div>
+                </div>
+                <div class="border p-4 rounded print:border-black flex flex-col shadow-sm">
+                    <h3 class="font-bold text-medical mb-2 border-b pb-1 uppercase text-xs tracking-wider">Audition & Tympans</h3>
+                    <div class="space-y-2" id="grid-audition"></div>
+                    
+                    <div class="mt-auto pt-4 border-t border-gray-100 space-y-3 font-bold uppercase text-[9px]">
+                        <div class="tympan-row flex flex-col p-2 rounded border border-transparent transition-colors">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-700">Tympan Droit :</span>
+                                <div class="flex gap-2">
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="tympanD" value="ok" checked onchange="updateTympanStyle(this)"> Normal</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-red-600"><input type="radio" name="tympanD" value="no" onchange="updateTympanStyle(this)"> Anormal</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-orange-600"><input type="radio" name="tympanD" value="nv" onchange="updateTympanStyle(this)"> Non vu</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tympan-row flex flex-col p-2 rounded border border-transparent transition-colors">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-700">Tympan Gauche :</span>
+                                <div class="flex gap-2">
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="tympanG" value="ok" checked onchange="updateTympanStyle(this)"> Normal</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-red-600"><input type="radio" name="tympanG" value="no" onchange="updateTympanStyle(this)"> Anormal</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-orange-600"><input type="radio" name="tympanG" value="nv" onchange="updateTympanStyle(this)"> Non vu</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DÉVELOPPEMENT PSYCHOMOTEUR -->
+            <div id="dev-section-container" class="dev-container">
+                <section class="bg-white border rounded-lg overflow-hidden print:border-black shadow-sm">
+                    <h3 class="dev-header-bg text-white p-3 font-bold uppercase text-sm tracking-widest text-center">Développement Psychomoteur</h3>
+                    <div class="p-0 font-bold uppercase text-[11px]">
+                        <div class="dev-block-1 p-3 border-b border-green-200"><div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2" id="dev-group-1"></div></div>
+                        <div class="dev-block-2 p-3 border-b border-green-200"><div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2" id="dev-group-2"></div></div>
+                        <div class="dev-block-3 p-3 border-b border-green-200"><div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2" id="dev-group-3"></div></div>
+                        <div class="dev-block-4 p-3"><div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2" id="dev-group-4"></div></div>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 flex flex-col md:flex-row gap-6 items-center border-t">
+                        <div class="flex-1 text-sm text-slate-600 italic leading-relaxed">
+                            <p class="font-bold text-red-700 not-italic mb-2 text-xs uppercase tracking-tight">Recommandations de repérage :</p>
+                            <p>Si vous avez coché au moins <span class="font-bold underline text-red-700 uppercase">2 cases "non" dans 2 champs de couleur différente</span>, orienter vers une <strong>PCO</strong>.</p>
+                            <p class="mt-2 text-xs">S’il existe par ailleurs un facteur de risque de TND et/ou une régression des compétences, <button type="button" onclick="openModal('modal-tnd')" class="text-blue-600 font-bold underline hover:text-blue-800 uppercase tracking-tighter">cliquez ici (p.113)</button></p>
+                        </div>
+                        <div class="no-print flex flex-col gap-2 min-w-[200px]">
+                            <a href="https://handicap.gouv.fr/IMG/pdf/brochure_reperage_tnd_2020.janv.pdf" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-3 rounded-lg text-[10px] font-black uppercase shadow-sm">
+                                Cliquer ici pour orienter (PCO)
+                            </a>
+                            <a href="https://maisondelautisme.gouv.fr/fiches-pratiques-autisme/" target="_blank" rel="noopener noreferrer" class="bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 text-center py-2 px-3 rounded-lg text-[10px] font-black uppercase shadow-sm">
+                                Maison de l'autisme & TND
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- PRÉVENTION & ENVIRONNEMENT -->
+            <section>
+                <h3 class="font-bold text-lg text-medical mb-4 border-l-4 border-orange-500 pl-2 uppercase text-sm tracking-wider">Prévention & Environnement</h3>
+                <div id="grid-prev" class="space-y-1 font-bold uppercase text-[11px]"></div>
+                <div class="mt-4 p-3 bg-white border border-gray-200 rounded text-sm font-bold uppercase text-[11px]">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                        <span class="text-gray-700 tracking-tight font-black">Exposition aux écrans sans interaction adulte ?</span>
+                        <div class="flex gap-4 font-bold uppercase">
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="ecrans" value="jamais" checked> Jamais</label>
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="ecrans" value="peu"> &lt;1x/sem</label>
+                            <label class="flex items-center gap-1 cursor-pointer text-red-600 font-black"><input type="radio" name="ecrans" value="bcp"> &ge;1x/sem</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VACCINATIONS -->
+            <section class="bg-blue-50 p-4 rounded border-l-4 border-blue-600 print:bg-transparent print:border-black print:border text-sm">
+                <h3 class="font-bold text-medical mb-2 uppercase text-xs tracking-wider font-black">Vaccinations (Calendrier 2025)</h3>
+                <div class="space-y-3 font-bold uppercase">
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" id="vaccinMenB" class="mt-1 w-5 h-5 text-blue-600 rounded">
+                        <div class="flex-1 font-bold text-[11px]">
+                            <label for="vaccinMenB" class="cursor-pointer tracking-tight">Méningocoque B - 2ème dose</label>
+                            <p class="text-[10px] text-gray-600 font-semibold tracking-tighter">Obligatoire (M3, M5, M12)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3 opacity-75 italic text-gray-500">
+                        <input type="checkbox" id="vaccinAutre" class="mt-1 w-5 h-5 text-gray-400 rounded">
+                        <div class="flex-1">
+                            <label for="vaccinAutre" class="font-bold cursor-pointer text-[11px] uppercase tracking-tighter">Autre vaccin / Rattrapage</label>
+                            <input type="text" class="input-std mt-1 text-xs bg-white h-7 font-normal" placeholder="Préciser (ex: BCG, Rotavirus...)">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONCLUSION & ORIENTATION -->
+            <section>
+                <h3 class="font-bold text-medical mb-2 text-sm uppercase tracking-wider">Synthèse & Orientation</h3>
+                <div class="space-y-3 mb-4">
+                    <div class="bg-slate-50 p-3 rounded border border-slate-200">
+                        <div class="flex items-center justify-between text-sm uppercase font-bold text-gray-700 tracking-tight">
+                            <span>Vaccinations à jour</span>
+                            <div class="flex gap-4">
+                                <label class="cursor-pointer font-bold"><input type="radio" name="vac_ajour" value="oui" checked onchange="toggleField('detailsVac', false)"> Oui</label>
+                                <label class="cursor-pointer font-bold"><input type="radio" name="vac_ajour" value="non" onchange="toggleField('detailsVac', true)"> Non</label>
+                            </div>
+                        </div>
+                        <div id="detailsVac" class="hidden mt-2 pt-2 border-t border-slate-200 flex items-center gap-2">
+                            <label class="text-xs font-semibold text-gray-500 uppercase italic">Date de rappel à réaliser :</label>
+                            <input type="text" class="input-std text-xs h-7 w-32 font-bold" placeholder="../../20..">
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm bg-slate-50 p-2 rounded border border-slate-200 text-gray-700 font-bold uppercase tracking-tighter">
+                        <input type="checkbox" id="drepano" class="w-4 h-4 text-medical">
+                        <label for="drepano" class="cursor-pointer">Porteur d'un trait drépanocytaire hétérozygote</label>
+                    </div>
+                </div>
+
+                <textarea class="w-full border border-gray-300 rounded p-2 text-sm h-24 print:border-none print:h-auto mb-4 font-medium" placeholder="Observation clinique..."></textarea>
+                
+                <div class="space-y-3 bg-gray-50 p-4 rounded border border-gray-200 print:bg-transparent print:border-none">
+                    <div class="flex flex-col md:flex-row md:items-center gap-3 text-sm font-bold uppercase tracking-tight">
+                        <span class="text-gray-700 w-64 text-xs uppercase tracking-tighter">Avis spécialisé demandé</span>
+                        <div class="flex items-center gap-4">
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="avis_spe" value="non" checked onchange="toggleField('precis_avis', false)"> Non</label>
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="avis_spe" value="oui" onchange="toggleField('precis_avis', true)"> Oui</label>
+                        </div>
+                        <input type="text" id="precis_avis" class="input-std flex-1 hidden h-8 text-xs font-normal" placeholder="Préciser (Spécialité, motif...)">
+                    </div>
+
+                    <div class="border-t border-gray-200 my-2 pt-2">
+                        <p class="text-xs font-bold text-gray-500 uppercase mb-3 tracking-widest font-black text-center md:text-left">Orientation vers :</p>
+                        <div class="space-y-2">
+                            <div class="flex flex-col md:flex-row md:items-center gap-3 font-semibold text-xs text-gray-700 italic tracking-tighter uppercase">
+                                <span class="w-64 pl-4">- Autre pro. de santé</span>
+                                <div class="flex items-center gap-4">
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="orient_pro" value="non" checked onchange="toggleField('precis_pro', false)"> Non</label>
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="orient_pro" value="oui" onchange="toggleField('precis_pro', true)"> Oui</label>
+                                </div>
+                                <input type="text" id="precis_pro" class="input-std flex-1 hidden h-7 font-normal" placeholder="Préciser (Ostéo, Kiné...)">
+                            </div>
+                            <div class="flex flex-col md:flex-row md:items-center gap-3 font-semibold text-xs text-gray-700 italic tracking-tighter uppercase">
+                                <span class="w-64 pl-4">- Structure pluridisciplinaire</span>
+                                <div class="flex items-center gap-4">
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="orient_struct" value="non" checked onchange="toggleField('precis_struct', false)"> Non</label>
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="orient_struct" value="oui" onchange="toggleField('precis_struct', true)"> Oui</label>
+                                </div>
+                                <input type="text" id="precis_struct" class="input-std flex-1 hidden h-7 font-normal" placeholder="Préciser (CAMSP, Réseau...)">
+                            </div>
+                            <div class="flex flex-col md:flex-row md:items-center gap-3 font-semibold text-xs text-gray-700 italic tracking-tighter uppercase font-black">
+                                <span class="w-64 pl-4">- PCO</span>
+                                <div class="flex items-center gap-4 font-bold">
+                                    <label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="orient_pco" value="non" checked onchange="toggleField('precis_pco', false)"> Non</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-alert"><input type="radio" name="orient_pco" value="oui" onchange="toggleField('precis_pco', true)"> Oui</label>
+                                </div>
+                                <input type="text" id="precis_pco" class="input-std flex-1 hidden h-7 font-normal" placeholder="Détails PCO (Formulaire envoyé...)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="hidden print:flex justify-between items-end mt-12 pt-8 border-t border-gray-300 text-sm font-semibold italic uppercase">
+                <div><p>Prochain RDV : <strong>8-9 mois (Examen obligatoire)</strong></p><p>Date : <span id="printDate"></span></p></div>
+                <div class="text-center"><p class="mb-8 font-black uppercase tracking-widest">Signature et Cachet</p><div class="w-48 h-20 border border-gray-200 mx-auto"></div></div>
+            </footer>
+
+            <div class="mt-12 pt-4 border-t border-gray-200 text-center text-[10px] text-gray-400 italic">
+                <p>Outil pédagogique local – à adapter à votre pratique. Ne remplace pas la décision clinique.</p>
+                <p>© 2025 – Dr Rémi Brochot. Reproduction ou diffusion interdite sans autorisation.</p>
+            </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 border-t border-gray-200 flex justify-center gap-4 no-print uppercase text-xs font-bold tracking-widest">
+            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded shadow transition font-black">🖨️ Imprimer / PDF</button>
+            <button onclick="resetForm()" class="bg-white hover:bg-gray-100 text-gray-700 py-2 px-6 rounded border border-gray-300 transition">Réinitialiser</button>
+        </div>
+    </div>
+
+    <!-- MODALE TND (PAGE 113) -->
+    <div id="modal-tnd" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4 no-print" onclick="closeModal('modal-tnd')">
+        <div class="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <div class="bg-medical text-white p-4 flex justify-between items-center sticky top-0 z-10 shadow-md">
+                <h3 class="font-bold uppercase tracking-wide text-sm">Troubles sensoriels et neurodéveloppement (p.113)</h3>
+                <button onclick="closeModal('modal-tnd')" class="hover:bg-white/20 p-1 rounded-full transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            
+            <div class="p-6 space-y-8 text-slate-700">
+                <section class="space-y-4">
+                    <h4 class="font-bold text-blue-700 border-b pb-1 uppercase text-xs tracking-widest">POUR LES ENFANTS DE MOINS DE 7 ANS</h4>
+                    <div class="text-sm leading-relaxed space-y-3">
+                        <p>Pour vous aider, vous disposez d’un guide « Détecter les signes d’un développement inhabituel chez les enfants de moins de 7 ans ».</p>
+                        <p>Il permet de faire le point sur les signes d’alerte communs à tout âge, ainsi que les <strong>facteurs de risque de TND</strong> :</p>
+                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 list-disc pl-8 font-semibold text-[11px] uppercase tracking-tighter text-slate-600">
+                            <li>Prématurité</li>
+                            <li>Poids de naissance < 1500g</li>
+                            <li>Frère, sœur ou parent de 1er degré ayant un TND</li>
+                            <li>Exposition grossesse toxiques (alcool, drogues, médicaments)</li>
+                            <li>Affections néonatales sévères</li>
+                            <li>Syndromes génétiques</li>
+                        </ul>
+                        <p>Il propose une grille de repérage des écarts de développement à chaque examen obligatoire jusqu’à 6 ans.</p>
+                        <p class="font-bold text-medical underline italic">En cas de signes d’alerte de trouble du neurodéveloppement, vous pouvez :</p>
+                        <ul class="space-y-4 list-none pl-2">
+                            <li class="flex items-start gap-3"><span class="text-blue-500 font-bold mt-1">➔</span><div><strong>Adresser vers une PCO</strong> pour un parcours diagnostique et d’interventions précoces.</div></li>
+                            <li class="flex items-start gap-3"><span class="text-blue-500 font-bold mt-1">➔</span><div>Réaliser une <strong>consultation complexe majorée</strong> dédiée au repérage.</div></li>
+                            <li class="flex items-start gap-3"><span class="text-blue-500 font-bold mt-1">➔</span><div><strong>Contacter le médecin de la plateforme</strong> pour son point de vue et décider de l'orientation.</div></li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <a href="https://handicap.gouv.fr/IMG/pdf/brochure_reperage_tnd_2020.janv.pdf" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded font-bold text-[11px] uppercase tracking-wider hover:bg-blue-700">Guide de repérage (< 7 ans)</a>
+                        <a href="https://www.enfant-different.org/soins-medicaux/les-plateformes-de-coordination-et-dorientation-pco/" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded font-bold text-[11px] uppercase tracking-wider hover:bg-blue-600">Plateforme PCO</a>
+                    </div>
+                </section>
+
+                <section class="space-y-4 pt-4 border-t border-slate-100">
+                    <h4 class="font-bold text-blue-700 border-b pb-1 uppercase text-xs tracking-widest">POUR LES ENFANTS DE PLUS DE 7 ANS</h4>
+                    <div class="text-sm leading-relaxed space-y-4">
+                        <p>En cas de doute sur l’existence d’un trouble « DYS », d’un TDAH ou autre TND, vous disposez d’un <strong>formulaire d’adressage spécifique</strong> (repérage TND 7-12 ans).</p>
+                        <a href="https://handicap.gouv.fr/sites/handicap/files/2022-04/Livret%20repérage%207-12%20ans-web.pdf" target="_blank" class="inline-block bg-blue-600 text-white px-4 py-2 rounded font-bold text-[11px] uppercase tracking-wider hover:bg-blue-700">Guide de repérage (7-12 ans)</a>
+                    </div>
+                </section>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h4 class="font-black text-medical uppercase text-[11px] mb-4 tracking-widest text-center">Espace Professionnel & Adressage</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <a href="https://www.ameli.fr/sites/default/files/Documents/Formulaire-adressage-PCO-0-6ans.pdf" target="_blank" class="flex items-center gap-3 bg-white p-3 rounded border border-slate-300 hover:border-blue-500 transition-colors group">
+                            <span class="text-2xl group-hover:scale-110 transition-transform">📄</span>
+                            <div class="flex flex-col"><span class="font-bold text-[11px] uppercase">Formulaire d'adressage</span><span class="text-[9px] text-gray-500">(0-6 ans)</span></div>
+                        </a>
+                        <a href="https://www.ameli.fr/sites/default/files/Documents/annuaire-liste-des-plateformes-pco.pdf" target="_blank" class="flex items-center gap-3 bg-white p-3 rounded border border-slate-300 hover:border-blue-500 transition-colors group">
+                            <span class="text-2xl group-hover:scale-110 transition-transform">📒</span>
+                            <div class="flex flex-col"><span class="font-bold text-[11px] uppercase">Annuaire des PCO</span><span class="text-[9px] text-gray-500">(Liste nationale)</span></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-4 bg-slate-50 border-t flex justify-end">
+                <button onclick="closeModal('modal-tnd')" class="bg-medical text-white px-8 py-2 rounded-lg font-bold text-sm uppercase tracking-wide hover:bg-slate-700 transition">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const somaticLeft = [["Auscultation cardiaque normale", "cardio", "oui"], ["Examen respiratoire normal", "respi", "oui"], ["Examen abdominal normal", "abdo", "oui"], ["Examen cutané normal", "cutane", "oui"]];
+        const somaticRight = [["Tonus axial normal", "tonus_ax", "oui"], ["Tonus membres normal", "tonus_mb", "oui"], ["Hernie inguinale absente", "hernie", "oui"]];
+        const visionItems = [["Globes oculaires de taille normale", "globe", "oui"], ["Paupières tombantes", "paupieres", "non"], ["Taille différente des pupilles", "pupilles", "non"], ["Tache blanche sur ou dans l'oeil", "tache", "non"], ["Reflets anormaux dans les yeux", "reflets", "non"], ["Poursuite oculaire normale", "poursuite", "oui"], ["Nystagmus/mouvements anormaux des yeux", "nystagmus", "non"], ["Strabisme", "strabisme", "non"]];
+        const auditionItems = [["À la voix", "voix", "oui"], ["Au bruit", "bruit", "oui"], ["Se retourne sur bruit hors vue", "retourne", "oui"]];
+        
+        const devG1 = [["Tient sa tête stable sans osciller", "tete", "oui"], ["Tient assis en tripode, avec appui mains", "tripode", "oui"]];
+        const devG2 = [["Saisit un objet tenu à distance", "saisit", "oui"], ["Utilise une main ou l'autre sans préférence", "main_pref", "oui"], ["Cligne les yeux à l’approche d’un objet vers l’œil gauche ou l’œil droit", "cligne", "oui", "full"]];
+        const devG3 = [["Produit des sons variés (monosyllabes ba ga bo ma ...)", "sons", "oui"], ["Tourne la tête pour regarder celui qui parle", "tourne_parle", "oui"]];
+        const devG4 = [["Sourit en réponse au sourire de l'adulte", "sourire", "oui"], ["Sollicite le regard de l'autre", "sollicite", "oui"]];
+
+        const prevItems = [
+            ["Position de couchage adaptée", "dodo", "oui"], 
+            ["Conseils donnés pour la prévention de la mort inattendue du nourrisson et du syndrome du bébé secoué", "conseils", "oui"], 
+            ["Information sur le risque de dépression post-partum", "dep", "oui"], 
+            ["Interactions parent(s)/bébé, conseils donnés", "interact", "oui"],
+            ["Sensibilisation aux risques environnementaux", "env_risk", "oui"]
+        ];
+
+        function createRow(label, id, normalVal) {
+            return `<div class="flex items-center justify-between py-1 border-b border-gray-50 text-sm tracking-tight"><span class="font-medium text-gray-700 flex-1 tracking-tighter uppercase text-[11px]">${label}</span><div class="flex items-center gap-3 font-bold uppercase text-[10px]"><label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="${id}" value="oui" ${normalVal==='oui'?'checked':''} onchange="highlightRow(this, '${normalVal}')"> Oui</label><label class="flex items-center gap-1 cursor-pointer"><input type="radio" name="${id}" value="non" ${normalVal==='non'?'checked':''} onchange="highlightRow(this, '${normalVal}')"> Non</label></div></div>`;
+        }
+
+        function createDevCard(label, id, normalVal, extra = "") {
+            const widthClass = extra === "full" ? "col-span-full" : "";
+            return `<div class="${widthClass} flex items-center justify-between p-2 bg-white/50 rounded border border-white/50 text-xs font-semibold tracking-tight"><span class="flex-1 leading-tight tracking-tighter uppercase text-[10px] font-bold">${label}</span><div class="flex gap-2 font-bold uppercase ml-2"><label class="cursor-pointer px-2 py-1 rounded border has-[:checked]:bg-blue-600 has-[:checked]:text-white"><input type="radio" name="${id}" value="oui" checked class="hidden" onchange="checkPCOAlert()"> Acquis</label><label class="cursor-pointer px-2 py-1 rounded border has-[:checked]:bg-red-600 has-[:checked]:text-white"><input type="radio" name="${id}" value="non" class="hidden" onchange="checkPCOAlert()"> Non</label></div></div>`;
+        }
+
+        function renderItems(containerId, items, renderFn) {
+            const container = document.getElementById(containerId);
+            if (container) container.innerHTML = items.map(item => renderFn(item[0], item[1], item[2], item[3])).join('');
+        }
+
+        function toggleField(fieldId, show) {
+            const el = document.getElementById(fieldId);
+            if (show) { 
+                el.classList.remove('hidden');
+                // Auto-focus on input if it's visible
+                const input = el.querySelector('input');
+                if(input) input.focus();
+            } else { 
+                el.classList.add('hidden'); 
+                const inputs = el.querySelectorAll('input');
+                if(inputs.length > 0) inputs.forEach(i => i.value = '');
+            }
+        }
+
+        function toggleHanches(show) {
+            const el = document.getElementById('detailsHanches');
+            if(show) el.classList.remove('hidden');
+            else { el.classList.add('hidden'); el.querySelectorAll('input').forEach(i => i.checked = false); }
+        }
+
+        function updateTympanStyle(radio) {
+            const row = radio.closest('.tympan-row');
+            row.classList.remove('tympan-anormal', 'tympan-nonvu');
+            if (radio.value === 'no') row.classList.add('tympan-anormal');
+            if (radio.value === 'nv') row.classList.add('tympan-nonvu');
+        }
+
+        function checkPCOAlert() {
+            const groups = ['dev-group-1', 'dev-group-2', 'dev-group-3', 'dev-group-4'];
+            let nonCountGroups = 0;
+            groups.forEach(groupId => {
+                const groupRadios = document.querySelectorAll(`#${groupId} input[value="non"]:checked`);
+                if (groupRadios.length > 0) nonCountGroups++;
+            });
+            const container = document.getElementById('dev-section-container');
+            if (nonCountGroups >= 2) container.classList.add('pco-alert');
+            else container.classList.remove('pco-alert');
+        }
+
+        function highlightRow(radio, normalVal) {
+            const row = radio.closest('div.flex');
+            const label = row.querySelector('span');
+            if (radio.value !== normalVal) { row.classList.add('bg-orange-100'); if(label) label.classList.add('text-red-700', 'font-black'); }
+            else { row.classList.remove('bg-orange-100'); if(label) label.classList.remove('text-red-700', 'font-black'); }
+        }
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); document.body.style.overflow = 'auto'; }
+
+        function calculerAge() {
+            const dobVal = document.getElementById('dateNaissance').value;
+            const examVal = document.getElementById('dateExamen').value;
+            if(dobVal && examVal) {
+                const dob = new Date(dobVal), exam = new Date(examVal);
+                let years = exam.getFullYear() - dob.getFullYear(), months = exam.getMonth() - dob.getMonth(), days = exam.getDate() - dob.getDate();
+                if (days < 0) { months--; let prevMonth = new Date(exam.getFullYear(), exam.getMonth(), 0); days += prevMonth.getDate(); }
+                if (months < 0) { years--; months += 12; }
+                let result = "";
+                if (years >= 2) { result = `${years} ans`; if (months > 0) result += ` et ${months} mois`; }
+                else { let totalMonths = years * 12 + months; if (totalMonths > 0) result += `${totalMonths} mois`; let weeks = Math.floor(days / 7), restDays = days % 7; if (weeks > 0) result += ` ${weeks} sem`; if (restDays > 0) result += ` ${restDays}j`; if (!result) result = "0j"; }
+                document.getElementById('ageCalcul').value = result;
+            }
+        }
+
+        function calculerIMC() {
+            const poids = parseFloat(document.getElementById('poids').value), tailleCm = parseFloat(document.getElementById('taille').value);
+            if(poids > 0 && tailleCm > 0) { const imc = poids / (Math.pow(tailleCm/100, 2)); document.getElementById('imc').value = imc.toFixed(1) + " kg/m²"; }
+            else document.getElementById('imc').value = "";
+        }
+
+        function resetForm() { if(confirm("Tout effacer ?")) location.reload(); }
+
+        window.onload = function() {
+            document.getElementById('dateExamen').valueAsDate = new Date();
+            document.getElementById('printDate').textContent = new Date().toLocaleDateString('fr-FR');
+            renderItems('grid-somatic-left', somaticLeft, createRow);
+            renderItems('grid-somatic-right', somaticRight, createRow);
+            renderItems('grid-vision', visionItems, createRow);
+            renderItems('grid-audition', auditionItems, createRow);
+            renderItems('dev-group-1', devG1, createDevCard);
+            renderItems('dev-group-2', devG2, createDevCard);
+            renderItems('dev-group-3', devG3, createDevCard);
+            renderItems('dev-group-4', devG4, createDevCard);
+            renderItems('grid-prev', prevItems, createRow);
+            document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+                if (radio.name.startsWith('tympan')) updateTympanStyle(radio);
+            });
+        };
+    </script>
+</body>
+</html>
