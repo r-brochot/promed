@@ -24,10 +24,10 @@
 </head>
 <body class="bg-gray-100 p-4 font-sans text-gray-900">
 
-    <div class="max-w-3xl mx-auto bg-white p-6 shadow-lg content-box border border-gray-200">
+    <div class="max-w-3xl mx-auto bg-white p-8 shadow-lg content-box border border-gray-200">
         
         <!-- Header -->
-        <div class="flex justify-between items-start border-b-2 border-blue-600 pb-2 mb-4">
+        <div class="flex justify-between items-start border-b-2 border-blue-600 pb-3 mb-6">
             <div>
                 <h1 class="text-xl font-bold text-blue-800 uppercase">Consentement Éclairé</h1>
                 <p class="text-xs text-gray-600 uppercase tracking-wide">Dossier Médical Partagé (DMP) / Mon Espace Santé</p>
@@ -38,7 +38,7 @@
         </div>
 
         <!-- Patient Info -->
-        <div class="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
+        <div class="grid grid-cols-2 gap-x-6 gap-y-3 mb-6">
             <div class="flex flex-col">
                 <label class="text-[10px] font-semibold uppercase text-gray-500">Nom du patient :</label>
                 <input type="text" class="p-1 w-full text-sm" placeholder="............................................................">
@@ -58,15 +58,15 @@
         </div>
 
         <!-- Body -->
-        <div class="space-y-3 text-xs sm:text-sm leading-snug text-justify">
+        <div class="space-y-4 text-xs sm:text-sm leading-relaxed text-justify">
             <p>
                 Je soussigné(e), identifié(e) ci-dessus, certifie avoir reçu une <strong>information claire, loyale et appropriée</strong> de la part de mon médecin concernant le fonctionnement et l'utilité du Dossier Médical Partagé (DMP) intégré à <strong>Mon Espace Santé</strong>.
             </p>
 
-            <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-400">
+            <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
                 <p class="font-semibold mb-1">J'accepte que mon médecin :</p>
-                <ul class="list-disc ml-5 space-y-0.5 italic text-xs">
-                    <li>Consulte mon Dossier Médical Partagé pour assurer la continuité de mes soins.</li>
+                <ul class="list-disc ml-5 space-y-1 italic text-xs">
+                    <li>Consulte mon Dossier Médical Partagé pour assurer la coordination de mes soins.</li>
                     <li>Alimente mon dossier avec les éléments pertinents (comptes-rendus, ordonnances, antécédents).</li>
                 </ul>
             </div>
@@ -86,7 +86,7 @@
         </div>
 
         <!-- Signature -->
-        <div class="mt-6 flex justify-between items-end">
+        <div class="mt-8 flex justify-between items-end">
             <div class="w-1/2">
                 <p class="text-xs">Fait à <input type="text" class="w-32" placeholder="........................."></p>
                 <p class="text-xs mt-2">Le <input type="text" class="w-32" placeholder=".... / .... / 202..."></p>
@@ -97,8 +97,13 @@
         </div>
 
         <!-- Footer -->
-        <div class="mt-4 pt-2 border-t border-gray-200 text-[9px] text-gray-400 text-center uppercase tracking-tighter">
-            Conformément au RGPD et au Code de la Santé Publique - Recueil de consentement (Décret n° 2021-1047)
+        <div class="mt-6 pt-3 border-t border-gray-200 text-center">
+            <div class="text-[9px] text-gray-400 uppercase tracking-tighter mb-1">
+                Conformément au RGPD et au Code de la Santé Publique - Recueil de consentement (Décret n° 2021-1047)
+            </div>
+            <div class="text-[8px] text-gray-300 italic">
+                © 2025 – Dr Rémi Brochot. Reproduction ou diffusion interdite sans autorisation.
+            </div>
         </div>
 
     </div>
