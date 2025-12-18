@@ -7,10 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @media print {
-            .no-print { display: none; }
-            body { background-color: white !important; }
-            .content-box { border: none !important; box-shadow: none !important; }
-            @page { margin: 1cm; }
+            /* Masquer les éléments inutiles à l'impression */
+            .no-print { display: none !important; }
+            body { background-color: white !important; padding: 0 !important; }
+            .content-box { border: none !important; box-shadow: none !important; margin: 0 !important; }
+            @page { margin: 1.5cm; }
         }
         input[type="text"], input[type="date"] {
             border-bottom: 1px dotted #000;
@@ -75,7 +76,7 @@
                 J'ai bien compris que le DMP est un carnet de santé numérique sécurisé qui permet à mes soignants d'accéder aux informations nécessaires à ma prise en charge, notamment en cas d'urgence.
             </p>
 
-            <p class="font-bold">Informations légales et droits :</p>
+            <p class="font-bold text-blue-900">Informations légales et droits :</p>
             <p>
                 Je suis informé(e) qu'une fois mon consentement à l'accès donné, je ne peux m'opposer — sauf <strong>motif légitime</strong> — au versement dans mon DMP des données utiles à la prévention, la coordination et la continuité de mes soins (Art. R. 1111-47 du Décret n° 2021-1047).
             </p>
