@@ -12,7 +12,8 @@
                     colors: {
                         medical: '#2c3e50',
                         accent: '#3498db',
-                        activdos: '#F33F2B', // Ta couleur personnalisée
+                        activdos: '#F33F2B', // Couleur Activ'Dos
+                        ameli: '#0C419A',    // Couleur officielle Ameli
                     }
                 }
             }
@@ -146,22 +147,24 @@
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <a href="divers/consentement_dmp.html" class="block w-full text-center py-2 px-4 bg-blue-50 text-blue-700 text-sm font-bold rounded-lg hover:bg-blue-600 hover:text-white transition">
+                    <a href="divers/dmp_consentement.html" class="block w-full text-center py-2 px-4 bg-blue-50 text-blue-700 text-sm font-bold rounded-lg hover:bg-blue-600 hover:text-white transition">
                         ✓ Consentement
                     </a>
-                    <a href="divers/refus_dmp.html" class="block w-full text-center py-2 px-4 bg-red-50 text-red-700 text-sm font-bold rounded-lg hover:bg-red-600 hover:text-white transition">
+                    <a href="divers/dmp_refus.html" class="block w-full text-center py-2 px-4 bg-red-50 text-red-700 text-sm font-bold rounded-lg hover:bg-red-600 hover:text-white transition">
                         ✕ Opposition (Refus)
                     </a>
                 </div>
             </div>
 
             <!-- 4. GRILLE DE WOOD (G) -->
-            <a href="divers/wood.html" class="card-btn bg-white p-8 rounded-xl shadow-md border-l-8 border-green-500 text-left group hover:bg-green-50">
+            <a href="divers/wood.html" class="card-btn bg-white p-8 rounded-xl shadow-md border-l-8 border-ameli text-left group hover:bg-blue-50">
                 <div class="flex items-center justify-between mb-4">
-                    <div class="p-3 bg-green-100 rounded-full text-green-600 group-hover:bg-green-200">
-                        <span class="text-2xl">📝</span>
+                    <div class="h-12 w-12 flex-shrink-0 bg-white rounded-lg overflow-hidden border border-slate-100 shadow-sm">
+                        <img src="images/logo-ameli.png" 
+                             alt="Logo Ameli" 
+                             class="h-full w-full object-contain p-1">
                     </div>
-                    <span class="text-green-500 font-semibold group-hover:translate-x-1 transition-transform">Ouvrir &rarr;</span>
+                    <span class="text-ameli font-semibold group-hover:translate-x-1 transition-transform">Ouvrir &rarr;</span>
                 </div>
                 <h3 class="text-xl font-bold text-slate-800 mb-1">Grille de Wood</h3>
                 <p class="text-sm text-slate-500">Évaluation ALD</p>
