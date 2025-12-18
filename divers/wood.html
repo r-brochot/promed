@@ -5,11 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grille de Wood - ALD Polypathologies - CPAM</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ameli: '#0C419A',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         /* --- CONFIGURATION STANDARD IMPRESSION --- */
         @page {
             size: A4;
-            margin: 10mm;
+            margin: 8mm; /* Marges réduites pour tout faire tenir */
         }
 
         /* --- Styles Généraux --- */
@@ -33,10 +44,10 @@
         .patient-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 12px;
             border: 1px solid #cbd5e1;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 12px;
+            margin-bottom: 15px;
             border-radius: 4px;
         }
 
@@ -50,7 +61,7 @@
         .table-scroll-container {
             width: 100%;
             overflow-x: auto;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border: 1px solid #cbd5e1;
             border-radius: 4px;
         }
@@ -59,12 +70,12 @@
             width: 100%;
             min-width: 850px;
             border-collapse: collapse;
-            table-layout: fixed; /* Indispensable pour forcer les largeurs colgroup */
+            table-layout: fixed; 
         }
 
         .grid-container th, .grid-container td {
             border: 1px solid #94a3b8;
-            padding: 8px 4px;
+            padding: 6px 4px;
             text-align: center;
             font-size: 11px;
             word-wrap: break-word;
@@ -73,7 +84,7 @@
         .grid-container th { background-color: #f1f5f9; }
 
         input[type="checkbox"] {
-            transform: scale(1.2);
+            transform: scale(1.1);
             cursor: pointer;
         }
 
@@ -88,11 +99,14 @@
                 max-width: 100%;
                 border: none;
             }
-            .table-scroll-container { border: none; overflow: visible; }
+            .table-scroll-container { border: none; overflow: visible; margin-bottom: 10px; }
             .grid-container { min-width: 100%; border: 1px solid black; }
-            .grid-container th, .grid-container td { border: 1px solid black; color: black; }
-            .patient-grid { border: 1px solid black; }
-            textarea { border: 1px solid black !important; }
+            .grid-container th, .grid-container td { border: 1px solid black; color: black; padding: 4px 2px; }
+            .patient-grid { border: 1px solid black; margin-bottom: 10px; padding: 8px; gap: 8px; }
+            .observations-section { margin-top: 5px !important; }
+            textarea { border: 1px solid black !important; height: 80px !important; }
+            .signature-block { mt: 10px !important; }
+            .footer-legal { margin-top: 10px !important; }
         }
 
         .line-input {
@@ -122,7 +136,7 @@
     <div class="page-container">
         
         <!-- Header Document -->
-        <div class="border-b-2 border-ameli pb-4 mb-6">
+        <div class="border-b-2 border-ameli pb-3 mb-4">
             <div class="flex items-center gap-4 mb-2">
                 <!-- Logo Ameli en haut à gauche -->
                 <div class="h-10 w-auto flex-shrink-0 no-print">
@@ -130,7 +144,7 @@
                 </div>
                 <h1 class="text-xl font-bold text-ameli uppercase">GRILLE DE WOOD</h1>
             </div>
-            <p class="text-[11px] text-slate-600 leading-tight text-justify">
+            <p class="text-[10px] text-slate-600 leading-tight text-justify">
                 A remplir par le médecin traitant en complément du protocole d'examen spécial dans le cadre d'une demande d'exonération du ticket modérateur pour "association d'affections caractérisées à l'origine de l'état pathologique invalidant - ALD (pathologies multiples)"
             </p>
         </div>
@@ -138,19 +152,19 @@
         <!-- Identification Patient -->
         <div class="patient-grid">
             <div class="flex flex-col">
-                <label class="text-[10px] font-bold uppercase text-slate-400">Nom patronyme</label>
+                <label class="text-[9px] font-bold uppercase text-slate-400">Nom patronyme</label>
                 <input type="text" class="line-input text-sm" placeholder="À remplir">
             </div>
             <div class="flex flex-col">
-                <label class="text-[10px] font-bold uppercase text-slate-400">Nom marital</label>
+                <label class="text-[9px] font-bold uppercase text-slate-400">Nom marital</label>
                 <input type="text" class="line-input text-sm" placeholder="À remplir">
             </div>
             <div class="flex flex-col">
-                <label class="text-[10px] font-bold uppercase text-slate-400">Prénom</label>
+                <label class="text-[9px] font-bold uppercase text-slate-400">Prénom</label>
                 <input type="text" class="line-input text-sm" placeholder="À remplir">
             </div>
             <div class="flex flex-col">
-                <label class="text-[10px] font-bold uppercase text-slate-400">N° d'immatriculation</label>
+                <label class="text-[9px] font-bold uppercase text-slate-400">N° d'immatriculation</label>
                 <input type="text" class="line-input text-sm" placeholder="À remplir">
             </div>
         </div>
@@ -175,7 +189,7 @@
                     <tr>
                         <th rowspan="2" class="text-left pl-3">
                             <span class="block">Domaines d'incapacité</span>
-                            <span class="text-[10px] font-normal italic leading-tight block mt-0.5">Incapacité concernant :</span>
+                            <span class="text-[9px] font-normal italic leading-tight block mt-0.5">Incapacité concernant :</span>
                         </th>
                         <th rowspan="2" class="text-[8px]">Codes</th>
                         <th class="text-[9px] uppercase font-bold leading-tight py-1">Nul</th>
@@ -198,34 +212,34 @@
             </table>
         </div>
 
-        <p class="text-[10px] text-slate-400 mb-4 italic sm:hidden no-print text-left">
+        <p class="text-[9px] text-slate-400 mb-3 italic sm:hidden no-print text-left">
             💡 Glissez le tableau vers la droite pour voir toutes les colonnes.
         </p>
 
         <!-- Observations -->
-        <div class="mb-6">
-            <label class="block text-sm font-bold text-slate-700 mb-2 border-l-4 border-ameli pl-2">Observations / Commentaires Libres :</label>
-            <textarea class="w-full h-32 p-3 border border-slate-300 rounded focus:ring-2 focus:ring-ameli outline-none text-sm leading-relaxed" placeholder="Utilisez cet espace pour toute observation complémentaire pertinente non couverte par la grille d'évaluation."></textarea>
+        <div class="observations-section mb-4">
+            <label class="block text-sm font-bold text-slate-700 mb-1 border-l-4 border-ameli pl-2 text-left">Observations / Commentaires Libres :</label>
+            <textarea class="w-full h-24 p-2 border border-slate-300 rounded focus:ring-2 focus:ring-ameli outline-none text-sm leading-relaxed" placeholder="Utilisez cet espace pour toute observation complémentaire pertinente non couverte par la grille d'évaluation."></textarea>
         </div>
 
         <!-- Signature -->
-        <div class="flex flex-col sm:flex-row justify-between items-end gap-6 mt-10">
+        <div class="signature-block flex flex-col sm:flex-row justify-between items-end gap-4 mt-6">
             <div class="w-full sm:w-1/2 space-y-4">
                 <div class="flex flex-col">
                     <label class="text-[10px] font-bold text-slate-400 uppercase">Date & signature :</label>
                     <div class="flex gap-2">
                         <input type="text" id="signature_date" class="line-input text-sm" placeholder="Lieu, le JJ/MM/AAAA">
-                        <button onclick="fillDate()" class="no-print bg-slate-100 hover:bg-slate-200 text-slate-600 p-1 rounded text-[10px] transition px-2">Aujourd'hui</button>
+                        <button onclick="fillDate()" class="no-print bg-slate-100 hover:bg-slate-200 text-slate-700 p-1 rounded text-[10px] transition px-2 border border-slate-300">Aujourd'hui</button>
                     </div>
                 </div>
             </div>
-            <div class="w-full sm:w-64 h-28 border border-slate-400 rounded p-2 relative">
+            <div class="w-full sm:w-64 h-20 border border-slate-400 rounded p-2 relative">
                 <span class="text-[10px] font-bold text-slate-300 uppercase italic">Signature et cachet</span>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="mt-8 pt-4 border-t border-slate-100 flex flex-col sm:flex-row justify-between gap-2">
+        <div class="footer-legal mt-6 pt-3 border-t border-slate-100 flex flex-col sm:flex-row justify-between gap-1">
             <p class="text-[9px] text-slate-400 uppercase">Grille de Wood - Liaison ALD Polypathologies</p>
             <p class="text-[9px] text-slate-300 italic text-right">© 2025 – Dr Rémi Brochot. Reproduction ou diffusion interdite sans autorisation.</p>
         </div>
@@ -234,7 +248,7 @@
     <!-- Actions -->
     <div class="max-w-4xl mx-auto mt-6 no-print flex justify-center pb-10">
         <button onclick="window.print()" class="bg-ameli text-white px-8 py-3 rounded-full shadow-lg hover:bg-blue-800 transition transform hover:scale-105 flex items-center gap-2 font-bold text-sm">
-            <span>🖨️ Exporter en PDF / Imprimer la grille remplie</span>
+            <span>🖨️ Exporter en PDF / Imprimer</span>
         </button>
     </div>
 
@@ -277,7 +291,7 @@
         function fillDate() {
             const today = new Date();
             const formatted = today.toLocaleDateString('fr-FR');
-            document.getElementById('signature_date').value = formatted;
+            document.getElementById('signature_date').value = `Fait à __________, le ${formatted}`;
         }
     </script>
 </body>
