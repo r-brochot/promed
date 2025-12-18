@@ -111,9 +111,15 @@
     </div>
 
     <!-- Controls -->
-    <div class="max-w-3xl mx-auto mt-4 no-print flex justify-end">
-        <button onclick="window.print()" class="bg-red-600 text-white px-6 py-2 rounded shadow hover:bg-red-700 transition">
-            🖨️ Imprimer l'opposition
+    <div class="max-w-3xl mx-auto mt-6 no-print flex justify-between items-center px-4">
+        <a href="../index.html" class="text-slate-500 hover:text-slate-800 flex items-center gap-2 transition font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Retour au tableau de bord
+        </a>
+        <button onclick="window.print()" class="bg-red-600 text-white px-6 py-2 rounded shadow hover:bg-red-700 transition flex items-center gap-2">
+            <span>🖨️ Imprimer l'opposition</span>
         </button>
     </div>
 
