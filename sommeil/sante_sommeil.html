@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santé du Sommeil (Court) - Dr Rémi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; }
+        .radio-custom { width: 20px; height: 20px; accent-color: #2563eb; cursor: pointer; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-10 mb-8 print:hidden">
+        <div class="max-w-3xl mx-auto px-4 py-3">
+            <a href="index.html" class="inline-flex items-center gap-2 text-slate-500 hover:text-blue-700 font-medium transition-colors">
+                <i class="fa-solid fa-arrow-left"></i> Retour aux Outils
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-4 py-8">
+        
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-slate-800 flex justify-center items-center gap-3">
+                <i class="fa-solid fa-heart-pulse text-red-500"></i> Santé du Sommeil
+            </h1>
+            <p class="text-slate-500 mt-2">Échelle Ru-SATED (Version Courte)</p>
+        </header>
+
+        <form id="healthForm" class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-100 text-slate-700 uppercase text-xs font-bold">
+                        <tr>
+                            <th class="p-4 w-1/2">Critère</th>
+                            <th class="p-4 text-center w-1/6">Jamais<br><span class="text-[10px] text-slate-400 font-normal">Rarement</span></th>
+                            <th class="p-4 text-center w-1/6">Parfois<br><span class="text-[10px] text-slate-400 font-normal">-</span></th>
+                            <th class="p-4 text-center w-1/6">Toujours<br><span class="text-[10px] text-slate-400 font-normal">Souvent</span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm md:text-base divide-y divide-slate-100">
+                        
+                        <!-- 1. Régularité (Regularity) -->
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4">
+                                <strong class="text-slate-800 block">1. Régularité</strong>
+                                <span class="text-slate-500 text-sm">Vous couchez-vous et vous levez-vous à la même heure (à ± 1h près) chaque jour ?</span>
+                            </td>
+                            <!-- Jamais = 0 point (Mauvais) -->
+                            <td class="text-center p-4 bg-red-50/30"><input type="radio" name="q1" value="0" class="radio-custom" required></td>
+                            <!-- Parfois = 1 point -->
+                            <td class="text-center p-4"><input type="radio" name="q1" value="1" class="radio-custom"></td>
+                            <!-- Toujours = 2 points (Bon) -->
+                            <td class="text-center p-4 bg-green-50/30"><input type="radio" name="q1" value="2" class="radio-custom"></td>
+                        </tr>
+
+                        <!-- 2. Satisfaction -->
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4">
+                                <strong class="text-slate-800 block">2. Satisfaction</strong>
+                                <span class="text-slate-500 text-sm">Êtes-vous satisfait(e) de votre sommeil ?</span>
+                            </td>
+                            <td class="text-center p-4 bg-red-50/30"><input type="radio" name="q2" value="0" class="radio-custom" required></td>
+                            <td class="text-center p-4"><input type="radio" name="q2" value="1" class="radio-custom"></td>
+                            <td class="text-center p-4 bg-green-50/30"><input type="radio" name="q2" value="2" class="radio-custom"></td>
+                        </tr>
+
+                        <!-- 3. Attention / Vigilance (Alertness) -->
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4">
+                                <strong class="text-slate-800 block">3. Attention</strong>
+                                <span class="text-slate-500 text-sm">Restez-vous éveillé(e) toute la journée sans somnoler ?</span>
+                            </td>
+                            <td class="text-center p-4 bg-red-50/30"><input type="radio" name="q3" value="0" class="radio-custom" required></td>
+                            <td class="text-center p-4"><input type="radio" name="q3" value="1" class="radio-custom"></td>
+                            <td class="text-center p-4 bg-green-50/30"><input type="radio" name="q3" value="2" class="radio-custom"></td>
+                        </tr>
+
+                         <!-- 4. Temporalité (Timing) -->
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4">
+                                <strong class="text-slate-800 block">4. Temporalité</strong>
+                                <span class="text-slate-500 text-sm">Êtes-vous endormi(e) ou dans votre lit entre 02h00 et 04h00 du matin ?</span>
+                            </td>
+                            <td class="text-center p-4 bg-red-50/30"><input type="radio" name="q4" value="0" class="radio-custom" required></td>
+                            <td class="text-center p-4"><input type="radio" name="q4" value="1" class="radio-custom"></td>
+                            <td class="text-center p-4 bg-green-50/30"><input type="radio" name="q4" value="2" class="radio-custom"></td>
+                        </tr>
+
+                        <!-- 5. Efficacité (Efficiency) -->
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4">
+                                <strong class="text-slate-800 block">5. Efficacité</strong>
+                                <span class="text-slate-500 text-sm">Passez-vous moins de 30 min éveillé(e) la nuit ? (Endormissement et réveils inclus)</span>
+                            </td>
+                            <td class="text-center p-4 bg-red-50/30"><input type="radio" name="q5" value="0" class="radio-custom" required></td>
+                            <td class="text-center p-4"><input type="radio" name="q5" value="1" class="radio-custom"></td>
+                            <td class="text-center p-4 bg-green-50/30"><input type="radio" name="q5" value="2" class="radio-custom"></td>
+                        </tr>
+
+                        <!-- 6. Durée (Duration) -->
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4">
+                                <strong class="text-slate-800 block">6. Durée</strong>
+                                <span class="text-slate-500 text-sm">Dormez-vous entre 6 et 8 heures par nuit ?</span>
+                            </td>
+                            <td class="text-center p-4 bg-red-50/30"><input type="radio" name="q6" value="0" class="radio-custom" required></td>
+                            <td class="text-center p-4"><input type="radio" name="q6" value="1" class="radio-custom"></td>
+                            <td class="text-center p-4 bg-green-50/30"><input type="radio" name="q6" value="2" class="radio-custom"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Action -->
+            <div class="p-6 bg-slate-50 border-t border-slate-200">
+                <button type="button" onclick="calculateHealth()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow transition-transform transform active:scale-95">
+                    Calculer le Score
+                </button>
+            </div>
+        </form>
+
+        <!-- Résultat -->
+        <div id="result-area" class="hidden mt-8 fade-in">
+            <!-- Bannière Dynamique -->
+            <div id="health-banner" class="rounded-lg p-6 text-center shadow-md border-2">
+                <h2 id="health-title" class="text-2xl font-bold mb-2"></h2>
+                <p id="health-desc" class="font-medium opacity-90"></p>
+                <div class="mt-4 text-sm font-mono bg-white/50 inline-block px-3 py-1 rounded">
+                    Score de santé : <span id="health-score"></span>/12
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function calculateHealth() {
+            const radios = document.querySelectorAll('input[type="radio"]:checked');
+            if (radios.length < 6) {
+                alert("Merci de répondre à toutes les 6 questions.");
+                return;
+            }
+
+            let score = 0;
+            radios.forEach(r => score += parseInt(r.value));
+
+            const resArea = document.getElementById('result-area');
+            const banner = document.getElementById('health-banner');
+            const title = document.getElementById('health-title');
+            const desc = document.getElementById('health-desc');
+            const scoreSpan = document.getElementById('health-score');
+
+            // Logique Score:
+            // Max = 12 (Très bonne santé)
+            // 0 = Très mauvaise santé
+            
+            // Si score <= 8 : Altérée (Rouge)
+            if (score <= 8) {
+                // Rouge - Altérée
+                banner.className = "rounded-lg p-6 text-center shadow-md border-2 bg-red-100 border-red-400 text-red-800";
+                title.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i> SANTÉ DE SOMMEIL ALTÉRÉE';
+                desc.textContent = "Le score indique des difficultés sur plusieurs dimensions du sommeil (Score ≤ 8).";
+            } else {
+                // Vert - Bonne
+                banner.className = "rounded-lg p-6 text-center shadow-md border-2 bg-green-100 border-green-400 text-green-800";
+                title.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i> SANTÉ DE SOMMEIL CONSERVÉE';
+                desc.textContent = "Les indicateurs principaux sont globalement bons (Score > 8).";
+            }
+
+            scoreSpan.textContent = score;
+            resArea.classList.remove('hidden');
+            resArea.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
