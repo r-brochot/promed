@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDS-25 - Évaluation des Plaintes du Sommeil</title>
+    <!-- Importation de Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Importation de FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+        }
+        
+        .radio-custom {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #2563eb; /* Bleu Tailwind */
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Classe pour le texte vertical dans les en-têtes */
+        .vertical-header {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            white-space: nowrap;
+            text-align: left; /* Devient "bas" après rotation */
+            padding-top: 10px;
+            padding-bottom: 10px;
+            height: 180px; /* Hauteur suffisante pour le texte long */
+            vertical-align: middle;
+        }
+
+        /* En-tête de tableau sticky */
+        @media (max-width: 640px) {
+            .sticky-header th {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .vertical-header {
+                height: 140px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 pb-12">
+
+    <!-- Navigation Retour (Nouveau) -->
+    <nav class="bg-white border-b border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 py-3">
+            <a href="index.html" class="inline-flex items-center gap-2 text-slate-500 hover:text-blue-700 font-medium transition-colors">
+                <i class="fa-solid fa-arrow-left"></i> Retour aux Outils Sommeil
+            </a>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="bg-blue-800 text-white p-6 shadow-md mb-6">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-3xl font-bold flex items-center gap-3">
+                    <i class="fa-solid fa-bed-pulse"></i> SDS-25
+                </h1>
+                <p class="text-blue-200 text-sm mt-1">Sleep Disorders Symptom Checklist-25</p>
+            </div>
+            <div class="text-right hidden md:block">
+                <div class="text-xs text-blue-300 uppercase tracking-widest">Outil Clinique</div>
+                <div class="font-semibold">Dr Rémi & Co.</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4">
+        
+        <!-- Cartouche Patient & Instructions -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8 border border-slate-200">
+            <div class="bg-slate-100 px-6 py-3 border-b border-slate-200 font-bold text-slate-700 flex items-center gap-2">
+                <i class="fa-regular fa-id-card"></i> Informations Patient
+            </div>
+            
+            <div class="p-6 grid gap-6">
+                <!-- Ligne 1 : Identité & Biométrie -->
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                    <div class="col-span-2 md:col-span-1">
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Initiales</label>
+                        <input type="text" class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500" placeholder="Ex: D.R.">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Âge</label>
+                        <input type="number" class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500" placeholder="Ans">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Sexe</label>
+                        <select class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500 bg-white">
+                            <option value="">-</option>
+                            <option value="M">H</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Taille (cm)</label>
+                        <input type="number" class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Poids (kg)</label>
+                        <input type="number" class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                    </div>
+                     <!-- Travail -->
+                    <div class="col-span-2 md:col-span-1 border-l pl-4 border-slate-200">
+                         <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Travail Posté ?</label>
+                         <select class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500 bg-white">
+                            <option value="non">Non</option>
+                            <option value="oui">Oui</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- Ligne 2 : Habitudes de sommeil -->
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                     <div>
+                        <label class="block text-xs font-bold text-blue-700 uppercase mb-1">Heures Travail</label>
+                        <div class="relative">
+                            <input type="number" class="w-full border border-slate-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500" placeholder="/sem">
+                            <span class="absolute right-3 top-2 text-slate-400 text-sm">h</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-1">Par semaine</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-blue-700 uppercase mb-1">Heure de Coucher</label>
+                        <input type="time" class="w-full border border-blue-100 bg-blue-50 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                        <p class="text-[10px] text-slate-400 mt-1">Habituelle</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-blue-700 uppercase mb-1">Heure de Lever</label>
+                        <input type="time" class="w-full border border-blue-100 bg-blue-50 rounded px-3 py-2 focus:outline-none focus:border-blue-500">
+                        <p class="text-[10px] text-slate-400 mt-1">Habituelle</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-blue-700 uppercase mb-1">Temps passé au lit</label>
+                        <div class="relative">
+                            <input type="number" step="0.5" class="w-full border border-blue-100 bg-blue-50 rounded px-3 py-2 focus:outline-none focus:border-blue-500" placeholder="Heures">
+                            <span class="absolute right-3 top-2 text-slate-400 text-sm">h</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-1 font-bold text-blue-800">EN MOYENNE</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-blue-700 uppercase mb-1">Temps de sommeil</label>
+                        <div class="relative">
+                            <input type="number" step="0.5" class="w-full border border-blue-100 bg-blue-50 rounded px-3 py-2 focus:outline-none focus:border-blue-500" placeholder="Heures">
+                            <span class="absolute right-3 top-2 text-slate-400 text-sm">h</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-1 font-bold text-blue-800">EN MOYENNE</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-yellow-50 px-6 py-4 border-t border-yellow-100 text-sm text-yellow-800 flex items-start gap-3">
+                <i class="fa-solid fa-circle-exclamation mt-1"></i>
+                <div>
+                    <strong>Instructions :</strong> Veuillez répondre aux questions suivantes concernant vos symptômes typiques au cours des <strong>3 derniers mois</strong>. Cochez la case qui correspond le mieux à votre fréquence.
+                </div>
+            </div>
+        </div>
+
+        <form id="sdsForm" class="bg-white rounded-lg shadow-lg overflow-hidden border border-slate-200">
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm sm:text-base text-left text-slate-600">
+                    <thead class="text-xs text-white uppercase bg-blue-700 sticky-header">
+                        <tr>
+                            <th scope="col" class="px-4 py-4 w-5/12 align-bottom">Question</th>
+                            <th scope="col" class="px-1 w-[11%] bg-blue-800"><div class="vertical-header mx-auto">Jamais</div></th>
+                            <th scope="col" class="px-1 w-[11%]"><div class="vertical-header mx-auto">1 fois par mois</div></th>
+                            <th scope="col" class="px-1 w-[11%] bg-blue-600"><div class="vertical-header mx-auto">1 à 2 jours par semaine</div></th>
+                            <th scope="col" class="px-1 w-[11%]"><div class="vertical-header mx-auto">3 à 4 jours par semaine</div></th>
+                            <th scope="col" class="px-1 w-[11%] bg-blue-600"><div class="vertical-header mx-auto">5 à 7 jours par semaine</div></th>
+                        </tr>
+                    </thead>
+                    <tbody id="questions-body">
+                        
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">1. Mon travail ou d’autres activités m’empêchent de dormir au moins 6 heures</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q1" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q1" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q1" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q1" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q1" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">2. Mon heure de coucher ou de réveil varie de plus de 3 heures</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q2" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q2" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q2" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q2" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q2" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">3. Il me faut 30 minutes ou plus pour m’endormir</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q3" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q3" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q3" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q3" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q3" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">4. Je suis éveillé pendant 30 minutes ou plus pendant la nuit</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q4" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q4" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q4" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q4" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q4" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">5. Je me réveille 30 minutes ou plus avant l’heure prévue et je ne peux pas me rendormir</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q5" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q5" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q5" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q5" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q5" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">6. Je suis usé(e), fatigué(e) ou somnolent(e) pendant la journée</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q6" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q6" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q6" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q6" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q6" value="4" class="radio-custom"></td>
+                        </tr>
+                         <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">7. Je dors mieux si je me couche avant 21 h et me réveille avant 5 h 30</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q7" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q7" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q7" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q7" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q7" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">8. Je dors mieux si je me couche tard (après 1 h du matin) et me réveille tard (après 9 h)</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q8" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q8" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q8" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q8" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q8" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">9. J’ai tendance à m’endormir à des moments ou dans des endroits inappropriés</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q9" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q9" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q9" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q9" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q9" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">10. On m’a dit que je ronflais</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q10" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q10" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q10" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q10" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q10" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">11. Je me réveille avec une bouche sèche le matin (bouche pâteuse)</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q11" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q11" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q11" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q11" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q11" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">12. Mon ronflement est si fort que mon/ma partenaire de lit se plaint</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q12" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q12" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q12" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q12" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q12" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">13. On m’a dit que j’arrêtais de respirer pendant mon sommeil</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q13" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q13" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q13" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q13" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q13" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">14. Je me réveille pendant la nuit en étouffant ou en suffoquant</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q14" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q14" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q14" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q14" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q14" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">15. Je ressens des sensations inconfortables dans mes jambes... soulagées en les bougeant</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q15" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q15" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q15" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q15" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q15" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">16. J’ai une envie de bouger mes jambes qui est aggravée le soir et la nuit</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q16" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q16" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q16" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q16" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q16" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">17. Je me réveille fréquemment pendant la nuit sans raison</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q17" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q17" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q17" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q17" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q17" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">18. Faiblesse musculaire soudaine lors d'émotion (colère, rire, effroi)</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q18" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q18" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q18" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q18" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q18" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">19. Rêves effrayants comme des images en m’endormant ou en me réveillant</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q19" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q19" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q19" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q19" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q19" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">20. Impression de ne pas pouvoir bouger au premier réveil</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q20" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q20" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q20" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q20" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q20" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">21. Je fais des cauchemars</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q21" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q21" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q21" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q21" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q21" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">22. Sans raison, je me réveille soudainement, surpris et effrayé</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q22" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q22" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q22" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q22" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q22" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">23. On m'a dit que j'agissais de façon étrange ou violente pendant mon sommeil</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q23" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q23" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q23" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q23" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q23" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">24. Je grince des dents ou serre la mâchoire pendant mon sommeil</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q24" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q24" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q24" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q24" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q24" value="4" class="radio-custom"></td>
+                        </tr>
+                        <tr class="border-b hover:bg-blue-50 transition-colors odd:bg-white even:bg-slate-50">
+                            <td class="px-4 py-3 font-medium text-slate-900">25. Mes difficultés de sommeil interfèrent avec mes activités quotidiennes</td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q25" value="0" class="radio-custom" required></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q25" value="1" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q25" value="2" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q25" value="3" class="radio-custom"></td>
+                            <td class="text-center border-l border-slate-100"><input type="radio" name="q25" value="4" class="radio-custom"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Action Area -->
+            <div class="p-6 bg-slate-50 border-t border-slate-200">
+                <button type="button" onclick="calculateScore()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition-all transform hover:scale-[1.01] active:scale-[0.99] flex justify-center items-center gap-2">
+                    <i class="fa-solid fa-calculator"></i> Calculer les Scores
+                </button>
+            </div>
+        </form>
+
+        <!-- Results Area -->
+        <div id="results-area" class="hidden mt-8 mb-12">
+            <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b pb-2">
+                <i class="fa-solid fa-clipboard-check text-blue-600"></i> Analyse Indicative
+            </h3>
+            
+            <div class="grid gap-6 md:grid-cols-3 mb-6">
+                <!-- Insomnie Card -->
+                <div id="res-insomnie" class="bg-white p-6 rounded-xl shadow-md border-t-4 transition-all">
+                    <!-- JS fills this -->
+                </div>
+
+                <!-- SAHOS Card -->
+                <div id="res-sahos" class="bg-white p-6 rounded-xl shadow-md border-t-4 transition-all">
+                     <!-- JS fills this -->
+                </div>
+
+                <!-- SJSR Card -->
+                <div id="res-sjsr" class="bg-white p-6 rounded-xl shadow-md border-t-4 transition-all">
+                     <!-- JS fills this -->
+                </div>
+            </div>
+
+            <!-- Attention Card -->
+            <div id="res-attention" class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 shadow-sm hidden">
+                <h4 class="text-yellow-800 font-bold text-lg mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Autres points d'attention clinique
+                </h4>
+                <ul id="list-attention" class="list-disc list-inside text-yellow-900 space-y-1">
+                    <!-- JS fills this -->
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-8 text-slate-400 text-sm">
+        Outil d'évaluation SDS-25 • Usage Médical
+    </footer>
+
+    <script>
+        function getVal(qName) {
+            const radios = document.getElementsByName(qName);
+            for (let r of radios) {
+                if (r.checked) return parseInt(r.value);
+            }
+            return 0; // Valeur par défaut
+        }
+
+        function getFrequencyLabel(val) {
+            if(val===2) return "1-2 jours/sem";
+            if(val===3) return "3-4 jours/sem";
+            if(val===4) return "5-7 jours/sem";
+            return "";
+        }
+
+        function calculateScore() {
+            // Récupération des valeurs
+            const q = {};
+            for(let i=1; i<=25; i++) {
+                q[i] = getVal('q' + i);
+            }
+
+            // Calcul des sous-scores
+            // Insomnie: Items 3, 4, 5, 6. Seuil > 5
+            const scoreInsomnie = q[3] + q[4] + q[5] + q[6];
+            
+            // SAHOS: Items 6, 10, 11, 12, 13, 14. Seuil > 3
+            const scoreSahos = q[6] + q[10] + q[11] + q[12] + q[13] + q[14];
+
+            // Jambes sans repos (SJSR): Items 15, 16, 17. Seuil > 3
+            const scoreSjsr = q[15] + q[16] + q[17];
+
+            // Affichage
+            const resArea = document.getElementById('results-area');
+            const divInsomnie = document.getElementById('res-insomnie');
+            const divSahos = document.getElementById('res-sahos');
+            const divSjsr = document.getElementById('res-sjsr');
+            const divAttention = document.getElementById('res-attention');
+            const listAttention = document.getElementById('list-attention');
+            
+            resArea.classList.remove('hidden');
+            resArea.classList.add('fade-in');
+
+            // Logique Insomnie
+            if (scoreInsomnie > 5) {
+                divInsomnie.className = 'bg-red-50 p-6 rounded-xl shadow-md border-t-4 border-red-500 transition-all';
+                divInsomnie.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2 text-red-700 font-bold text-lg">
+                        <i class="fa-solid fa-moon"></i> Insomnie
+                    </div>
+                    <div class="text-3xl font-bold text-red-600 mb-1">${scoreInsomnie} <span class="text-sm font-normal text-red-400">/ 16</span></div>
+                    <p class="text-sm text-red-800 font-semibold">Risque détecté (Seuil > 5)</p>
+                    <p class="text-xs text-red-600 mt-2">Basé sur endormissement, maintien, réveil précoce & fatigue.</p>
+                `;
+            } else {
+                divInsomnie.className = 'bg-green-50 p-6 rounded-xl shadow-md border-t-4 border-green-500 transition-all opacity-75';
+                divInsomnie.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2 text-green-700 font-bold text-lg">
+                        <i class="fa-solid fa-moon"></i> Insomnie
+                    </div>
+                    <div class="text-3xl font-bold text-green-600 mb-1">${scoreInsomnie} <span class="text-sm font-normal text-green-400">/ 16</span></div>
+                    <p class="text-sm text-green-800">Pas de risque significatif</p>
+                `;
+            }
+
+            // Logique SAHOS
+            if (scoreSahos > 3) {
+                divSahos.className = 'bg-red-50 p-6 rounded-xl shadow-md border-t-4 border-red-500 transition-all';
+                divSahos.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2 text-red-700 font-bold text-lg">
+                        <i class="fa-solid fa-lungs"></i> SAHOS
+                    </div>
+                    <div class="text-3xl font-bold text-red-600 mb-1">${scoreSahos} <span class="text-sm font-normal text-red-400">/ 24</span></div>
+                    <p class="text-sm text-red-800 font-semibold">Risque Apnée détecté (Seuil > 3)</p>
+                    <p class="text-xs text-red-600 mt-2">Basé sur ronflements, pauses respi & fatigue.</p>
+                `;
+            } else {
+                divSahos.className = 'bg-green-50 p-6 rounded-xl shadow-md border-t-4 border-green-500 transition-all opacity-75';
+                divSahos.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2 text-green-700 font-bold text-lg">
+                        <i class="fa-solid fa-lungs"></i> SAHOS
+                    </div>
+                    <div class="text-3xl font-bold text-green-600 mb-1">${scoreSahos} <span class="text-sm font-normal text-green-400">/ 24</span></div>
+                    <p class="text-sm text-green-800">Pas de risque significatif</p>
+                `;
+            }
+
+            // Logique SJSR
+            if (scoreSjsr > 3) {
+                divSjsr.className = 'bg-red-50 p-6 rounded-xl shadow-md border-t-4 border-red-500 transition-all';
+                divSjsr.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2 text-red-700 font-bold text-lg">
+                        <i class="fa-solid fa-person-walking"></i> SJSR
+                    </div>
+                    <div class="text-3xl font-bold text-red-600 mb-1">${scoreSjsr} <span class="text-sm font-normal text-red-400">/ 12</span></div>
+                    <p class="text-sm text-red-800 font-semibold">Risque SJSR détecté (Seuil > 3)</p>
+                    <p class="text-xs text-red-600 mt-2">Basé sur impatiences & mouvements nocturnes.</p>
+                `;
+            } else {
+                divSjsr.className = 'bg-green-50 p-6 rounded-xl shadow-md border-t-4 border-green-500 transition-all opacity-75';
+                divSjsr.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2 text-green-700 font-bold text-lg">
+                        <i class="fa-solid fa-person-walking"></i> SJSR
+                    </div>
+                    <div class="text-3xl font-bold text-green-600 mb-1">${scoreSjsr} <span class="text-sm font-normal text-green-400">/ 12</span></div>
+                    <p class="text-sm text-green-800">Pas de risque significatif</p>
+                `;
+            }
+
+            // Autres drapeaux rouges
+            listAttention.innerHTML = '';
+            const flags = [
+                {id: 7, label: "Préférence marquée Matin (Avance de phase ?)", val: q[7]},
+                {id: 8, label: "Préférence marquée Soir (Retard de phase ?)", val: q[8]},
+                {id: 9, label: "Endormissements inappropriés (Hypersomnie ?)", val: q[9]},
+                {id: 18, label: "Faiblesse musculaire à l'émotion (Cataplexie ?)", val: q[18]},
+                {id: 19, label: "Hallucinations hypnagogiques", val: q[19]},
+                {id: 20, label: "Paralysie du sommeil", val: q[20]},
+                {id: 23, label: "Comportements complexes/violents (Parasomnie ?)", val: q[23]},
+                {id: 24, label: "Bruxisme probable", val: q[24]},
+                {id: 25, label: "Impact fonctionnel quotidien important", val: q[25]}
+            ];
+
+            let hasFlags = false;
+            flags.forEach(f => {
+                if (f.val >= 2) { // Si au moins 1-2 jours/semaine (valeur 2)
+                    let li = document.createElement('li');
+                    li.innerHTML = `<strong>${f.label}</strong> <span class="text-xs bg-yellow-200 px-2 py-0.5 rounded-full ml-1 text-yellow-800">${getFrequencyLabel(f.val)}</span>`;
+                    listAttention.appendChild(li);
+                    hasFlags = true;
+                }
+            });
+
+            if (hasFlags) {
+                divAttention.classList.remove('hidden');
+            } else {
+                divAttention.classList.add('hidden');
+            }
+            
+            // Scroll to results
+            resArea.scrollIntoView({behavior: "smooth"});
+        }
+    </script>
+</body>
+</html>
