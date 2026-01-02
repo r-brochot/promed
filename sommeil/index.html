@@ -3,25 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Outils Sommeil - Dr R. BROCHOT</title>
-    <!-- Importation de Tailwind CSS -->
+    <title>Outils Sommeil - Dr R BROCHOT</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Importation de FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8;
-        }
-        
-        .tool-card {
-            transition: all 0.3s ease;
-        }
-        .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; }
+        .tool-card { transition: all 0.3s ease; }
+        .tool-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -30,12 +18,9 @@
     <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">
-                    S
-                </div>
+                <div class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">S</div>
                 <h1 class="text-2xl font-bold text-slate-800">Outils Sommeil</h1>
             </div>
-            <!-- Tu pourras changer ce lien vers l'accueil de ton site principal -->
             <a href="../index.html" class="text-slate-500 hover:text-blue-600 transition-colors text-sm font-medium">
                 <i class="fa-solid fa-house mr-1"></i> Accueil Site
             </a>
@@ -44,40 +29,44 @@
 
     <!-- Main Content -->
     <main class="flex-grow max-w-6xl mx-auto px-4 py-12 w-full">
-        
         <div class="text-center mb-12">
             <h2 class="text-3xl font-bold text-slate-800 mb-3">Boîte à Outils Clinique</h2>
-            <p class="text-slate-500 max-w-2xl mx-auto">Accès rapide aux échelles d'évaluation, calculateurs et documents pour la consultation de médecine du sommeil.</p>
+            <p class="text-slate-500 max-w-2xl mx-auto">Accès rapide aux échelles d'évaluation et documents.</p>
         </div>
 
-        <!-- Grid des Outils -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
-            <!-- Carte Outil 1 : SDS-25 -->
+            <!-- Carte 1 : SDS-25 -->
             <a href="sds25.html" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-blue-300 group">
                 <div class="h-2 bg-blue-600 w-full"></div>
                 <div class="p-6">
                     <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                         <i class="fa-solid fa-bed-pulse"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">Échelle SDS-25</h3>
-                    <p class="text-slate-500 text-sm mb-4">Sleep Disorders Symptom Checklist. Dépistage rapide des troubles majeurs (Insomnie, SAHOS, SJSR).</p>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">SDS-25</h3>
+                    <p class="text-slate-500 text-sm mb-4">Dépistage complet des troubles (Insomnie, SAHOS, SJSR).</p>
                     <div class="text-blue-600 font-semibold text-sm flex items-center">
-                        Ouvrir l'outil <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        Ouvrir <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </div>
                 </div>
             </a>
 
-            <!-- Placeholder pour futur outil -->
-            <div class="block bg-slate-50 rounded-xl overflow-hidden border border-slate-200 border-dashed p-6 flex flex-col justify-center items-center text-center opacity-60">
-                <div class="w-14 h-14 bg-slate-200 text-slate-400 rounded-lg flex items-center justify-center text-2xl mb-4">
-                    <i class="fa-solid fa-calculator"></i>
+            <!-- Carte 2 : Santé Sommeil Court (NOUVEAU) -->
+            <a href="sante_sommeil.html" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-green-400 group">
+                <div class="h-2 bg-green-500 w-full"></div>
+                <div class="p-6">
+                    <div class="w-14 h-14 bg-green-50 text-green-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Santé Sommeil (Court)</h3>
+                    <p class="text-slate-500 text-sm mb-4">Évaluation rapide de la santé du sommeil (Ru-SATED).</p>
+                    <div class="text-green-600 font-semibold text-sm flex items-center">
+                        Ouvrir <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
                 </div>
-                <h3 class="text-lg font-bold text-slate-400 mb-1">Dette de Sommeil</h3>
-                <p class="text-slate-400 text-xs uppercase tracking-widest font-bold">Bientôt disponible</p>
-            </div>
+            </a>
 
-             <!-- Placeholder pour Documents -->
+             <!-- Carte 3 : Documents -->
              <a href="documents/" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-purple-300 group">
                 <div class="h-2 bg-purple-600 w-full"></div>
                 <div class="p-6">
@@ -85,21 +74,18 @@
                         <i class="fa-solid fa-file-pdf"></i>
                     </div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Documents PDF</h3>
-                    <p class="text-slate-500 text-sm mb-4">Accès aux fiches patients et échelles imprimables.</p>
+                    <p class="text-slate-500 text-sm mb-4">Fiches patients et supports à imprimer.</p>
                     <div class="text-purple-600 font-semibold text-sm flex items-center">
-                        Voir le dossier <i class="fa-solid fa-folder-open ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        Accéder <i class="fa-solid fa-folder-open ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </div>
                 </div>
             </a>
 
         </div>
-
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-8 mt-8">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <p class="text-slate-400 text-sm">&copy; 2024 Dr Rémi - Outils Médicaux</p>
-        </div>
+    <footer class="bg-white border-t border-slate-200 py-8 mt-8 text-center text-slate-400 text-sm">
+        &copy; 2024 Dr Rémi - Outils Médicaux
     </footer>
 
 </body>
