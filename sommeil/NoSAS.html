@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score NoSAS - Dr R. BROCHOT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; }
+        .input-field { transition: all 0.2s; }
+        .input-field:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-10 mb-8 print:hidden">
+        <div class="max-w-2xl mx-auto px-4 py-3">
+            <a href="index.html" class="inline-flex items-center gap-2 text-slate-500 hover:text-blue-700 font-medium transition-colors">
+                <i class="fa-solid fa-arrow-left"></i> Retour aux Outils
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-2xl mx-auto px-4 py-6">
+        
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-slate-800 flex justify-center items-center gap-3">
+                <i class="fa-solid fa-lungs text-blue-600"></i> Score NoSAS
+            </h1>
+            <p class="text-slate-500 mt-2">Dépistage du Syndrome d'Apnées du Sommeil (Lausanne)</p>
+        </header>
+
+        <form id="nosasForm" class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 p-6 space-y-6">
+            
+            <!-- Critère 1 : Tour de cou (Neck) -->
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded mr-2">N</span> Tour de cou
+                </label>
+                <div class="flex items-center gap-4">
+                    <div class="relative w-full">
+                        <input type="number" id="neck" class="input-field w-full border border-slate-300 rounded-lg px-4 py-3 text-lg" placeholder="En cm">
+                        <span class="absolute right-4 top-3.5 text-slate-400">cm</span>
+                    </div>
+                    <div class="text-xs text-slate-400 w-1/2">
+                        Seuil critique : ≥ 40 cm<br>
+                        (+4 points)
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-slate-100">
+
+            <!-- Critère 2 : IMC (Obesity) - Calcul Auto -->
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded mr-2">O</span> IMC (Obésité)
+                </label>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs text-slate-500 block mb-1">Taille (cm)</label>
+                        <input type="number" id="height" class="input-field w-full border border-slate-300 rounded-lg px-3 py-2" placeholder="Ex: 175">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-500 block mb-1">Poids (kg)</label>
+                        <input type="number" id="weight" class="input-field w-full border border-slate-300 rounded-lg px-3 py-2" placeholder="Ex: 80">
+                    </div>
+                </div>
+                <!-- Zone info score + résultat -->
+                <div class="flex justify-between items-start mt-3">
+                    <div class="text-xs text-slate-400 leading-relaxed">
+                        IMC 25 à &lt;30 : <strong>+3 pts</strong><br>
+                        IMC ≥ 30 : <strong>+5 pts</strong>
+                    </div>
+                    <div class="text-sm font-medium text-blue-600 text-right">
+                        <span id="bmi-display"></span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-slate-100">
+
+            <!-- Critère 3 : Ronflement (Snoring) -->
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded mr-2">S</span> Ronflement
+                </label>
+                <p class="text-sm text-slate-500 mb-3">Le patient ronfle-t-il ?</p>
+                <div class="flex gap-4">
+                    <label class="flex-1 cursor-pointer">
+                        <input type="radio" name="snoring" value="0" class="peer hidden" checked>
+                        <div class="block text-center border-2 border-slate-200 rounded-lg py-3 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 hover:bg-slate-50 transition-all">
+                            Non
+                        </div>
+                    </label>
+                    <label class="flex-1 cursor-pointer">
+                        <input type="radio" name="snoring" value="2" class="peer hidden">
+                        <div class="block text-center border-2 border-slate-200 rounded-lg py-3 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 hover:bg-slate-50 transition-all">
+                            Oui (+2)
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <hr class="border-slate-100">
+
+            <!-- Critère 4 : Âge (Age) -->
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded mr-2">A</span> Âge
+                </label>
+                <p class="text-sm text-slate-500 mb-3">Le patient a-t-il plus de 55 ans ?</p>
+                <div class="flex gap-4">
+                    <label class="flex-1 cursor-pointer">
+                        <input type="radio" name="age" value="0" class="peer hidden" checked>
+                        <div class="block text-center border-2 border-slate-200 rounded-lg py-3 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 hover:bg-slate-50 transition-all">
+                            ≤ 55 ans
+                        </div>
+                    </label>
+                    <label class="flex-1 cursor-pointer">
+                        <input type="radio" name="age" value="4" class="peer hidden">
+                        <div class="block text-center border-2 border-slate-200 rounded-lg py-3 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 hover:bg-slate-50 transition-all">
+                            > 55 ans (+4)
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <hr class="border-slate-100">
+
+            <!-- Critère 5 : Sexe (Sex) -->
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded mr-2">S</span> Sexe
+                </label>
+                <div class="flex gap-4">
+                    <label class="flex-1 cursor-pointer">
+                        <input type="radio" name="sex" value="0" class="peer hidden" checked>
+                        <div class="block text-center border-2 border-slate-200 rounded-lg py-3 peer-checked:border-pink-500 peer-checked:bg-pink-50 peer-checked:text-pink-700 hover:bg-slate-50 transition-all">
+                            <i class="fa-solid fa-venus mr-2"></i> Femme
+                        </div>
+                    </label>
+                    <label class="flex-1 cursor-pointer">
+                        <input type="radio" name="sex" value="2" class="peer hidden">
+                        <div class="block text-center border-2 border-slate-200 rounded-lg py-3 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 hover:bg-slate-50 transition-all">
+                            <i class="fa-solid fa-mars mr-2"></i> Homme (+2)
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Bouton Calcul -->
+            <button type="button" onclick="calculateNoSAS()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 rounded-lg shadow-lg transition-transform transform active:scale-95 text-lg mt-4">
+                CALCULER LE SCORE
+            </button>
+
+        </form>
+
+        <!-- Résultats -->
+        <div id="result-area" class="hidden mt-8 fade-in">
+            <div id="score-banner" class="rounded-xl p-6 shadow-md border-l-8 bg-white relative overflow-hidden">
+                <div class="relative z-10">
+                    <h2 class="text-sm font-bold uppercase tracking-wider mb-1 opacity-70">Résultat NoSAS</h2>
+                    <div class="flex items-baseline gap-2 mb-2">
+                        <span id="score-value" class="text-5xl font-black">0</span>
+                        <span class="text-xl font-medium text-slate-400">/ 17</span>
+                    </div>
+                    <h3 id="risk-text" class="text-2xl font-bold mb-2"></h3>
+                    <p id="risk-desc" class="text-sm opacity-90"></p>
+                </div>
+                <!-- Background Icon -->
+                <i id="bg-icon" class="fa-solid fa-lungs absolute -right-4 -bottom-4 text-9xl opacity-10"></i>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-8 text-slate-400 text-xs">
+        &copy; 2026 Dr R. BROCHOT • Marti-Soler H et al. Lancet Respir Med 2016
+    </footer>
+
+    <script>
+        // Calcul automatique de l'IMC
+        const heightInput = document.getElementById('height');
+        const weightInput = document.getElementById('weight');
+        const bmiDisplay = document.getElementById('bmi-display');
+
+        function updateBMI() {
+            const h = parseFloat(heightInput.value) / 100; // cm -> m
+            const w = parseFloat(weightInput.value);
+            
+            if (h > 0 && w > 0) {
+                const bmi = (w / (h * h)).toFixed(1);
+                let pts = 0;
+                if (bmi >= 25 && bmi < 30) pts = 3;
+                if (bmi >= 30) pts = 5;
+                
+                bmiDisplay.innerHTML = `IMC : <strong>${bmi}</strong> (${pts > 0 ? '+' + pts + ' pts' : '0 pt'})`;
+                return pts;
+            }
+            bmiDisplay.innerHTML = "";
+            return 0;
+        }
+
+        heightInput.addEventListener('input', updateBMI);
+        weightInput.addEventListener('input', updateBMI);
+
+        function calculateNoSAS() {
+            // Récupération des points
+            let score = 0;
+
+            // 1. Neck (>40cm = +4)
+            const neck = parseFloat(document.getElementById('neck').value) || 0;
+            if (neck >= 40) score += 4;
+
+            // 2. BMI
+            score += updateBMI(); // Récupère les points calculés par l'IMC
+
+            // 3. Snoring
+            const snoring = document.querySelector('input[name="snoring"]:checked');
+            if (snoring) score += parseInt(snoring.value);
+
+            // 4. Age
+            const age = document.querySelector('input[name="age"]:checked');
+            if (age) score += parseInt(age.value);
+
+            // 5. Sex
+            const sex = document.querySelector('input[name="sex"]:checked');
+            if (sex) score += parseInt(sex.value);
+
+            // Affichage
+            const resArea = document.getElementById('result-area');
+            const banner = document.getElementById('score-banner');
+            const scoreVal = document.getElementById('score-value');
+            const riskText = document.getElementById('risk-text');
+            const riskDesc = document.getElementById('risk-desc');
+            const bgIcon = document.getElementById('bg-icon');
+
+            scoreVal.textContent = score;
+            resArea.classList.remove('hidden');
+
+            // Logique NoSAS : Seuil à 8
+            if (score >= 8) {
+                // Risque Élevé
+                banner.className = "rounded-xl p-6 shadow-md border-l-8 bg-red-50 border-red-500 text-red-900 relative overflow-hidden";
+                riskText.textContent = "Probabilité ÉLEVÉE de SAHOS";
+                riskDesc.textContent = "Le score est ≥ 8. Une polygraphie ou polysomnographie est fortement recommandée.";
+                bgIcon.className = "fa-solid fa-triangle-exclamation absolute -right-4 -bottom-4 text-9xl opacity-10 text-red-900";
+            } else {
+                // Risque Faible
+                banner.className = "rounded-xl p-6 shadow-md border-l-8 bg-green-50 border-green-500 text-green-900 relative overflow-hidden";
+                riskText.textContent = "Probabilité FAIBLE de SAHOS";
+                riskDesc.innerHTML = "Le score est < 8. Le risque d'apnée du sommeil est statistiquement faible.<br><strong class='text-green-700 block mt-1'>(À confronter à la clinique)</strong>";
+                bgIcon.className = "fa-solid fa-check-circle absolute -right-4 -bottom-4 text-9xl opacity-10 text-green-900";
+            }
+            
+            resArea.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
