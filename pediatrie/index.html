@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pédiatrie - Dr BROCHOT</title>
+    <title>Pédiatrie - Dr R. BROCHOT</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,41 +11,46 @@
                 extend: {
                     colors: {
                         medical: '#2c3e50',
-                        accent: '#3498db',
+                        brand: '#3498db',
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #f8fafc; }
-        /* Animation douce au survol des cartes */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            background-image: radial-gradient(#e2e8f0 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
         .tool-card {
-            transition: all 0.2s ease-in-out;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .tool-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-color: #3b82f6; /* Bleu plus vif au survol */
+            transform: translateY(-5px);
+            border-color: #3498db;
         }
     </style>
 </head>
-<body class="font-sans text-slate-800">
+<body class="text-slate-800">
 
-    <!-- EN-TÊTE SIMPLIFIÉ -->
-    <header class="bg-blue-600 text-white shadow-md">
-        <div class="max-w-6xl mx-auto px-4 py-4">
+    <!-- HEADER PORTAL -->
+    <header class="bg-medical text-white shadow-xl border-b-4 border-brand">
+        <div class="max-w-6xl mx-auto px-6 py-8">
             <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <span class="text-2xl">👶</span>
+                <div class="flex items-center space-x-4">
+                    <div class="bg-white p-2 rounded-xl shadow-inner">
+                        <span class="text-3xl">👶</span>
+                    </div>
                     <div>
-                        <h1 class="text-xl font-bold tracking-wide">Pédiatrie</h1>
-                        <p class="text-blue-100 text-xs">Suivi & Dépistages</p>
+                        <h1 class="text-2xl font-black tracking-tighter uppercase">Pédiatrie</h1>
+                        <p class="text-brand font-bold text-xs uppercase tracking-widest opacity-80">Suivi & Examens Systématiques</p>
                     </div>
                 </div>
-                <!-- Bouton Retour -->
-                <a href="../index.html" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm transition flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <a href="../index.html" class="bg-slate-700 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-xs font-black uppercase transition-all border border-slate-600 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     Retour Menu
@@ -54,60 +59,110 @@
         </div>
     </header>
 
-    <!-- CONTENU PRINCIPAL -->
-    <main class="max-w-6xl mx-auto px-4 py-10">
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <main class="max-w-6xl mx-auto px-6 py-12">
+        
+        <div class="mb-10">
+            <h2 class="text-sm font-black text-slate-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
+                <span class="h-px w-8 bg-slate-300"></span>
+                Calendrier des examens (Carnet 2025)
+            </h2>
             
-            <!-- 2 SEMAINES -->
-            <a href="consultation_2_semaines.html" class="tool-card block p-6 bg-white border border-slate-200 rounded-xl shadow-sm text-center group">
-                <div class="text-4xl mb-3">👶</div>
-                <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">2 Semaines</h3>
-                <p class="text-xs text-slate-500 mt-2">Examen néonatal (J8-J15)</p>
-            </a>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- 2 SEMAINES -->
+                <a href="consultation_2_semaines.html" class="tool-card group bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🍼</div>
+                    <h3 class="font-black text-medical group-hover:text-brand transition-colors">2 Semaines</h3>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Examen Néonatal</p>
+                    <div class="mt-4 px-3 py-1 bg-slate-100 rounded-full text-[9px] font-black text-slate-500 uppercase">J8 à J15</div>
+                </a>
 
-            <!-- 1 MOIS -->
-            <a href="consultation_1_mois.html" class="tool-card block p-6 bg-white border border-slate-200 rounded-xl shadow-sm text-center group">
-                <div class="text-4xl mb-3">🧸</div>
-                <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">1 Mois</h3>
-                <p class="text-xs text-slate-500 mt-2">Croissance & Dépistages</p>
-            </a>
+                <!-- 1 MOIS -->
+                <a href="consultation_1_mois.html" class="tool-card group bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🧸</div>
+                    <h3 class="font-black text-medical group-hover:text-brand transition-colors">1 Mois</h3>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Dépistages</p>
+                    <div class="mt-4 px-3 py-1 bg-slate-100 rounded-full text-[9px] font-black text-slate-500 uppercase">Croissance</div>
+                </a>
 
-            <!-- 2 MOIS -->
-            <a href="consultation_2_mois.html" class="tool-card block p-6 bg-white border border-slate-200 rounded-xl shadow-sm text-center group">
-                <div class="text-4xl mb-3">💉</div>
-                <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">2 Mois</h3>
-                <p class="text-xs text-slate-500 mt-2">1ères Vaccinations</p>
-            </a>
+                <!-- 2 MOIS -->
+                <a href="consultation_2_mois.html" class="tool-card group bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">💉</div>
+                    <h3 class="font-black text-medical group-hover:text-brand transition-colors">2 Mois</h3>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Vaccinations</p>
+                    <div class="mt-4 px-3 py-1 bg-blue-50 rounded-full text-[9px] font-black text-brand uppercase">Obligatoire</div>
+                </a>
 
-            <!-- 3 MOIS -->
-            <a href="consultation_3_mois.html" class="tool-card block p-6 bg-white border border-slate-200 rounded-xl shadow-sm text-center group">
-                <div class="text-4xl mb-3">📅</div>
-                <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">3 Mois</h3>
-                <p class="text-xs text-slate-500 mt-2">Bilan & Méningo B</p>
-            </a>
+                <!-- 3 MOIS -->
+                <a href="consultation_3_mois.html" class="tool-card group bg-white p-6 rounded-2xl border-2 border-brand/20 shadow-md flex flex-col items-center text-center ring-4 ring-brand/5">
+                    <div class="w-16 h-16 bg-brand/10 rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">📅</div>
+                    <h3 class="font-black text-medical group-hover:text-brand transition-colors">3 Mois</h3>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Bilan & MenB</p>
+                    <div class="mt-4 px-3 py-1 bg-brand text-white rounded-full text-[9px] font-black uppercase">Prêt</div>
+                </a>
 
-            <!-- 4 MOIS -->
-            <a href="consultation_4_mois.html" class="tool-card block p-6 bg-white border border-slate-200 rounded-xl shadow-sm text-center group">
-                <div class="text-4xl mb-3">🥣</div>
-                <h3 class="font-bold text-lg text-slate-800 group-hover:text-blue-600">4 Mois</h3>
-                <p class="text-xs text-slate-500 mt-2">Diversification & Rappels</p>
-            </a>
+                <!-- 4 MOIS -->
+                <a href="consultation_4_mois.html" class="tool-card group bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🥣</div>
+                    <h3 class="font-black text-medical group-hover:text-brand transition-colors">4 Mois</h3>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Diversification</p>
+                    <div class="mt-4 px-3 py-1 bg-slate-100 rounded-full text-[9px] font-black text-slate-500 uppercase">En attente</div>
+                </a>
 
-            <!-- 9 MOIS (Placeholder) -->
-            <div class="block p-6 bg-slate-50 border border-slate-200 border-dashed rounded-xl text-center opacity-60">
-                <div class="text-4xl mb-3 grayscale">👁️</div>
-                <h3 class="font-bold text-lg text-slate-400">9 Mois (SBT)</h3>
-                <p class="text-xs text-slate-400 mt-2">À venir</p>
+                <!-- 5 MOIS -->
+                <a href="consultation_5_mois.html" class="tool-card group bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">🦒</div>
+                    <h3 class="font-black text-medical group-hover:text-brand transition-colors">5 Mois</h3>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Motricité</p>
+                    <div class="mt-4 px-3 py-1 bg-slate-100 rounded-full text-[9px] font-black text-slate-500 uppercase">En attente</div>
+                </a>
+
+                <!-- 8-9 MOIS -->
+                <div class="bg-slate-50 p-6 rounded-2xl border-2 border-slate-200 border-dashed flex flex-col items-center text-center opacity-60">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-3xl mb-4 grayscale">👁️</div>
+                    <h3 class="font-black text-slate-400">8 - 9 Mois</h3>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">SBT & Vision</p>
+                    <div class="mt-4 px-3 py-1 bg-white border border-slate-200 rounded-full text-[9px] font-black text-slate-400 uppercase italic">Développement</div>
+                </div>
+
             </div>
-
         </div>
 
+        <!-- OUTILS ANNEXES (Placeholders) -->
+        <div>
+            <h2 class="text-sm font-black text-slate-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
+                <span class="h-px w-8 bg-slate-300"></span>
+                Outils de Dépistage
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-4 opacity-50 cursor-not-allowed">
+                    <div class="text-2xl">📉</div>
+                    <div>
+                        <h4 class="font-bold text-sm">Courbes de croissance</h4>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">Génération dynamique</p>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-4 opacity-50 cursor-not-allowed">
+                    <div class="text-2xl">🔊</div>
+                    <div>
+                        <h4 class="font-bold text-sm">Tests Auditifs</h4>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">Protocoles d'examen</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer class="text-center text-slate-400 py-8 text-sm">
-        <p>Outil pédagogique - Dr Rémi BROCHOT</p>
-        <p class="text-[10px] opacity-70 mt-1">&copy; 2025 Reproduction interdite</p>
+    <footer class="max-w-6xl mx-auto px-6 py-12 border-t border-slate-200">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Logiciel de support à la consultation pédiatrique</p>
+                <p class="text-[9px] text-slate-300 font-bold mt-1 uppercase">Développé par Dr R. BROCHOT &copy; 2025</p>
+            </div>
+            <div class="flex gap-4">
+                <span class="px-3 py-1 bg-medical text-white text-[9px] font-black rounded uppercase">v1.2 - Stable</span>
+            </div>
+        </div>
     </footer>
 
 </body>
