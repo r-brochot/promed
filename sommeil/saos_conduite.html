@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information - Apnées du Sommeil et Conduite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; background: #f3f4f6; }
+        
+        @media print {
+            body { background: white; font-size: 12pt; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .shadow-lg { box-shadow: none !important; }
+            .border { border: 1px solid #ccc !important; }
+        }
+
+        .check-box {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 1px solid black;
+            margin-right: 5px;
+            position: relative;
+            top: 2px;
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <!-- Bouton Imprimer -->
+    <div class="max-w-[21cm] mx-auto mb-6 text-right no-print">
+        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow flex items-center gap-2 ml-auto transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            Imprimer ce document
+        </button>
+    </div>
+
+    <!-- Feuille A4 -->
+    <div class="max-w-[21cm] mx-auto bg-white p-12 shadow-lg min-h-[29.7cm] text-slate-900 border border-gray-200">
+
+        <!-- En-tête Médecin -->
+        <div class="flex justify-between items-start border-b-2 border-slate-800 pb-4 mb-8">
+            <div>
+                <h1 class="text-xl font-bold uppercase tracking-wide">Dr R. BROCHOT</h1>
+                <p class="text-sm text-slate-600">Médecine Générale</p>
+            </div>
+            <div class="text-right">
+                <h2 class="text-lg font-bold text-blue-900">INFORMATION MÉDICALE</h2>
+                <p class="text-xs text-slate-500 italic">Code de la route & Santé Publique</p>
+            </div>
+        </div>
+
+        <!-- Infos remise simplifiées -->
+        <div class="bg-slate-50 border border-slate-200 p-4 rounded mb-8">
+            <span class="text-sm font-semibold text-slate-500 uppercase block text-[10px] mb-2">Traçabilité :</span>
+            <div class="text-lg font-bold text-slate-800">
+                Document remis en main propre le : ........ / ........ / ................
+            </div>
+        </div>
+
+        <!-- Titre -->
+        <h3 class="text-center text-xl font-bold mb-6 underline decoration-2 decoration-blue-500 underline-offset-4">
+            SYNDROME D'APNÉES DU SOMMEIL (SAOS)<br>ET CONDUITE AUTOMOBILE
+        </h3>
+
+        <!-- Corps du texte -->
+        <div class="text-justify space-y-4 text-sm leading-relaxed">
+            
+            <p>
+                <strong>Un risque avéré :</strong> Les malades apnéiques ont 7 fois plus de risques d’être impliqués dans un accident de la circulation que des conducteurs sans troubles respiratoires. Des études (Masa et al. – Lloberes et al.) ont clairement montré que la somnolence au volant est significativement corrélée au risque d’accident.
+            </p>
+
+            <p>
+                <strong>Le principe de responsabilité :</strong> Chaque conducteur est censé auto-évaluer sa capacité à conduire. Une personne atteinte de troubles susceptibles de constituer un danger pour elle-même ou les autres (comme la somnolence) doit cesser de conduire jusqu’à l’amélioration de son état. Ce principe est fixé par <strong>l’Arrêté du 28 Mars 2022</strong>.
+            </p>
+
+            <div class="bg-blue-50 p-4 border-l-4 border-blue-600 my-6">
+                <h4 class="font-bold text-blue-900 mb-2">QUE DIT LA LOI (Arrêté du 28/03/2022) ?</h4>
+                <p class="mb-2">En cas de <strong>Somnolence Diurne Excessive</strong> liée au Syndrome d'Apnées du Sommeil, le permis n'est ni délivré ni renouvelé tant que le traitement n'a pas prouvé son efficacité.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <!-- Groupe 1 -->
+                    <div class="bg-white p-3 rounded border border-blue-100">
+                        <strong class="block text-blue-800 border-b border-blue-100 pb-1 mb-2">GROUPE 1 (Léger)</strong>
+                        <ul class="list-disc list-inside text-xs space-y-1">
+                            <li>Concerne : Voiture (B), Moto (A).</li>
+                            <li><strong>Incompatibilité</strong> tant que persiste la somnolence.</li>
+                            <li><strong>Reprise possible :</strong> Après 1 mois de traitement efficace (PPC, Orthèse...) et avis médical spécialisé.</li>
+                            <li><strong>Durée de validité :</strong> Compatibilité temporaire de <strong>3 ans maximum</strong> (renouvelable).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Groupe 2 -->
+                    <div class="bg-white p-3 rounded border border-blue-100">
+                        <strong class="block text-red-800 border-b border-red-100 pb-1 mb-2">GROUPE 2 (Lourd)</strong>
+                        <ul class="list-disc list-inside text-xs space-y-1">
+                            <li>Concerne : Poids Lourds (C, E), Bus (D), Taxis, Ambulances.</li>
+                            <li><strong>Contrôle médical obligatoire</strong> auprès d'un médecin agréé par la préfecture.</li>
+                            <li><strong>Reprise possible :</strong> Après 1 mois de traitement efficace, validé obligatoirement par un <strong>Test de Maintien de l'Eveil (TME)</strong>.</li>
+                            <li><strong>Durée de validité :</strong> Compatibilité temporaire d'<strong>1 an maximum</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                <strong>La procédure :</strong> C’est la Commission Médicale du permis de conduire (ou le médecin agréé par la préfecture) qui juge de l’aptitude définitive, sur la base du dossier médical et de l'avis du <strong>médecin formé au dépistage et au suivi des troubles respiratoires au cours du sommeil</strong>.
+            </p>
+
+            <p class="font-semibold text-slate-800 mt-4">
+                Le rôle de votre médecin traitant :
+            </p>
+            <p>
+                Votre médecin a le devoir légal de vous informer sur les risques liés à votre pathologie. Cependant, soumis au secret médical, il ne peut pas contacter la préfecture à votre place. <strong>La démarche de régularisation auprès du médecin agréé relève de votre entière et unique responsabilité.</strong>
+            </p>
+
+            <p class="italic text-xs text-slate-500 mt-2">
+                En cas d'accident responsable lié à une pathologie non déclarée, les assurances peuvent refuser la couverture des dommages.
+            </p>
+        </div>
+
+        <!-- Signature -->
+        <div class="mt-12 pt-8 border-t border-slate-300 grid grid-cols-2">
+            <div>
+                <p class="text-xs font-bold mb-8">Date : ..............................................</p>
+            </div>
+            <div class="text-right">
+                <p class="text-xs font-bold mb-12">Signature du Médecin :</p>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center text-[10px] text-slate-400">
+            Document d'information remis à titre préventif conformément au code de déontologie médicale et à l'arrêté du 28/03/2022.
+        </div>
+
+    </div>
+
+</body>
+</html>
