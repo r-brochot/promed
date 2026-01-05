@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information - Aptitude Médicale à la Conduite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; background: #f3f4f6; }
+        
+        @media print {
+            body { background: white; font-size: 12pt; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .shadow-lg { box-shadow: none !important; }
+            .border { border: 1px solid #ccc !important; }
+            /* Force background colors for print */
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+
+        .check-box {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 1px solid #334155;
+            margin-right: 6px;
+            position: relative;
+            top: 2px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <!-- Bouton Imprimer -->
+    <div class="max-w-[21cm] mx-auto mb-6 text-right no-print">
+        <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg shadow flex items-center gap-2 ml-auto transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            Imprimer ce document
+        </button>
+    </div>
+
+    <!-- Feuille A4 -->
+    <div class="max-w-[21cm] mx-auto bg-white p-12 shadow-lg min-h-[29.7cm] text-slate-900 border border-gray-200">
+
+        <!-- En-tête Médecin -->
+        <div class="flex justify-between items-start border-b-2 border-slate-800 pb-4 mb-8">
+            <div>
+                <h1 class="text-xl font-bold uppercase tracking-wide">Dr R. BROCHOT</h1>
+                <p class="text-sm text-slate-600">Médecine Générale</p>
+            </div>
+            <div class="text-right">
+                <h2 class="text-lg font-bold text-indigo-900">INFORMATION LÉGALE</h2>
+                <p class="text-xs text-slate-500 italic">Sécurité Routière & Santé</p>
+            </div>
+        </div>
+
+        
+        <!-- Titre -->
+        <h3 class="text-center text-xl font-bold mb-6 underline decoration-2 decoration-indigo-500 underline-offset-4">
+            AFFECTIONS MÉDICALES ET APTITUDE À LA CONDUITE
+        </h3>
+
+        <!-- Corps du texte -->
+        <div class="text-justify space-y-4 text-sm leading-relaxed">
+            
+            <p>
+                <strong>Le principe de responsabilité :</strong> Le code de la route impose à tout conducteur de s'assurer qu'il est en capacité physique et cognitive de maîtriser son véhicule. Certaines pathologies constituent un danger pour le conducteur et les autres usagers.
+            </p>
+
+            <p>
+                <strong>Que dit la loi ?</strong> L’<strong>Arrêté du 28 mars 2022</strong> fixe la liste précise des affections médicales incompatibles avec la conduite (définitivement ou temporairement) ou nécessitant un avis médical spécialisé.
+            </p>
+
+            <!-- Cadre Pathologie concernée -->
+            <div class="bg-indigo-50 p-5 rounded border border-indigo-100 my-6">
+                <p class="font-bold text-indigo-900 mb-3 border-b border-indigo-200 pb-2">MOTIF DE L'INFORMATION CE JOUR :</p>
+                <div class="grid grid-cols-2 gap-y-2 text-xs md:text-sm">
+                    <div class="flex items-center"><span class="check-box"></span> Pathologie Cardio-Vasculaire</div>
+                    <div class="flex items-center"><span class="check-box"></span> Pathologie Neurologique (Épilepsie...)</div>
+                    <div class="flex items-center"><span class="check-box"></span> Diabète / Endocrinologie</div>
+                    <div class="flex items-center"><span class="check-box"></span> Vision / Ophtalmologie</div>
+                    <div class="flex items-center"><span class="check-box"></span> Troubles du Sommeil / Vigilance</div>
+                    <div class="flex items-center"><span class="check-box"></span> Addictions / Médicaments</div>
+                    <div class="flex items-center"><span class="check-box"></span> Autre : .............................................</div>
+                </div>
+            </div>
+
+            <h4 class="font-bold text-slate-800 mt-6 mb-2 text-base">1. La distinction des rôles</h4>
+            <ul class="list-disc list-inside space-y-2 ml-2">
+                <li>
+                    <strong>Votre Médecin Traitant :</strong> Il a l'obligation légale de vous <strong>informer</strong> que votre état de santé nécessite un avis expert. Il n'est pas habilité à valider votre permis de conduire.
+                </li>
+                <li>
+                    <strong>Le Médecin Agréé par la Préfecture :</strong> C'est le seul habilité à statuer sur votre aptitude. Il s'agit d'un médecin généraliste agréé (liste en préfecture) ou de la Commission Médicale (obligatoire pour alcool/stupéfiants).
+                </li>
+            </ul>
+
+            <h4 class="font-bold text-slate-800 mt-6 mb-2 text-base">2. Vos obligations et risques</h4>
+            <div class="border-l-4 border-red-500 pl-4 py-1 ml-2">
+                <p class="font-semibold text-red-700">Avertissement Assurance :</p>
+                <p class="text-xs mt-1">
+                    En cas d'accident corporel responsable, si le conducteur est atteint d'une affection médicale non déclarée figurant sur la liste de l'arrêté du 28/03/2022, <strong>l'assurance peut refuser de couvrir les dommages</strong> (clause de déchéance de garantie), ce qui peut entraîner des conséquences financières dramatiques à vie.
+                </p>
+            </div>
+
+            <h4 class="font-bold text-slate-800 mt-6 mb-2 text-base">3. La procédure à suivre</h4>
+            <p>
+                Compte tenu des éléments médicaux discutés ce jour, il est de votre responsabilité de :
+            </p>
+            <ol class="list-decimal list-inside space-y-2 ml-2 mt-2 font-semibold text-indigo-900">
+                <li>Ne pas conduire tant que votre état n'est pas stabilisé ou validé.</li>
+                <li>Prendre rendez-vous avec un Médecin Agréé (cabinet de ville) pour le permis de conduire.</li>
+                <li>Lui présenter les courriers et examens médicaux récents.</li>
+            </ol>
+            
+            <p class="font-bold text-slate-900 mt-4 border border-slate-300 p-2 bg-slate-50 text-center text-sm">
+                La démarche de régularisation auprès du médecin agréé relève de votre entière et unique responsabilité.
+            </p>
+
+            <div class="mt-2 text-[11px] text-slate-600 bg-slate-50 border-l-2 border-slate-400 pl-3 py-2 italic">
+                <p><strong>Article 4 (Arrêté du 28/03/2022) :</strong> « Le titulaire d'un permis de conduire, atteint de l'une des affections médicales mentionnées [...], sollicite, dès qu'il a connaissance de cette affection, l'avis d'un médecin agréé. »</p>
+                <p class="mt-1"><strong>Article 5 :</strong> « Avant chaque contrôle médical, l'usager répond loyalement, par écrit, à un questionnaire à l'usage exclusif du médecin agréé [...] (Annexe III). »</p>
+            </div>
+            
+            <p class="text-xs text-slate-500 mt-4 italic">
+                Note : Pour les permis "Lourds" (Poids lourds, Transports en commun, Taxis...), la réglementation est plus stricte et le contrôle médical est systématique.
+            </p>
+
+        </div>
+
+        <!-- Signature -->
+        <div class="mt-12 pt-8 border-t border-slate-300 grid grid-cols-2">
+            <div>
+                <p class="text-xs font-bold mb-8">Information remise en main propre le: ....../....../.........</p>
+            </div>
+            <div class="text-right">
+                <p class="text-xs font-bold mb-12">Signature du Médecin :</p>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center text-[10px] text-slate-400">
+            Document remis conformément à l'article R.412-6 du Code de la Route et à l'arrêté du 28/03/2022.
+        </div>
+
+    </div>
+
+</body>
+</html>
