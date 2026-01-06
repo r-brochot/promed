@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Hypnotiques - Dr R. BROCHOT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fff; color: #333; }
+        @media print {
+            .no-print { display: none !important; }
+            body { font-size: 11pt; padding: 0; background: white; }
+            .container { max-width: 100% !important; border: none !important; shadow: none !important; padding: 0 !important; margin: 0 !important; }
+            .card { break-inside: avoid; border: 1px solid #ddd; }
+            h2 { color: #000 !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 p-4 md:p-8">
+
+    <div class="container max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-lg border border-slate-200">
+        
+        <!-- En-tête -->
+        <div class="border-b-2 border-slate-800 pb-4 mb-8 flex justify-between items-start">
+            <div>
+                <h1 class="text-xl font-bold uppercase tracking-widest text-slate-900">Dr Rémi BROCHOT</h1>
+                <p class="text-sm text-slate-600 font-semibold">Médecine du Sommeil</p>
+            </div>
+            <div class="text-right text-sm text-slate-500 italic">
+                <p>Fiche d'information Médicament</p>
+                <p>Réf: MED-HYP-2026</p>
+            </div>
+        </div>
+
+        <!-- Titre -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-slate-800 uppercase mb-2">
+                Les Hypnotiques ("Somnifères")
+            </h2>
+            <p class="text-slate-600 max-w-2xl mx-auto italic">
+                Information sur le bon usage, les risques et le sevrage.
+            </p>
+        </div>
+
+        <!-- Warning Box -->
+        <div class="bg-amber-50 border-l-8 border-amber-500 p-6 mb-8 rounded-r-lg">
+            <h3 class="text-xl font-bold text-amber-900 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation"></i> Ce qu'il faut retenir
+            </h3>
+            <p class="text-amber-800 leading-relaxed">
+                Le somnifère classique est une <strong>aide ponctuelle</strong> (insomnie aiguë). Il ne guérit pas la cause.<br>
+                Pour l'insomnie chronique, le traitement de référence reste la <strong>Thérapie Comportementale et Cognitive (TCC)</strong>.
+            </p>
+        </div>
+
+        <!-- Les 3 Règles d'Or -->
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="card bg-slate-50 p-5 rounded-lg border-t-4 border-blue-500 text-center">
+                <div class="text-3xl text-blue-500 mb-3"><i class="fa-solid fa-hourglass-half"></i></div>
+                <h4 class="font-bold text-slate-800 mb-2">Durée Limitée</h4>
+                <p class="text-sm text-slate-600">Prescription limitée à <strong>4 semaines maximum</strong> (28 jours) pour éviter l'accoutumance et la dépendance.</p>
+            </div>
+            <div class="card bg-slate-50 p-5 rounded-lg border-t-4 border-red-500 text-center">
+                <div class="text-3xl text-red-500 mb-3"><i class="fa-solid fa-ban"></i></div>
+                <h4 class="font-bold text-slate-800 mb-2">Pas d'alcool</h4>
+                <p class="text-sm text-slate-600">L'association avec l'alcool est dangereuse (risque de coma, apnées, chutes).</p>
+            </div>
+            <div class="card bg-slate-50 p-5 rounded-lg border-t-4 border-purple-500 text-center">
+                <div class="text-3xl text-purple-500 mb-3"><i class="fa-solid fa-bed"></i></div>
+                <h4 class="font-bold text-slate-800 mb-2">Au lit !</h4>
+                <p class="text-sm text-slate-600">À prendre <strong>juste au moment du coucher</strong> (pas 1h avant devant la télé !).</p>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+            
+            <!-- Les Risques -->
+            <div>
+                <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">⚠️ Les Risques et Effets Secondaires</h3>
+                <ul class="space-y-4 text-sm text-slate-700">
+                    
+                    <!-- ALERTE CONDUITE -->
+                    <li class="flex items-start gap-3 bg-red-50 p-3 rounded-lg border border-red-100">
+                        <i class="fa-solid fa-car-burst text-red-600 mt-1 text-lg"></i>
+                        <div>
+                            <strong class="text-red-700 uppercase">Conduite Automobile : DANGER</strong><br>
+                            Risque important de somnolence le lendemain matin. La vigilance peut être altérée même sans sensation de fatigue.<br>
+                            <strong>Soyez extrêmement prudent.</strong>
+                        </div>
+                    </li>
+
+                    <li class="flex items-start gap-3 px-2">
+                        <i class="fa-solid fa-link text-slate-500 mt-1"></i>
+                        <div>
+                            <strong>Dépendance & Accoutumance :</strong><br>
+                            Le corps s'habitue, l'effet diminue avec le temps. L'arrêt brutal provoque un rebond.
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3 px-2">
+                        <i class="fa-solid fa-person-falling text-orange-500 mt-1"></i>
+                        <div>
+                            <strong>Chutes :</strong><br>
+                            Risque majeur de chute la nuit (surtout chez le sujet âgé).
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3 px-2">
+                        <i class="fa-solid fa-brain text-slate-500 mt-1"></i>
+                        <div>
+                            <strong>Mémoire :</strong><br>
+                            Risque d'amnésie des faits récents et troubles de la concentration.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tableau des Molécules -->
+            <div>
+                <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">💊 Durée d'action (Demi-vie)</h3>
+                <div class="overflow-hidden rounded-lg border border-slate-200">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-slate-100 text-slate-700 font-bold">
+                            <tr>
+                                <th class="p-3">Médicament</th>
+                                <th class="p-3">Indication</th>
+                                <th class="p-3">Demi-vie</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <!-- Classiques -->
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Zolpidem (Stilnox®)</td>
+                                <td class="p-3 text-slate-600">Endormissement</td>
+                                <td class="p-3">Courte (~2h30)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Zopiclone (Imovane®)</td>
+                                <td class="p-3 text-slate-600">Maintien</td>
+                                <td class="p-3">Moyenne (~5h)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold">Loprazolam (Havlane®)</td>
+                                <td class="p-3 text-slate-600">Maintien</td>
+                                <td class="p-3">Moyenne (~8h)</td>
+                            </tr>
+                            <!-- Nouveau : Quviviq -->
+                            <tr class="bg-indigo-50 hover:bg-indigo-100 border-t-2 border-indigo-100">
+                                <td class="p-3">
+                                    <div class="font-bold text-indigo-900">Daridorexant (Quviviq®)</div>
+                                    <div class="text-[10px] text-indigo-700 mt-1 font-semibold">
+                                        <i class="fa-solid fa-star text-yellow-500 mr-1"></i>Seul traitement avec AMM "Insomnie Chronique"
+                                    </div>
+                                </td>
+                                <td class="p-3 text-indigo-800 text-xs">
+                                    <strong>Traitement de fond</strong><br>
+                                    (Toujours associé aux TCC/ETP)
+                                </td>
+                                <td class="p-3 text-indigo-800">Moyenne (~8h)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-slate-400 mt-2 italic">
+                    *Demi-vie : temps d'élimination par l'organisme. Plus elle est longue, plus le risque de somnolence le lendemain matin est élevé.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Sevrage (Simplifié) -->
+        <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+            <h3 class="text-lg font-bold text-blue-900 mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-stairs"></i> Comment arrêter ? (Le Sevrage)
+            </h3>
+            <p class="text-blue-800 text-sm font-medium leading-relaxed">
+                En cas d'usage prolongé, <strong>il ne faut pas arrêter brutalement</strong>. L'arrêt doit être progressif pour éviter l'insomnie de rebond.<br>
+                <span class="block mt-2 font-bold"><i class="fa-solid fa-user-doctor mr-1"></i> Parlez-en à votre médecin pour établir un plan de décroissance personnalisé.</span>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-xs text-slate-400 border-t pt-4">
+            <p>Document remis par le Dr Rémi BROCHOT. Ne modifiez pas votre traitement sans avis médical.</p>
+        </div>
+
+    </div>
+
+    <!-- Bouton Imprimer -->
+    <div class="no-print fixed bottom-8 right-8">
+        <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-full shadow-xl flex items-center gap-3 transition-transform hover:scale-105">
+            <i class="fa-solid fa-print"></i> Imprimer la fiche
+        </button>
+    </div>
+
+</body>
+</html>
