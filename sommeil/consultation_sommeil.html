@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche de Consultation Sommeil</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative; /* Pour le footer */
+            padding-bottom: 50px; /* Espace pour le footer */
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        h2.section-title {
+            color: #2980b9;
+            font-size: 1.2em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 5px solid #2980b9;
+            padding-left: 10px;
+            background-color: #f9f9f9;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        
+        h2.section-title.respi-title { border-left-color: #e74c3c; }
+        h2.section-title.sleep-title { border-left-color: #3f51b5; background-color: #e8eaf6; }
+
+        /* Grilles Générales */
+        .ident-grid, .bio-grid, .atcd-frs-grid, .risk-grid, .respi-grid, .score-grid-top, .sleep-grid, .psy-grid, .score-grid-bottom {
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .ident-grid {
+            display: grid;
+            grid-template-columns: 1fr 3fr; 
+            gap: 20px;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            align-items: center;
+        }
+
+        .bio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            background-color: #eef2f3;
+        }
+        
+        /* ATCD Grid (Modifiée pour supporter les colonnes spécialités) */
+        .atcd-frs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+        
+        .box-atcd {
+            background-color: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 8px;
+            height: 100%;
+        }
+        .box-atcd h3 {
+            font-size: 1em; color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px; text-transform: uppercase; font-weight: 700;
+        }
+        
+        .frs-box {
+            background-color: #fff3e0;
+            border-left: 3px solid #e67e22;
+            border-radius: 0 4px 4px 0;
+            padding: 4px 8px;
+            margin-bottom: 6px;
+        }
+        
+        .sub-option {
+            display: none; 
+            margin-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 8px;
+            padding-left: 10px;
+            border-left: 2px solid #ddd;
+        }
+        
+        .precision-input {
+            display: none;
+            width: 90%;
+            margin-top: 5px;
+            margin-left: 30px;
+            padding: 5px;
+            font-size: 0.9em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .full-width { grid-column: 1 / -1; }
+
+        .toxiques-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 10px;
+            background-color: #fafafa;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            background-color: #fff4e6;
+            border: 1px solid #ffe0b2;
+        }
+        
+        .score-grid-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background-color: #eef2f3;
+        }
+
+        .respi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background-color: #fff;
+            border: 1px solid #eee;
+        }
+        
+        .symptom-box {
+            background-color: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+        }
+        .symptom-box h3 { font-size: 1em; color: #555; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+
+        .sleep-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background-color: #e8eaf6;
+            border: 1px solid #c5cae9;
+        }
+        .box {
+            background-color: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .hidden-section {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #3f51b5;
+            border-radius: 0 4px 4px 0;
+        }
+        .radio-group { display: flex; gap: 15px; align-items: center; }
+
+        .psy-container {
+            background-color: #f3e5f5;
+            border: 1px solid #e1bee7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .psy-toggle { margin-bottom: 15px; text-align: center; border-bottom: 1px solid #d1c4e9; padding-bottom: 10px;}
+        .psy-scores {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .score-grid-bottom {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            background-color: #fff;
+            border: 1px solid #eee;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        .ident-grid .form-group { margin-bottom: 0; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="number"], input[type="text"], input[type="time"], select, textarea {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-size: 16px; font-family: inherit;
+        }
+        textarea { resize: vertical; }
+        input:focus, select:focus, textarea:focus { border-color: #3498db; outline: none; box-shadow: 0 0 5px rgba(52, 152, 219, 0.2); }
+
+        /* Checkboxes */
+        .checkbox-container {
+            display: block; position: relative; padding-left: 35px; margin-bottom: 10px; cursor: pointer; font-size: 15px; user-select: none; color: #444; line-height: 1.4; padding-top: 2px; padding-bottom: 2px; border-radius: 4px; transition: background-color 0.2s;
+        }
+        .frs-box .checkbox-container, .sub-option .checkbox-container { margin-bottom: 0; }
+        .checkbox-container input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
+        .checkmark { position: absolute; top: 2px; left: 0; height: 20px; width: 20px; background-color: #fff; border: 2px solid #ccc; border-radius: 4px; transition: all 0.2s; }
+        .respi-grid .checkmark { left: 5px; } 
+        .checkbox-container:hover input ~ .checkmark { background-color: #f0f0f0; }
+        .checkbox-container input:checked ~ .checkmark { background-color: #3498db; border-color: #3498db; }
+        
+        .risk-grid .checkbox-container input:checked ~ .checkmark,
+        .frs-box .checkbox-container input:checked ~ .checkmark, 
+        .sub-option .checkbox-container input:checked ~ .checkmark { background-color: #e67e22; border-color: #e67e22; }
+        
+        .respi-grid .checkbox-container input:checked ~ .checkmark { background-color: #e74c3c; border-color: #e74c3c; }
+        
+        .sleep-grid .checkbox-container input:checked ~ .checkmark { background-color: #3f51b5; border-color: #3f51b5; }
+        
+        .checkbox-container.auto-checked input:checked ~ .checkmark { background-color: #c0392b; border: 2px solid #e74c3c; }
+        .atcd-frs-grid .frs-tag { color: #e67e22; font-weight: bold; font-size: 0.8em; margin-left: 5px; }
+        .checkmark:after { content: ""; position: absolute; display: none; left: 6px; top: 2px; width: 5px; height: 10px; border: solid white; border-width: 0 3px 3px 0; transform: rotate(45deg); }
+        .respi-grid .checkmark:after { left: 7px; top: 3px; }
+        .checkbox-container input:checked ~ .checkmark:after { display: block; }
+        
+        .criteria-value { color: #666; font-size: 0.85em; font-weight: normal; display: block; margin-top: 2px; }
+        .cerfa-positive { background-color: #fff3e0; font-weight: 600; color: #e67e22; }
+
+        input.clickable { background-color: #e8f6fd; cursor: pointer; border: 1px solid #3498db; color: #2980b9; font-weight: bold; }
+        input.clickable:hover { background-color: #d6eaf8; }
+        input[readonly].readonly-data { background-color: #f0f0f0; color: #555; cursor: default; }
+        input[readonly].alert-metabolic { background-color: #ffebee; color: #c0392b; border-color: #e74c3c; font-weight: bold; }
+
+        .unit { font-size: 0.85em; color: #7f8c8d; font-weight: normal; margin-left: 5px; }
+        
+        .pathology-warning, .imc-warning, .driving-warning { color: #c0392b; font-size: 0.85em; font-weight: bold; margin-top: 5px; display: none; }
+        .imc-warning { background-color: #fcece4; padding: 4px; border-radius: 4px; border-left: 3px solid #d35400; color: #d35400;}
+        .driving-warning { background-color: #ffebee; padding: 5px; border-radius: 4px; border: 1px solid #ef9a9a; }
+        .ppc-alert { display: none; background-color: #e8f5e9; color: #2e7d32; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-weight: bold; border: 1px solid #a5d6a7; text-align: center; }
+
+        /* Styles Spécifiques Modal */
+        .had-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .question-block { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+        .question-text { font-weight: bold; margin-bottom: 5px; display: block; color: #2c3e50; font-size: 0.95em; }
+        .type-tag { font-size: 0.7em; text-transform: uppercase; color: #999; float: right; margin-top: 2px; }
+        .option-label { display: block; margin-bottom: 3px; cursor: pointer; font-size: 0.9em; padding: 2px 5px; border-radius: 4px; transition: background 0.2s; }
+        .option-label:hover { background-color: #f5f5f5; }
+        .option-label input { margin-right: 10px; }
+        
+        .mallampati-selector { display: flex; gap: 10px; margin-top: 5px; }
+        .mallampati-option { flex: 1; text-align: center; border: 1px solid #ddd; border-radius: 4px; padding: 5px; cursor: pointer; font-size: 0.9em; }
+        .mallampati-option:hover { background-color: #f0f0f0; }
+        .mallampati-option.selected { background-color: #e74c3c; color: white; border-color: #c0392b; }
+        .sub-label { font-size: 0.85em; color: #777; display: block; margin-top: 5px; }
+        .link-schema { font-size: 0.8em; color: #3498db; cursor: pointer; text-decoration: underline; margin-left: 5px; }
+        .radio-label-row { display: inline-flex; align-items: center; margin-right: 15px; cursor: pointer; font-size: 0.95em; }
+        .radio-label-row input { margin-right: 5px; width: auto; height: auto;}
+        
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            font-size: 0.7em;
+            color: #aaa;
+            margin-top: 40px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* --- MODAL --- */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+        .modal-content { background-color: #fefefe; margin: 2% auto; padding: 25px; border: 1px solid #888; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: slideDown 0.3s ease-out; }
+        .modal-content.large { max-width: 800px; }
+        .modal-image-content { background-color: #fefefe; margin: 5% auto; padding: 10px; border: 1px solid #888; width: auto; max-width: 800px; border-radius: 8px; text-align: center; }
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+        .modal-header h2 { margin: 0; color: #2c3e50; font-size: 1.5em; }
+        .close { color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer; transition: color 0.2s; }
+        .close:hover { color: #e74c3c; }
+
+        .nosas-intro { background-color: #fff8e1; padding: 10px; border-radius: 4px; border-left: 4px solid #f1c40f; margin-bottom: 15px; font-size: 0.9em; color: #7f6000; }
+        
+        .modal-item { margin-bottom: 10px; padding: 10px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .modal-question { flex-grow: 1; padding-right: 15px; font-weight: 500;}
+        .modal-options { display: flex; gap: 10px; min-width: 140px; justify-content: flex-end;}
+        
+        /* Layout vertical pour options rMEQ */
+        .vertical-options { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
+        
+        .radio-label { display: flex; flex-direction: column; align-items: center; font-size: 0.8em; color: #666; cursor: pointer; }
+        .nosas-item.auto-detected { background-color: #f0fff4; border: 1px solid #27ae60; padding: 10px; border-radius: 4px; margin-bottom: 10px;}
+        
+        .score-display { text-align: center; margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 6px; font-weight: bold; font-size: 1.2em; }
+        .btn-validate { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .btn-print { display: block; width: 200px; margin: 40px auto 0; padding: 12px 20px; background-color: #34495e; color: white; border: none; cursor: pointer; border-radius: 6px; font-size: 16px; text-align: center; }
+        .score-alert { background-color: #ffebee !important; color: #c0392b !important; border-color: #e74c3c !important; }
+
+        @media print {
+            body { background-color: white; padding: 0; font-size: 11pt; }
+            .container { box-shadow: none; width: 100%; max-width: 100%; padding: 0; margin: 0; }
+            .btn-print { display: none; }
+            h1 { font-size: 14pt; margin-bottom: 10px; border-bottom: 1px solid #000; }
+            h2.section-title { font-size: 12pt; border: none; padding: 0; margin-top: 15px; color: #000; font-weight: bold; text-decoration: underline; background: none;}
+            .bio-grid, .risk-grid, .atcd-frs-grid, .sleep-grid, .psy-container, .general-history-grid, .respi-grid, .score-grid-top, .score-grid-bottom { border: 1px solid #ccc; background-color: transparent; page-break-inside: avoid; margin-bottom: 10px; padding: 5px; }
+            .ident-grid { border: none; padding: 0; margin-bottom: 5px; }
+            input, select, textarea { border: none; border-bottom: 1px dotted #999; padding: 0; background: transparent !important; }
+            textarea { height: auto; resize: none; }
+            .pathology-warning, .imc-warning, .driving-warning { color: black; font-style: italic; background: none; border: none; padding: 0;}
+            .psy-scores { display: grid !important; } 
+            .psy-toggle { display: none; }
+            #ant_fam_precision:placeholder-shown { display: none !important; }
+            
+            .sub-option, .precision-input { display: block !important; border:none; padding:0; margin-left: 20px; }
+            .sub-option input:not(:checked) + .checkmark { display:none; }
+            .precision-input:placeholder-shown { display: none !important; }
+            
+            /* Print specifics Respi & Sommeil */
+            .respi-grid, .sleep-grid, .atcd-frs-grid { grid-template-columns: 1fr 1fr; }
+            .mallampati-option { border: 1px solid #000; }
+            .mallampati-option.selected { background-color: #ddd !important; color: black !important; border: 2px solid black; }
+            .clickable { border: none !important; }
+            #nycturie_precision, #ronflement_precision, #dentier_precision, #nez_precision_div { display: block !important; }
+            .cerfa-positive { background-color: #eee !important; color: black !important; font-weight: bold; }
+            .ppc-alert { display: block !important; border: 2px solid black; color: black; }
+            .link-schema { display: none; }
+            .hidden-section { display: block !important; border: none; padding: 0; }
+            .radio-group { display: none; }
+            
+            /* Footer */
+            .footer { position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 0.6em; border-top: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Synthèse Consultation Sommeil</h1>
+
+    <!-- Identification Patient -->
+    <div class="ident-grid">
+        <div class="form-group">
+            <label>Initiales</label>
+            <input type="text" id="initiales" placeholder="Ex: JD" style="text-transform: uppercase;">
+        </div>
+        <div class="form-group">
+            <label>Profession <span class="unit">(Poste à risque ?)</span></label>
+            <input type="text" id="profession" placeholder="Ex: Chauffeur PL, Travail posté, SNCF...">
+        </div>
+    </div>
+
+    <!-- Données Biométriques -->
+    <h2 class="section-title">Données Biométriques</h2>
+    <div class="bio-grid">
+        <div class="form-group">
+            <label>Sexe</label>
+            <select id="sexe" onchange="updateCalculations()">
+                <option value="H">Homme</option>
+                <option value="F">Femme</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Age <span class="unit">(ans)</span></label>
+            <input type="number" id="age" placeholder="Ans">
+        </div>
+        <div class="form-group">
+            <label>Poids <span class="unit">(kg)</span></label>
+            <input type="number" id="poids" oninput="calculateBMI()" placeholder="80">
+        </div>
+        <div class="form-group">
+            <label>Taille <span class="unit">(m)</span></label>
+            <input type="number" id="taille" step="0.01" oninput="calculateBMI()" placeholder="1.75">
+        </div>
+        <div class="form-group">
+            <label>IMC <span class="unit">(kg/m²)</span></label>
+            <input type="number" id="imc" class="readonly-data" readonly tabindex="-1">
+            <div id="imc_warning" class="imc-warning">⚠️ IMC > 35 : Rechercher SOH (Gazo ?) / Polygraphie (si Chir Bariatrique)</div>
+        </div>
+        <div class="form-group">
+            <label>Tour de Cou <span class="unit">(cm)</span></label>
+            <input type="number" id="cou" placeholder="42">
+        </div>
+    </div>
+
+    <!-- Antécédents & Facteurs de Risques Spécifiques (FRS) -->
+    <h2 class="section-title">Antécédents & Facteurs de Risques Spécifiques (FRS)</h2>
+    <div class="atcd-frs-grid">
+        <!-- COLONNE GAUCHE -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+            <!-- CARDIOLOGIE -->
+            <div class="box-atcd">
+                <h3>Cardiologie</h3>
+                <label class="checkbox-container">HTA (Hypertension)
+                    <input type="checkbox" id="atcd_hta" onchange="toggleHtaResistante(); syncMetabolic();">
+                    <span class="checkmark"></span>
+                </label>
+                <div id="sub_hta_resistante" class="sub-option">
+                    <div class="frs-box"><label class="checkbox-container">HTA Résistante <span class="frs-tag">(FRS)</span><input type="checkbox" id="atcd_hta_resistante"><span class="checkmark"></span></label></div>
+                </div>
+                <div class="frs-box"><label class="checkbox-container">Coronaropathie <span class="frs-tag">(FRS)</span><input type="checkbox" id="atcd_coro"><span class="checkmark"></span></label></div>
+                <div class="frs-box"><label class="checkbox-container">Arythmie / FA <span class="frs-tag">(FRS)</span><input type="checkbox" id="atcd_fa"><span class="checkmark"></span></label></div>
+                <div class="frs-box"><label class="checkbox-container">AVC / AIT <span class="frs-tag">(FRS)</span><input type="checkbox" id="atcd_avc"><span class="checkmark"></span></label></div>
+                <div class="frs-box"><label class="checkbox-container">Insuffisance Cardiaque <span class="frs-tag">(FRS)</span><input type="checkbox" id="atcd_ic"><span class="checkmark"></span></label></div>
+            </div>
+
+            <!-- METABOLIQUE -->
+            <div class="box-atcd">
+                <h3>Métabolisme</h3>
+                <label class="checkbox-container">Diabète <input type="checkbox" id="atcd_diabete" onchange="syncMetabolic()"><span class="checkmark"></span></label>
+                <label class="checkbox-container">Dyslipidémie <input type="checkbox" id="atcd_dyslip" onchange="syncMetabolic()"><span class="checkmark"></span></label>
+            </div>
+        </div>
+
+        <!-- COLONNE DROITE -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+            <!-- PNEUMOLOGIE -->
+            <div class="box-atcd">
+                <h3>Pneumologie</h3>
+                <label class="checkbox-container">BPCO <input type="checkbox" id="atcd_bpco"><span class="checkmark"></span></label>
+                <label class="checkbox-container">Asthme <input type="checkbox" id="atcd_asthme"><span class="checkmark"></span></label>
+                <label class="checkbox-container">Oxygénothérapie <input type="checkbox" id="atcd_oxy" onchange="togglePrecision('atcd_oxy', 'prec_oxy')"><span class="checkmark"></span></label>
+                <input type="text" id="prec_oxy" class="precision-input" placeholder="Préciser l'indication...">
+                <label class="checkbox-container">VNI (Ventilation) <input type="checkbox" id="atcd_vni" onchange="togglePrecision('atcd_vni', 'prec_vni')"><span class="checkmark"></span></label>
+                <input type="text" id="prec_vni" class="precision-input" placeholder="Préciser l'indication...">
+            </div>
+
+            <!-- NEUROLOGIE -->
+            <div class="box-atcd">
+                <h3>Neurologie</h3>
+                <label class="checkbox-container">Troubles cognitifs <input type="checkbox" id="atcd_cognitif"><span class="checkmark"></span></label>
+                <label class="checkbox-container">SEP (Sclérose en Plaques) <input type="checkbox" id="atcd_sep"><span class="checkmark"></span></label>
+                <label class="checkbox-container">Maladie Neurodégénérative <input type="checkbox" id="atcd_neurodege"><span class="checkmark"></span></label>
+            </div>
+            
+            <!-- OPHTALMO -->
+            <div class="box-atcd">
+                <h3>Ophtalmologie</h3>
+                <div class="frs-box"><label class="checkbox-container">Glaucome <span class="frs-tag">(FRS)</span><input type="checkbox" id="atcd_glaucome"><span class="checkmark"></span></label></div>
+            </div>
+        </div>
+
+        <!-- BAS DE PAGE -->
+        <div class="full-width" style="margin-top:10px;">
+            <textarea id="ant_libres" rows="2" placeholder="Antécédents libres (Chirurgie ORL, Allergies...)..."></textarea>
+        </div>
+        <div class="full-width" style="margin-bottom:15px;">
+            <label>Traitements en cours :</label>
+            <textarea id="traitement_actuel" rows="1" placeholder="Lister les traitements sédatifs ou stimulants..."></textarea>
+        </div>
+
+        <div class="full-width" style="border-top:1px solid #eee; padding-top:15px;">
+            <div class="toxiques-row">
+                <label class="checkbox-container">Tabac <input type="checkbox" id="tox_tabac"><span class="checkmark"></span></label>
+                <label class="checkbox-container">Alcool <input type="checkbox" id="tox_alcool"><span class="checkmark"></span></label>
+                <label class="checkbox-container">Toxiques (Drogues) <input type="checkbox" id="tox_autres" onchange="document.getElementById('tox_precision').focus()"><span class="checkmark"></span></label>
+                <input type="text" id="tox_precision" placeholder="Préciser..." style="flex-grow: 1; min-width: 100px; width:auto; border:none; border-bottom:1px solid #ddd;">
+                
+                <div id="fam_history_container" style="display: flex; align-items: center; margin-left:20px; gap: 10px; padding: 5px; border-radius: 4px; transition: all 0.3s;">
+                    <label style="margin:0; font-size:0.95em; font-weight:600;">ATCD Familiaux Sommeil :</label>
+                    <label class="radio-label" style="flex-direction: row; gap:5px; margin:0;"><input type="radio" name="ant_fam" value="non" checked onclick="toggleAntFam(false)"> Non</label>
+                    <label class="radio-label" style="flex-direction: row; gap:5px; margin:0;"><input type="radio" name="ant_fam" value="oui" onclick="toggleAntFam(true)"> Oui</label>
+                    <input type="text" id="ant_fam_precision" placeholder="Préciser..." style="display:none; width: 150px; border:none; border-bottom: 1px solid #3498db; background: transparent;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calculateur Syndrome Métabolique -->
+    <h2 class="section-title">Calculateur Syndrome Métabolique</h2>
+    <div class="risk-grid">
+        <div class="form-group">
+            <label style="margin-bottom:15px;">Critères Biologiques & Pression :</label>
+            <label class="checkbox-container">HTA (Traitée ou > 140/90) <input type="checkbox" id="met_hta" onchange="checkMetabolicSyndrome()"><span class="checkmark"></span></label>
+            <label class="checkbox-container">Hypertriglycéridémie (≥ 1.50 g/l) <input type="checkbox" id="met_tg" onchange="checkMetabolicSyndrome()"><span class="checkmark"></span></label>
+            <label class="checkbox-container">HDL-Cholestérol bas <span id="hdl_limit_text">(&lt; 0.40 g/l)</span> <input type="checkbox" id="met_hdl" onchange="checkMetabolicSyndrome()"><span class="checkmark"></span></label>
+            <label class="checkbox-container">Hyperglycémie / Diabète (> 1.0 g/l) <input type="checkbox" id="met_diabete" onchange="checkMetabolicSyndrome()"><span class="checkmark"></span></label>
+        </div>
+        <div class="form-group">
+            <label>Périmètre Abdominal <span class="unit">(cm)</span></label>
+            <input type="number" id="perimetre_abdo" oninput="checkMetabolicSyndrome()" placeholder="Mesure au nombril">
+            <div id="waist_status" class="pathology-warning">⚠️ Pathologique (> <span id="waist_limit">94</span>cm)</div>
+        </div>
+        <div class="form-group">
+            <label>Résultat Syndrome Métabolique</label>
+            <input type="text" id="metabolic_result" class="readonly-data" readonly placeholder="En attente...">
+        </div>
+    </div>
+
+    <!-- Échelles de Sévérité -->
+    <h2 class="section-title">Échelles de Sévérité (Somnolence & Fatigue)</h2>
+    <div class="score-grid-top">
+        <div>
+            <label>EPWORTH (Somnolence) <span class="unit">/24 (Patho > 10)</span></label>
+            <input type="text" id="epworth" class="clickable" placeholder="Cliquez pour calculer" readonly onclick="openEpworthModal()">
+            <div id="epworth_driving_warning" class="driving-warning">⚠️ Risque Conduite : Remettre fiche info</div>
+        </div>
+        <div>
+            <label>FSS (Fatigue) <span class="unit">/63 (Patho > 36)</span></label>
+            <input type="text" id="fss" class="clickable" placeholder="Cliquez pour calculer" readonly onclick="openFSSModal()">
+        </div>
+    </div>
+
+    <!-- Troubles Respiratoires -->
+    <h2 class="section-title respi-title">Troubles Respiratoires du Sommeil & Morphologie</h2>
+    
+    <div id="ppc_alert" class="ppc-alert">✅ Indication PPC/OAM possible : Critères Cliniques remplis (≥ 3 symptômes)</div>
+    
+    <div class="respi-grid">
+        <!-- Colonne 1 : Signes Cliniques -->
+        <div class="symptom-box">
+            <h3>Signes Nocturnes & Diurnes</h3>
+            
+            <label class="checkbox-container" id="lbl_somnolence">Somnolence Diurne
+                <input type="checkbox" id="respi_somnolence" onchange="checkCerfaCriteria()">
+                <span class="checkmark"></span>
+            </label>
+            <label class="checkbox-container" id="lbl_fatigue">Fatigue Diurne
+                <input type="checkbox" id="respi_fatigue" onchange="checkCerfaCriteria()">
+                <span class="checkmark"></span>
+            </label>
+            <label class="checkbox-container" id="lbl_somnolence_severe">Somnolence sévère / Risque accidentel
+                <input type="checkbox" id="respi_somnolence_severe" onchange="checkCerfaCriteria()">
+                <span class="checkmark"></span>
+            </label>
+            
+            <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
+
+            <!-- RONFLEMENT -->
+            <label class="checkbox-container" id="lbl_ronflement">Ronflements
+                <input type="checkbox" id="respi_ronflement" onchange="toggleRonflement(); checkCerfaCriteria();">
+                <span class="checkmark"></span>
+            </label>
+            <div id="ronflement_precision" style="margin-left: 30px; margin-bottom: 10px; display:none;">
+                <select id="respi_ronflement_type" style="font-size: 0.9em; padding: 4px;" onchange="checkCerfaCriteria()">
+                    <option value="">Préciser...</option>
+                    <option value="simple">Simple / Positionnel</option>
+                    <option value="severe">Sévère et quotidien</option> 
+                    <option value="intrusif">Incommodant l'entourage</option>
+                </select>
+            </div>
+
+            <label class="checkbox-container" id="lbl_etouffement">Sensation d'étouffement / suffocation nocturne
+                <input type="checkbox" id="respi_etouffement" onchange="checkCerfaCriteria()">
+                <span class="checkmark"></span>
+            </label>
+
+            <!-- NYCTURIE -->
+            <label class="checkbox-container" id="lbl_nycturie">Nycturie
+                <input type="checkbox" id="respi_nycturie" onchange="toggleNycturie(); checkCerfaCriteria();">
+                <span class="checkmark"></span>
+            </label>
+            <div id="nycturie_precision" style="margin-left: 30px; margin-bottom: 10px; display:none;">
+                <select id="respi_nycturie_select" style="font-size: 0.9em; padding: 4px;" onchange="checkCerfaCriteria()">
+                    <option value="">Combien de fois ?</option>
+                    <option value="1">1 fois / nuit</option>
+                    <option value="2">≥ 2 fois (Significatif)</option>
+                </select>
+            </div>
+
+            <label class="checkbox-container" id="lbl_cephalee">Céphalées matinales (Hypoxie)
+                <input type="checkbox" id="respi_cephalee" onchange="checkCerfaCriteria()">
+                <span class="checkmark"></span>
+            </label>
+            
+            <hr style="border:0; border-top:1px solid #eee; margin:10px 0;">
+            
+            <!-- Autres -->
+            <label class="checkbox-container">Pauses respiratoires (Apnées)
+                <input type="checkbox" id="respi_pauses">
+                <span class="checkmark"></span>
+            </label>
+            <label class="checkbox-container">Sommeil non réparateur / Inertie
+                <input type="checkbox" id="respi_non_reparateur">
+                <span class="checkmark"></span>
+            </label>
+            <label class="checkbox-container">Sueurs nocturnes (Hypercapnie)
+                <input type="checkbox" id="respi_sueurs">
+                <span class="checkmark"></span>
+            </label>
+            <label class="checkbox-container">Éveils intra-sommeil
+                <input type="checkbox" id="respi_eveils">
+                <span class="checkmark"></span>
+            </label>
+            <label class="checkbox-container">Siestes
+                <input type="checkbox" id="respi_siestes">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+
+        <!-- Colonne 2 : Examen Physique -->
+        <div class="symptom-box">
+            <h3>Examen Morphologique (ORL)</h3>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight:600;">Présence de dents (Support OAM) :</label>
+                <div style="margin-bottom:5px;">
+                    <label class="radio-label-row"><input type="radio" name="orl_dents" value="oui" checked onchange="toggleDentier()"> Oui</label>
+                    <label class="radio-label-row"><input type="radio" name="orl_dents" value="non" onchange="toggleDentier()"> Non</label>
+                </div>
+                <div id="dentier_precision" style="display:none; margin-left:15px; background:#f9f9f9; padding:10px; border-radius:4px; border:1px solid #eee;">
+                    <label style="font-size:0.9em; font-weight:600; display:block; margin-bottom:5px;">Dentier / Appareillage :</label>
+                    <label class="checkbox-container" style="font-size:0.9em;">Complet Supérieur <input type="checkbox" id="dentier_sup"> <span class="checkmark"></span></label>
+                    <label class="checkbox-container" style="font-size:0.9em;">Complet Inférieur <input type="checkbox" id="dentier_inf"> <span class="checkmark"></span></label>
+                    <label class="checkbox-container" style="font-size:0.9em;">Les deux <input type="checkbox" id="dentier_deux"> <span class="checkmark"></span></label>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label>Dentition / Mâchoire :</label>
+                <label class="checkbox-container">Rétrognathie (Menton en retrait) <input type="checkbox" id="orl_retrognathie"><span class="checkmark"></span></label>
+                <label class="checkbox-container">Macroglossie (Grosse langue) <input type="checkbox" id="orl_macroglossie"><span class="checkmark"></span></label>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+
+            <div style="margin-bottom: 15px;">
+                <label>Score de Mallampati : <span class="link-schema" onclick="openImageModal('mallampati')">📷 (Voir Schéma)</span></label>
+                <div class="mallampati-selector">
+                    <div class="mallampati-option" onclick="selectMallampati(1, this)">I</div>
+                    <div class="mallampati-option" onclick="selectMallampati(2, this)">II</div>
+                    <div class="mallampati-option" onclick="selectMallampati(3, this)">III</div>
+                    <div class="mallampati-option" onclick="selectMallampati(4, this)">IV</div>
+                </div>
+                <input type="hidden" id="mallampati_val">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label>Amygdales (Friedman) : <span class="link-schema" onclick="openImageModal('friedman')">📷 (Voir Schéma)</span></label>
+                <select id="orl_amygdales">
+                    <option value="0">0 - Absentes / Invisibles</option>
+                    <option value="1">1 - Dans la loge</option>
+                    <option value="2">2 - Dépassent les piliers</option>
+                    <option value="3">3 - Touchent la luette</option>
+                    <option value="4">4 - "Kissing" (Se touchent)</option>
+                </select>
+            </div>
+            
+            <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+
+            <!-- NEZ -->
+            <div>
+                <label style="font-weight:600;">Nez (Obstruction ?) :</label>
+                <label class="checkbox-container">Déviation Septale <input type="checkbox" id="nez_deviation"> <span class="checkmark"></span></label>
+                <label class="checkbox-container">Polypose <input type="checkbox" id="nez_polypose"> <span class="checkmark"></span></label>
+                <label class="checkbox-container">Autres <input type="checkbox" id="nez_autres" onchange="toggleNezAutre()"> <span class="checkmark"></span></label>
+                <div id="nez_precision_div" style="display:none; margin-left:30px;">
+                    <input type="text" id="nez_precision" placeholder="Préciser (Cornets, etc.)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Encart Sommeil & Habitudes -->
+    <h2 class="section-title sleep-title">Sommeil & Habitudes </h2>
+    <div class="sleep-grid">
+        <!-- Colonne 1 : Rythme -->
+        <div>
+            <div class="box">
+                <div class="form-group">
+                    <label>Horaires Habituels (Semaine) :</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                        <div>
+                            <label style="font-size:0.85em; color:#777;">Mise au lit</label>
+                            <input type="time" id="heure_lit">
+                        </div>
+                        <div>
+                            <label style="font-size:0.85em; color:#777;">Endormissement</label>
+                            <input type="time" id="heure_dodo">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end;">
+                        <div>
+                            <label style="font-size:0.85em; color:#777;">Heure de Réveil</label>
+                            <input type="time" id="heure_reveil">
+                        </div>
+                        <div style="padding-bottom: 8px;">
+                            <label class="checkbox-container" style="margin:0; font-size:0.85em;">
+                                Avec Alarme ?
+                                <input type="checkbox" id="reveil_alarme">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Agenda du Sommeil :</label>
+                    <select id="agenda_sommeil">
+                        <option value="">Sélectionner...</option>
+                        <option value="non">Non réalisé</option>
+                        <option value="oui">Oui (Disponible)</option>
+                        <option value="faire">À faire (Prescrit ce jour)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="box">
+                <label>Dette de Sommeil / Rythme :</label>
+                <label class="checkbox-container">Dette de sommeil ressentie (Semaine)
+                    <input type="checkbox" id="dette_sommeil"><span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Horaires de travail décalés / Nuit
+                    <input type="checkbox" id="horaires_decales"><span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Utilisation écrans tardive (Netflix...)
+                    <input type="checkbox" id="ecrans_tard"><span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Bruit environnemental
+                    <input type="checkbox" id="bruit_env"><span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Colonne 2 : Pathologies -->
+        <div>
+            <!-- Chronotype (Déplacé ici) -->
+            <div class="box">
+                <label>Chronotype (HOR/OTS) <span class="unit">/25</span></label>
+                <input type="text" id="hor_ots" class="clickable" placeholder="Cliquez pour évaluer (rMEQ)" readonly onclick="openHorOtsModal()">
+            </div>
+
+            <div class="box" style="background-color: #fdfdfe;">
+                <div class="form-group">
+                    <label>Pathologies du sommeil CONNUES ?</label>
+                    <div class="radio-group">
+                        <label class="radio-label"><input type="radio" name="patho_connue" value="non" checked onchange="togglePatho(false)"> Non</label>
+                        <label class="radio-label"><input type="radio" name="patho_connue" value="oui" onchange="togglePatho(true)"> Oui</label>
+                    </div>
+                </div>
+
+                <div id="patho_details" class="hidden-section">
+                    <label class="checkbox-container">Parasomnies Sommeil Lent <input type="checkbox" id="patho_para_sl"><span class="checkmark"></span></label>
+                    <label class="checkbox-container">Parasomnies Sommeil Paradoxal <input type="checkbox" id="patho_para_sp"><span class="checkmark"></span></label>
+                    <label class="checkbox-container">Troubles du Rythme Circadien <input type="checkbox" id="patho_circadien"><span class="checkmark"></span></label>
+                    <label class="checkbox-container">Bruxisme Nocturne <input type="checkbox" id="patho_bruxisme"><span class="checkmark"></span></label>
+                    <label class="checkbox-container">Syndrome Jambes Sans Repos (SJSR) <input type="checkbox" id="patho_sjsr"><span class="checkmark"></span></label>
+                    <label class="checkbox-container">Mouvements Périodiques (MPJ) <input type="checkbox" id="patho_mpj"><span class="checkmark"></span></label>
+                    <label class="checkbox-container" style="color:#d35400;">Insomnie <input type="checkbox" id="patho_insomnie"><span class="checkmark"></span></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Encart Psy -->
+    <h2 class="section-title">Contexte Psychologique</h2>
+    <div class="psy-container">
+        <div class="psy-toggle">
+            <label style="display:inline-block; margin-right: 15px;">Syndrome Dépressif / Anxieux Suspecté ?</label>
+            <label style="display:inline-block; margin-right: 10px;">
+                <input type="radio" name="psy_suspect" value="non" checked onchange="togglePsy()"> Non
+            </label>
+            <label style="display:inline-block;">
+                <input type="radio" name="psy_suspect" value="oui" id="psy_suspect_yes" onchange="togglePsy()"> Oui
+            </label>
+        </div>
+
+        <div id="psy_scores" class="psy-scores">
+            <!-- NOUVEAU HAD -->
+            <div class="form-group">
+                <label>HAD - ANXIÉTÉ <span class="unit">/21 (>10 Patho)</span></label>
+                <input type="text" id="had_a" class="clickable" placeholder="Cliquez pour calculer" readonly onclick="openHadModal()">
+            </div>
+            <div class="form-group">
+                <label>HAD - DÉPRESSION <span class="unit">/21 (>10 Patho)</span></label>
+                <input type="text" id="had_d" class="clickable" placeholder="Cliquez pour calculer" readonly onclick="openHadModal()">
+            </div>
+        </div>
+    </div>
+
+    <!-- Dépistage Final -->
+    <h2 class="section-title">Dépistage Probabilité SAOS</h2>
+    <div class="score-grid-bottom">
+        <div class="form-group">
+            <label>NoSAS (Probabilité Clinique) <span class="unit">/17 (Positif > 7)</span></label>
+            <input type="text" id="nosas" class="clickable" placeholder="Cliquez pour calculer" readonly onclick="openNosasModal()">
+        </div>
+    </div>
+    
+    <div class="footer">
+        © 2026 – Dr Rémi Brochot. Reproduction ou diffusion interdite sans autorisation.
+    </div>
+
+    <button class="btn-print" onclick="window.print()">Imprimer la fiche</button>
+</div>
+
+<!-- MODAL HAD -->
+<div id="hadModal" class="modal"><div class="modal-content large"><div class="modal-header"><h2>Echelle HAD (Anxiété - Dépression)</h2><span class="close" onclick="closeModal('hadModal')">&times;</span></div><p style="margin-bottom:15px; font-size:0.9em; background:#f3e5f5; padding:10px; border-radius:4px; border-left:4px solid #8e44ad;">Cochez la réponse qui exprime le mieux ce que vous avez éprouvé <strong>au cours de la semaine passée</strong>.</p><form id="hadForm" onchange="updateHadTemp()"><div class="had-grid"><div><div class="question-block"><span class="question-text">1. Je me sens tendu(e) ou énervé(e). <span class="type-tag">A</span></span><label class="option-label"><input type="radio" name="had1" value="3"> La plupart du temps</label><label class="option-label"><input type="radio" name="had1" value="2"> Souvent</label><label class="option-label"><input type="radio" name="had1" value="1"> De temps en temps</label><label class="option-label"><input type="radio" name="had1" value="0"> Jamais</label></div><div class="question-block"><span class="question-text">2. Je prends plaisir aux mêmes choses qu’autrefois. <span class="type-tag">D</span></span><label class="option-label"><input type="radio" name="had2" value="0"> Oui, tout autant</label><label class="option-label"><input type="radio" name="had2" value="1"> Pas autant</label><label class="option-label"><input type="radio" name="had2" value="2"> Un peu seulement</label><label class="option-label"><input type="radio" name="had2" value="3"> Presque plus</label></div><div class="question-block"><span class="question-text">3. J’ai une sensation de peur comme si quelque chose d’horrible allait m’arriver. <span class="type-tag">A</span></span><label class="option-label"><input type="radio" name="had3" value="3"> Oui, très nettement</label><label class="option-label"><input type="radio" name="had3" value="2"> Oui, mais ce n’est pas trop grave</label><label class="option-label"><input type="radio" name="had3" value="1"> Un peu, mais cela ne m’inquiète pas</label><label class="option-label"><input type="radio" name="had3" value="0"> Pas du tout</label></div><div class="question-block"><span class="question-text">4. Je ris facilement et vois le bon côté des choses. <span class="type-tag">D</span></span><label class="option-label"><input type="radio" name="had4" value="0"> Autant que par le passé</label><label class="option-label"><input type="radio" name="had4" value="1"> Plus autant qu’avant</label><label class="option-label"><input type="radio" name="had4" value="2"> Vraiment moins qu’avant</label><label class="option-label"><input type="radio" name="had4" value="3"> Plus du tout</label></div><div class="question-block"><span class="question-text">5. Je me fais du souci. <span class="type-tag">A</span></span><label class="option-label"><input type="radio" name="had5" value="3"> Très souvent</label><label class="option-label"><input type="radio" name="had5" value="2"> Assez souvent</label><label class="option-label"><input type="radio" name="had5" value="1"> Occasionnellement</label><label class="option-label"><input type="radio" name="had5" value="0"> Très occasionnellement</label></div><div class="question-block"><span class="question-text">6. Je suis de bonne humeur. <span class="type-tag">D</span></span><label class="option-label"><input type="radio" name="had6" value="3"> Jamais</label><label class="option-label"><input type="radio" name="had6" value="2"> Rarement</label><label class="option-label"><input type="radio" name="had6" value="1"> Assez souvent</label><label class="option-label"><input type="radio" name="had6" value="0"> La plupart du temps</label></div><div class="question-block"><span class="question-text">7. Je peux rester tranquillement assis(e) à ne rien faire et me sentir décontracté(e). <span class="type-tag">A</span></span><label class="option-label"><input type="radio" name="had7" value="0"> Oui, quoi qu’il arrive</label><label class="option-label"><input type="radio" name="had7" value="1"> Oui, en général</label><label class="option-label"><input type="radio" name="had7" value="2"> Rarement</label><label class="option-label"><input type="radio" name="had7" value="3"> Jamais</label></div></div><div><div class="question-block"><span class="question-text">8. J’ai l’impression de fonctionner au ralenti. <span class="type-tag">D</span></span><label class="option-label"><input type="radio" name="had8" value="3"> Presque toujours</label><label class="option-label"><input type="radio" name="had8" value="2"> Très souvent</label><label class="option-label"><input type="radio" name="had8" value="1"> Parfois</label><label class="option-label"><input type="radio" name="had8" value="0"> Jamais</label></div><div class="question-block"><span class="question-text">9. J’éprouve des sensations de peur et j’ai l’estomac noué. <span class="type-tag">A</span></span><label class="option-label"><input type="radio" name="had9" value="0"> Jamais</label><label class="option-label"><input type="radio" name="had9" value="1"> Parfois</label><label class="option-label"><input type="radio" name="had9" value="2"> Assez souvent</label><label class="option-label"><input type="radio" name="had9" value="3"> Très souvent</label></div><div class="question-block"><span class="question-text">10. Je ne m’intéresse plus à mon apparence. <span class="type-tag">D</span></span><label class="option-label"><input type="radio" name="had10" value="3"> Plus du tout</label><label class="option-label"><input type="radio" name="had10" value="2"> Pas autant que je devrais</label><label class="option-label"><input type="radio" name="had10" value="1"> Plus autant qu'avant</label><label class="option-label"><input type="radio" name="had10" value="0"> Autant que par le passé</label></div><div class="question-block"><span class="question-text">11. J’ai la bougeotte et n’arrive pas à tenir en place. <span class="type-tag">A</span></span><label class="option-label"><input type="radio" name="had11" value="3"> Oui, c’est tout à fait le cas</label><label class="option-label"><input type="radio" name="had11" value="2"> Un peu</label><label class="option-label"><input type="radio" name="had11" value="1"> Pas tellement</label><label class="option-label"><input type="radio" name="had11" value="0"> Pas du tout</label></div><div class="question-block"><span class="question-text">12. Je me réjouis d’avance à l’idée de faire certaines choses. <span class="type-tag">D</span></span><label class="option-label"><input type="radio" name="had12" value="0"> Autant qu’avant</label><label class="option-label"><input type="radio" name="had12" value="1"> Un peu moins qu’avant</label><label class="option-label"><input type="radio" name="had12" value="2"> Bien moins qu’avant</label><label class="option-label"><input type="radio" name="had12" value="3"> Presque jamais</label></div><div class="question-block"><span class="question-text">13. J’éprouve des sensations soudaines de panique. <span class="type-tag">A</span></span><label class="option-label"><input type="radio" name="had13" value="3"> Vraiment très souvent</label><label class="option-label"><input type="radio" name="had13" value="2"> Assez souvent</label><label class="option-label"><input type="radio" name="had13" value="1"> Pas très souvent</label><label class="option-label"><input type="radio" name="had13" value="0"> Jamais</label></div><div class="question-block"><span class="question-text">14. Je peux prendre plaisir à un bon livre ou à une bonne émission TV. <span class="type-tag">D</span></span><label class="option-label"><input type="radio" name="had14" value="0"> Souvent</label><label class="option-label"><input type="radio" name="had14" value="1"> Parfois</label><label class="option-label"><input type="radio" name="had14" value="2"> Rarement</label><label class="option-label"><input type="radio" name="had14" value="3"> Très rarement</label></div></div></div><div class="score-display">Anxiété (A) : <span id="hadScoreA" style="color:#8e44ad;">0</span> | Dépression (D) : <span id="hadScoreD" style="color:#8e44ad;">0</span></div><button type="button" class="btn-validate" onclick="validateHad()">Valider ces scores</button></form></div></div>
+
+<!-- Autres Modales (NoSAS, Epworth, FSS, HorOts, Image) -->
+<div id="nosasModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>Calculateur NoSAS</h2><span class="close" onclick="closeModal('nosasModal')">&times;</span></div><form id="nosasForm"><div class="nosas-item" id="row_cou"><label for="check_cou">Tour de cou > 40 cm <small>(+4)</small></label><input type="checkbox" id="check_cou" value="4"></div><div class="nosas-item" id="row_bmi25"><label for="check_bmi25">IMC 25-30 <small>(+3)</small></label><input type="checkbox" id="check_bmi25" value="3" onchange="handleBmiCheckbox('25')"></div><div class="nosas-item" id="row_bmi30"><label for="check_bmi30">IMC > 30 <small>(+5)</small></label><input type="checkbox" id="check_bmi30" value="5" onchange="handleBmiCheckbox('30')"></div><div class="nosas-item"><label for="check_ronflement">Ronflement <small>(+2)</small></label><input type="checkbox" id="check_ronflement" value="2"></div><div class="nosas-item" id="row_age"><label for="check_age">Age > 55 ans <small>(+4)</small></label><input type="checkbox" id="check_age" value="4"></div><div class="nosas-item" id="row_sexe"><label for="check_sexe">Sexe Masculin <small>(+2)</small></label><input type="checkbox" id="check_sexe" value="2"></div><div class="score-display">Score NoSAS : <span id="tempScore" style="color:#3498db;">0</span> / 17</div><button type="button" class="btn-validate" onclick="validateNosas()">Valider ce score</button></form></div></div>
+<div id="epworthModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>Échelle d'Epworth</h2><span class="close" onclick="closeModal('epworthModal')">&times;</span></div><p style="margin-bottom:10px; font-size:0.9em;">"Durant le dernier mois, vous est il arriver de somnolet ou de vous endormir..." <br> 0: jamais, 1: léger risque, 2: risque modéré, 3: risque élevé</p><form id="epworthForm" onchange="updateEpworthTemp()">
+    <div class="modal-item"><span class="modal-question">1. Assis en train de lire</span><div class="modal-options"><label class="radio-label"><input type="radio" name="ep1" value="0" checked>0</label><label class="radio-label"><input type="radio" name="ep1" value="1">1</label><label class="radio-label"><input type="radio" name="ep1" value="2">2</label><label class="radio-label"><input type="radio" name="ep1" value="3">3</label></div></div><div class="modal-item"><span class="modal-question">2. Devant la TV</span><div class="modal-options"><label class="radio-label"><input type="radio" name="ep2" value="0" checked>0</label><label class="radio-label"><input type="radio" name="ep2" value="1">1</label><label class="radio-label"><input type="radio" name="ep2" value="2">2</label><label class="radio-label"><input type="radio" name="ep2" value="3">3</label></div></div><div class="modal-item"><span class="modal-question">3. Assis inactif lieu public</span><div class="modal-options"><label class="radio-label"><input type="radio" name="ep3" value="0" checked>0</label><label class="radio-label"><input type="radio" name="ep3" value="1">1</label><label class="radio-label"><input type="radio" name="ep3" value="2">2</label><label class="radio-label"><input type="radio" name="ep3" value="3">3</label></div></div><div class="modal-item"><span class="modal-question">4. Passager voiture > 1h</span><div class="modal-options"><label class="radio-label"><input type="radio" name="ep4" value="0" checked>0</label><label class="radio-label"><input type="radio" name="ep4" value="1">1</label><label class="radio-label"><input type="radio" name="ep4" value="2">2</label><label class="radio-label"><input type="radio" name="ep4" value="3">3</label></div></div><div class="modal-item"><span class="modal-question">5. Allongé après-midi</span><div class="modal-options"><label class="radio-label"><input type="radio" name="ep5" value="0" checked>0</label><label class="radio-label"><input type="radio" name="ep5" value="1">1</label><label class="radio-label"><input type="radio" name="ep5" value="2">2</label><label class="radio-label"><input type="radio" name="ep5" value="3">3</label></div></div><div class="modal-item"><span class="modal-question">6. Assis en parlant</span><div class="modal-options"><label class="radio-label"><input type="radio" name="ep6" value="0" checked>0</label><label class="radio-label"><input type="radio" name="ep6" value="1">1</label><label class="radio-label"><input type="radio" name="ep6" value="2">2</label><label class="radio-label"><input type="radio" name="ep6" value="3">3</label></div></div><div class="modal-item"><span class="modal-question">7. Assis calme après repas</span><div class="modal-options"><label class="radio-label"><input type="radio" name="ep7" value="0" checked>0</label><label class="radio-label"><input type="radio" name="ep7" value="1">1</label><label class="radio-label"><input type="radio" name="ep7" value="2">2</label><label class="radio-label"><input type="radio" name="ep7" value="3">3</label></div></div><div class="modal-item" style="background-color:#ffebee;"><span class="modal-question">8. Voiture immobilisée</span><div class="modal-options"><label class="radio-label"><input type="radio" name="ep8" value="0" checked>0</label><label class="radio-label"><input type="radio" name="ep8" value="1">1</label><label class="radio-label"><input type="radio" name="ep8" value="2">2</label><label class="radio-label"><input type="radio" name="ep8" value="3">3</label></div></div><div class="score-display">Score Epworth : <span id="epworthTempScore" style="color:#3498db;">0</span> / 24</div><button type="button" class="btn-validate" onclick="validateEpworth()">Valider</button></form></div></div>
+<div id="fssModal" class="modal"><div class="modal-content"><div class="modal-header"><h2>Echelle de Sévérité de la Fatigue (FSS)</h2><span class="close" onclick="closeModal('fssModal')">&times;</span></div><p style="margin-bottom:10px; font-size:0.9em;">"Durant la semaine passée, j'ai trouvé que..." <br> 1: Pas du tout d'accord, 3-5: ni D'accord ni pas d'accord, 7: Tout à fait d'accord</p><form id="fssForm" onchange="updateFSSTemp()">
+    <div class="modal-item"><span class="modal-question">1. Je suis moins motivé(e) quand je suis fatigué(e)</span><div class="modal-options"><label class="radio-label"><input type="radio" name="fss1" value="1" checked>1</label><label class="radio-label"><input type="radio" name="fss1" value="2">2</label><label class="radio-label"><input type="radio" name="fss1" value="3">3</label><label class="radio-label"><input type="radio" name="fss1" value="4">4</label><label class="radio-label"><input type="radio" name="fss1" value="5">5</label><label class="radio-label"><input type="radio" name="fss1" value="6">6</label><label class="radio-label"><input type="radio" name="fss1" value="7">7</label></div></div>
+    <div class="modal-item"><span class="modal-question">2. L'exercice physique me rend fatigué</span><div class="modal-options"><label class="radio-label"><input type="radio" name="fss2" value="1" checked>1</label><label class="radio-label"><input type="radio" name="fss2" value="2">2</label><label class="radio-label"><input type="radio" name="fss2" value="3">3</label><label class="radio-label"><input type="radio" name="fss2" value="4">4</label><label class="radio-label"><input type="radio" name="fss2" value="5">5</label><label class="radio-label"><input type="radio" name="fss2" value="6">6</label><label class="radio-label"><input type="radio" name="fss2" value="7">7</label></div></div>
+    <div class="modal-item"><span class="modal-question">3. Je suis facilement fatigué(e)</span><div class="modal-options"><label class="radio-label"><input type="radio" name="fss3" value="1" checked>1</label><label class="radio-label"><input type="radio" name="fss3" value="2">2</label><label class="radio-label"><input type="radio" name="fss3" value="3">3</label><label class="radio-label"><input type="radio" name="fss3" value="4">4</label><label class="radio-label"><input type="radio" name="fss3" value="5">5</label><label class="radio-label"><input type="radio" name="fss3" value="6">6</label><label class="radio-label"><input type="radio" name="fss3" value="7">7</label></div></div>
+    <div class="modal-item"><span class="modal-question">4. La fatigue gêne mon fonctionnement physique</span><div class="modal-options"><label class="radio-label"><input type="radio" name="fss4" value="1" checked>1</label><label class="radio-label"><input type="radio" name="fss4" value="2">2</label><label class="radio-label"><input type="radio" name="fss4" value="3">3</label><label class="radio-label"><input type="radio" name="fss4" value="4">4</label><label class="radio-label"><input type="radio" name="fss4" value="5">5</label><label class="radio-label"><input type="radio" name="fss4" value="6">6</label><label class="radio-label"><input type="radio" name="fss4" value="7">7</label></div></div>
+    <div class="modal-item"><span class="modal-question">5. La fatigue me cause fréquemment des problèmes</span><div class="modal-options"><label class="radio-label"><input type="radio" name="fss5" value="1" checked>1</label><label class="radio-label"><input type="radio" name="fss5" value="2">2</label><label class="radio-label"><input type="radio" name="fss5" value="3">3</label><label class="radio-label"><input type="radio" name="fss5" value="4">4</label><label class="radio-label"><input type="radio" name="fss5" value="5">5</label><label class="radio-label"><input type="radio" name="fss5" value="6">6</label><label class="radio-label"><input type="radio" name="fss5" value="7">7</label></div></div>
+    <div class="modal-item"><span class="modal-question">6. Ma fatigue m'empêche d'avoir une activité physique soutenue</span><div class="modal-options"><label class="radio-label"><input type="radio" name="fss6" value="1" checked>1</label><label class="radio-label"><input type="radio" name="fss6" value="2">2</label><label class="radio-label"><input type="radio" name="fss6" value="3">3</label><label class="radio-label"><input type="radio" name="fss6" value="4">4</label><label class="radio-label"><input type="radio" name="fss6" value="5">5</label><label class="radio-label"><input type="radio" name="fss6" value="6">6</label><label class="radio-label"><input type="radio" name="fss6" value="7">7</label></div></div>
+    <div class="modal-item"><span class="modal-question">7. La fatigue m'empêche d'accomplir certains devoirs et responsabilités</span><div class="modal-options"><label class="radio-label"><input type="radio" name="fss7" value="1" checked>1</label><label class="radio-label"><input type="radio" name="fss7" value="2">2</label><label class="radio-label"><input type="radio" name="fss7" value="3">3</label><label class="radio-label"><input type="radio" name="fss7" value="4">4</label><label class="radio-label"><input type="radio" name="fss7" value="5">5</label><label class="radio-label"><input type="radio" name="fss7" value="6">6</label><label class="radio-label"><input type="radio" name="fss7" value="7">7</label></div></div>
+    <div class="modal-item"><span class="modal-question">8. La fatigue est un de mes 3 symptômes les plus invalidants</span><div class="modal-options"><label class="radio-label"><input type="radio" name="fss8" value="1" checked>1</label><label class="radio-label"><input type="radio" name="fss8" value="2">2</label><label class="radio-label"><input type="radio" name="fss8" value="3">3</label><label class="radio-label"><input type="radio" name="fss8" value="4">4</label><label class="radio-label"><input type="radio" name="fss8" value="5">5</label><label class="radio-label"><input type="radio" name="fss8" value="6">6</label><label class="radio-label"><input type="radio" name="fss8" value="7">7</label></div></div>
+    <div class="modal-item"><span class="modal-question">9. La fatigue interfère avec travail / famille / vie sociale</span><div class="modal-options"><label class="radio-label"><input type="radio" name="fss9" value="1" checked>1</label><label class="radio-label"><input type="radio" name="fss9" value="2">2</label><label class="radio-label"><input type="radio" name="fss9" value="3">3</label><label class="radio-label"><input type="radio" name="fss9" value="4">4</label><label class="radio-label"><input type="radio" name="fss9" value="5">5</label><label class="radio-label"><input type="radio" name="fss9" value="6">6</label><label class="radio-label"><input type="radio" name="fss9" value="7">7</label></div></div><div class="score-display">Total : <span id="fssTempScore" style="color:#3498db;">9</span> / 63 (Moyenne: <span id="fssMeanScore">1.0</span>)</div><button type="button" class="btn-validate" onclick="validateFSS()">Valider</button></form></div></div>
+
+<!-- POPUP HOR/OTS (rMEQ) -->
+<div id="horOtsModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 style="margin:0;">Chronotype (rMEQ - Horne & Ostberg)</h3>
+            <span class="close" onclick="closeModal('horOtsModal')">&times;</span>
+        </div>
+        <p style="color:#666; font-size:0.9em; margin-bottom: 20px;">
+            Version courte (5 questions). Score de 4 à 25.
+        </p>
+        
+        <form id="horOtsForm" onchange="updateHorOtsScore()">
+            <div class="modal-item">
+                <span class="modal-question">1. Si vous viviez a votre rythme (celui qui vous plaît le plus), à quelle heure vous lèveriez-vous etant entierement libre d'organiser votre journee ? (5h00 - 12h00)</span>
+                <div class="modal-options" style="flex-direction: column; align-items: flex-start;">
+                    <label class="option-label"><input type="radio" name="ho1" value="5"> 05h00 - 06h30</label>
+                    <label class="option-label"><input type="radio" name="ho1" value="4"> 06h30 - 07h45</label>
+                    <label class="option-label"><input type="radio" name="ho1" value="3"> 07h45 - 09h45</label>
+                    <label class="option-label"><input type="radio" name="ho1" value="2"> 09h45 - 11h00</label>
+                    <label class="option-label"><input type="radio" name="ho1" value="1"> 11h00 - 12h00</label>
+                </div>
+            </div>
+
+            <div class="modal-item">
+                <span class="modal-question">2. Comment vous sentez-vous durant la demi-heure qui suit votre réveil ?</span>
+                <div class="modal-options" style="flex-direction: column; align-items: flex-start;">
+                    <label class="option-label"><input type="radio" name="ho2" value="1"> Très fatigué(e)</label>
+                    <label class="option-label"><input type="radio" name="ho2" value="2"> Relativement fatigué(e)</label>
+                    <label class="option-label"><input type="radio" name="ho2" value="3"> Relativement en forme</label>
+                    <label class="option-label"><input type="radio" name="ho2" value="4"> Très en forme</label>
+                </div>
+            </div>
+
+            <div class="modal-item">
+                <span class="modal-question">3. À quel moment le soir vous sentez-vous fatigué au point de vous endormir ? (20h00 - 02h00)</span>
+                <div class="modal-options" style="flex-direction: column; align-items: flex-start;">
+                    <label class="option-label"><input type="radio" name="ho3" value="5"> 20h00 - 21h00</label>
+                    <label class="option-label"><input type="radio" name="ho3" value="4"> 21h00 - 22h15</label>
+                    <label class="option-label"><input type="radio" name="ho3" value="3"> 22h15 - 00h45</label>
+                    <label class="option-label"><input type="radio" name="ho3" value="2"> 00h45 - 02h00</label>
+                    <label class="option-label"><input type="radio" name="ho3" value="1"> 02h00 - 03h00</label>
+                </div>
+            </div>
+
+            <div class="modal-item">
+                <span class="modal-question">4. À quelle heure de la journée vous sentez-vous dans votre meilleure forme ?</span>
+                <div class="modal-options" style="flex-direction: column; align-items: flex-start;">
+                    <label class="option-label"><input type="radio" name="ho4" value="5"> 05h00 - 07h00</label>
+                    <label class="option-label"><input type="radio" name="ho4" value="4"> 08h00 - 09h00</label>
+                    <label class="option-label"><input type="radio" name="ho4" value="3"> 10h00 - 16h00</label>
+                    <label class="option-label"><input type="radio" name="ho4" value="2"> 17h00 - 21h00</label>
+                    <label class="option-label"><input type="radio" name="ho4" value="1"> 21h00 - 04h00</label>
+                </div>
+            </div>
+
+            <div class="modal-item">
+                <span class="modal-question">5. Vous considérez-vous comme un sujet du matin ou du soir ?</span>
+                <div class="modal-options" style="flex-direction: column; align-items: flex-start;">
+                    <label class="option-label"><input type="radio" name="ho5" value="6"> Tout à fait du matin</label>
+                    <label class="option-label"><input type="radio" name="ho5" value="4"> Plutôt du matin</label>
+                    <label class="option-label"><input type="radio" name="ho5" value="2"> Plutôt du soir</label>
+                    <label class="option-label"><input type="radio" name="ho5" value="0"> Tout à fait du soir</label>
+                </div>
+            </div>
+        </form>
+        
+        <div class="score-display">
+            Score : <span id="horOtsScore">0</span> / 25 <br>
+            <span id="horOtsInterp" style="font-size:0.9em; font-weight:normal;">...</span>
+        </div>
+
+        <button type="button" class="btn-validate" onclick="validateHorOts()">Valider</button>
+    </div>
+</div>
+<div id="imageModal" class="modal"><div class="modal-image-content"><div class="modal-header"><h2 id="imageModalTitle">Schéma</h2><span class="close" onclick="closeModal('imageModal')">&times;</span></div><img id="imageModalSrc" src="" alt="Schéma" style="max-width:100%; height:auto;" onerror="this.onerror=null; this.src=''; this.alt='Image non trouvée (vérifier le dossier images/)';"></div></div>
+
+<script>
+    // --- Calculs Généraux ---
+    function updateCalculations() {
+        const sexe = document.getElementById('sexe').value;
+        const hdlLabel = document.getElementById('hdl_limit_text');
+        hdlLabel.innerText = (sexe === 'H') ? '(Traité ou < 0.40 g/l)' : '(Traité ou < 0.50 g/l)';
+        checkMetabolicSyndrome();
+    }
+
+    // Gestion HTA Cascade
+    function toggleHtaResistante() {
+        const isHta = document.getElementById('atcd_hta').checked;
+        document.getElementById('sub_hta_resistante').style.display = isHta ? 'block' : 'none';
+        if(!isHta) document.getElementById('atcd_hta_resistante').checked = false;
+    }
+    
+    // Gestion Précisions Pneumo
+    function togglePrecision(checkId, inputId) {
+        const isChecked = document.getElementById(checkId).checked;
+        const input = document.getElementById(inputId);
+        input.style.display = isChecked ? 'block' : 'none';
+        if(isChecked) input.focus();
+    }
+
+    function syncMetabolic() {
+        document.getElementById('met_hta').checked = document.getElementById('atcd_hta').checked;
+        document.getElementById('met_diabete').checked = document.getElementById('atcd_diabete').checked;
+        if(document.getElementById('atcd_dyslip').checked) { document.getElementById('met_tg').checked = true; }
+        checkMetabolicSyndrome();
+    }
+    
+    function togglePsy() {
+        const isSuspected = document.getElementById('psy_suspect_yes').checked;
+        document.getElementById('psy_scores').style.display = isSuspected ? 'grid' : 'none';
+    }
+    
+    function togglePhase() {
+        const radios = document.getElementsByName('phase_suspect');
+        let isYes = false;
+        for (let r of radios) { if (r.checked && r.value === 'oui') isYes = true; }
+        document.getElementById('phase_container').style.display = isYes ? 'block' : 'none';
+    }
+    
+    // Toggle Antécédents Familiaux (Style FRS)
+    function toggleAntFam(isYes) {
+        const container = document.getElementById('fam_history_container');
+        const precisionInput = document.getElementById('ant_fam_precision');
+        precisionInput.style.display = isYes ? 'block' : 'none';
+        if(isYes) {
+            precisionInput.focus();
+            container.style.backgroundColor = "#fff3e0";
+            container.style.borderLeft = "3px solid #e67e22";
+            container.style.borderRadius = "0 4px 4px 0";
+        } else {
+            container.style.backgroundColor = "transparent";
+            container.style.borderLeft = "none";
+            container.style.borderRadius = "4px";
+        }
+    }
+
+    function calculateBMI() {
+        const poids = parseFloat(document.getElementById('poids').value);
+        const taille = parseFloat(document.getElementById('taille').value);
+        const imcInput = document.getElementById('imc');
+        const imcWarning = document.getElementById('imc_warning');
+        if (poids > 0 && taille > 0) {
+            const imc = poids / (taille * taille);
+            imcInput.value = imc.toFixed(1);
+            if (imc > 35) { imcWarning.style.display = 'block'; } else { imcWarning.style.display = 'none'; }
+            checkMetabolicSyndrome(); 
+        } else {
+            imcInput.value = '';
+            imcWarning.style.display = 'none';
+        }
+    }
+
+    function checkMetabolicSyndrome() {
+        const sexe = document.getElementById('sexe').value; 
+        const waist = parseFloat(document.getElementById('perimetre_abdo').value) || 0;
+        const hta = document.getElementById('met_hta').checked;
+        const tg = document.getElementById('met_tg').checked;
+        const hdl = document.getElementById('met_hdl').checked;
+        const diabete = document.getElementById('met_diabete').checked;
+        const waistLimit = (sexe === 'H') ? 94 : 80;
+        document.getElementById('waist_limit').innerText = waistLimit;
+        let criteriaCount = 0;
+        if (waist >= waistLimit) {
+            criteriaCount++;
+            document.getElementById('waist_status').style.display = 'block';
+        } else {
+            document.getElementById('waist_status').style.display = 'none';
+        }
+        if (hta) criteriaCount++;
+        if (tg) criteriaCount++;
+        if (hdl) criteriaCount++;
+        if (diabete) criteriaCount++;
+        const resultField = document.getElementById('metabolic_result');
+        if (criteriaCount >= 3) {
+            resultField.value = "PRÉSENT (" + criteriaCount + "/5 critères)";
+            resultField.classList.add('alert-metabolic');
+        } else {
+            if (criteriaCount > 0) resultField.value = "Négatif (" + criteriaCount + " critère(s))";
+            else resultField.value = "Négatif";
+            resultField.classList.remove('alert-metabolic');
+        }
+    }
+
+    // --- Modal Logic ---
+    function closeModal(id) { document.getElementById(id).style.display = "none"; }
+    window.onclick = function(event) { if (event.target.classList.contains('modal')) event.target.style.display = "none"; }
+
+    // --- Module Respi Toggles ---
+    function toggleNycturie() {
+        const isChecked = document.getElementById('respi_nycturie').checked;
+        document.getElementById('nycturie_precision').style.display = isChecked ? 'block' : 'none';
+        if (!isChecked) { const selectEl = document.getElementById('respi_nycturie_select'); selectEl.value = ""; checkNycturieSignificative(selectEl); }
+    }
+    function toggleRonflement() {
+        const isChecked = document.getElementById('respi_ronflement').checked;
+        document.getElementById('ronflement_precision').style.display = isChecked ? 'block' : 'none';
+        if (!isChecked) { document.getElementById('respi_ronflement_type').value = ""; }
+    }
+    function checkNycturieSignificative(selectEl) {
+        if(selectEl.value === '2') {
+            selectEl.style.color = "#c0392b"; selectEl.style.fontWeight = "bold"; selectEl.style.borderColor = "#e74c3c"; selectEl.style.backgroundColor = "#ffebee";
+        } else {
+            selectEl.style.color = "#333"; selectEl.style.fontWeight = "normal"; selectEl.style.borderColor = "#ddd"; selectEl.style.backgroundColor = "#fff";
+        }
+    }
+    function toggleDentier() {
+        const hasDents = document.querySelector('input[name="orl_dents"]:checked').value;
+        const divDentier = document.getElementById('dentier_precision');
+        divDentier.style.display = (hasDents === 'non') ? 'block' : 'none';
+    }
+    function toggleNezAutre() {
+        const isChecked = document.getElementById('nez_autres').checked;
+        document.getElementById('nez_precision_div').style.display = isChecked ? 'block' : 'none';
+        if(isChecked) document.getElementById('nez_precision').focus();
+    }
+    
+    // --- Cerfa Check ---
+    function checkCerfaCriteria() {
+        let count = 0;
+        if(document.getElementById('respi_somnolence').checked) { count++; document.getElementById('lbl_somnolence').classList.add('cerfa-positive'); } else { document.getElementById('lbl_somnolence').classList.remove('cerfa-positive'); }
+        if(document.getElementById('respi_fatigue').checked) { count++; document.getElementById('lbl_fatigue').classList.add('cerfa-positive'); } else { document.getElementById('lbl_fatigue').classList.remove('cerfa-positive'); }
+        
+        const ronflCheck = document.getElementById('respi_ronflement').checked;
+        const ronflType = document.getElementById('respi_ronflement_type').value;
+        if(ronflCheck && ronflType === 'severe') { count++; document.getElementById('lbl_ronflement').classList.add('cerfa-positive'); } else { document.getElementById('lbl_ronflement').classList.remove('cerfa-positive'); }
+        
+        if(document.getElementById('respi_etouffement').checked) { count++; document.getElementById('lbl_etouffement').classList.add('cerfa-positive'); } else { document.getElementById('lbl_etouffement').classList.remove('cerfa-positive'); }
+        
+        const nyctCheck = document.getElementById('respi_nycturie').checked;
+        const nyctVal = document.getElementById('respi_nycturie_select').value;
+        if(nyctCheck && nyctVal === '2') { count++; document.getElementById('lbl_nycturie').classList.add('cerfa-positive'); } else { document.getElementById('lbl_nycturie').classList.remove('cerfa-positive'); }
+        
+        if(document.getElementById('respi_cephalee').checked) { count++; document.getElementById('lbl_cephalee').classList.add('cerfa-positive'); } else { document.getElementById('lbl_cephalee').classList.remove('cerfa-positive'); }
+        
+        if(document.getElementById('respi_somnolence_severe').checked) { count++; document.getElementById('lbl_somnolence_severe').classList.add('cerfa-positive'); } else { document.getElementById('lbl_somnolence_severe').classList.remove('cerfa-positive'); }
+        
+        const alertBox = document.getElementById('ppc_alert');
+        if(count >= 3) { alertBox.style.display = 'block'; } else { alertBox.style.display = 'none'; }
+    }
+
+    // --- Mallampati ---
+    function selectMallampati(score, element) {
+        document.querySelectorAll('.mallampati-option').forEach(el => el.classList.remove('selected'));
+        element.classList.add('selected');
+        document.getElementById('mallampati_val').value = score;
+    }
+    
+    // --- Image Modal ---
+    function openImageModal(type) {
+        const modal = document.getElementById('imageModal');
+        const img = document.getElementById('imageModalSrc');
+        const title = document.getElementById('imageModalTitle');
+        modal.style.display = "block";
+        if (type === 'mallampati') { title.innerText = "Classification de Mallampati"; img.src = "images/mallampati.png"; } 
+        else if (type === 'friedman') { title.innerText = "Stades de Friedman (Amygdales)"; img.src = "images/Friedman.png"; }
+    }
+
+    // --- NoSAS Logic ---
+    function openNosasModal() {
+        const m = document.getElementById("nosasModal"); m.style.display = "block";
+        const cou = parseFloat(document.getElementById('cou').value) || 0;
+        const imc = parseFloat(document.getElementById('imc').value) || 0;
+        const age = parseFloat(document.getElementById('age').value) || 0;
+        const sexe = document.getElementById('sexe').value;
+        const isRonflement = document.getElementById('respi_ronflement').checked;
+        document.getElementById("nosasForm").reset();
+        document.querySelectorAll('.nosas-item').forEach(el => el.classList.remove('auto-detected'));
+        if (cou > 40) { document.getElementById('check_cou').checked = true; document.getElementById('row_cou').classList.add('auto-detected'); }
+        if (imc > 30) { document.getElementById('check_bmi30').checked = true; document.getElementById('row_bmi30').classList.add('auto-detected'); }
+        else if (imc >= 25) { document.getElementById('check_bmi25').checked = true; document.getElementById('row_bmi25').classList.add('auto-detected'); }
+        if (age > 55) { document.getElementById('check_age').checked = true; document.getElementById('row_age').classList.add('auto-detected'); }
+        if (sexe === 'H') { document.getElementById('check_sexe').checked = true; document.getElementById('row_sexe').classList.add('auto-detected'); }
+        if (isRonflement) { document.getElementById('check_ronflement').checked = true; }
+        updateTempScore();
+    }
+    function handleBmiCheckbox(type) {
+        if (type === '30' && document.getElementById('check_bmi30').checked) document.getElementById('check_bmi25').checked = false;
+        if (type === '25' && document.getElementById('check_bmi25').checked) document.getElementById('check_bmi30').checked = false;
+        updateTempScore();
+    }
+    function updateTempScore() {
+        let score = 0;
+        document.querySelectorAll('#nosasForm input[type="checkbox"]').forEach(box => { if (box.checked) score += parseInt(box.value); });
+        const span = document.getElementById('tempScore');
+        span.innerText = score;
+        span.style.color = (score > 7) ? "#c0392b" : "#3498db";
+    }
+    document.getElementById('nosasForm').addEventListener('change', updateTempScore);
+    function validateNosas() {
+        const score = document.getElementById('tempScore').innerText;
+        const field = document.getElementById('nosas');
+        field.value = score;
+        if (parseInt(score) > 7) field.classList.add('score-alert'); else field.classList.remove('score-alert');
+        closeModal('nosasModal');
+    }
+
+    // --- Epworth Logic ---
+    function openEpworthModal() { document.getElementById("epworthModal").style.display = "block"; updateEpworthTemp(); }
+    function updateEpworthTemp() {
+        let score = 0;
+        for (let i = 1; i <= 8; i++) {
+            const radios = document.getElementsByName('ep' + i);
+            for (let radio of radios) { if (radio.checked) { score += parseInt(radio.value); break; } }
+        }
+        document.getElementById('epworthTempScore').innerText = score;
+    }
+    function validateEpworth() {
+        const score = document.getElementById('epworthTempScore').innerText;
+        const field = document.getElementById('epworth');
+        field.value = score;
+        if (parseInt(score) > 10) {
+            field.classList.add('score-alert');
+            const checkSom = document.getElementById('respi_somnolence');
+            checkSom.checked = true;
+            document.getElementById('lbl_somnolence').classList.add('auto-checked');
+        } else {
+            field.classList.remove('score-alert');
+            document.getElementById('lbl_somnolence').classList.remove('auto-checked');
+        }
+        
+        let item8Value = 0;
+        const item8Radios = document.getElementsByName('ep8');
+        for (let radio of item8Radios) { if (radio.checked) { item8Value = parseInt(radio.value); break; } }
+        const warningDiv = document.getElementById('epworth_driving_warning');
+        const checkSevere = document.getElementById('respi_somnolence_severe');
+        if (item8Value > 0) { 
+            warningDiv.style.display = 'block'; 
+            checkSevere.checked = true; 
+            document.getElementById('lbl_somnolence_severe').classList.add('auto-checked');
+        } else { 
+            warningDiv.style.display = 'none'; 
+        }
+        checkCerfaCriteria();
+        closeModal('epworthModal');
+    }
+
+    // --- FSS Logic ---
+    function openFSSModal() { document.getElementById("fssModal").style.display = "block"; updateFSSTemp(); }
+    function updateFSSTemp() {
+        let score = 0;
+        for (let i = 1; i <= 9; i++) {
+            const radios = document.getElementsByName('fss' + i);
+            for (let radio of radios) { if (radio.checked) { score += parseInt(radio.value); break; } }
+        }
+        document.getElementById('fssTempScore').innerText = score;
+        document.getElementById('fssMeanScore').innerText = (score / 9).toFixed(1);
+    }
+    function validateFSS() {
+        const score = parseInt(document.getElementById('fssTempScore').innerText);
+        const mean = (score / 9).toFixed(1);
+        const field = document.getElementById('fss');
+        field.value = score + " (Moy: " + mean + ")";
+        if (score > 36) {
+            field.classList.add('score-alert');
+            const checkFat = document.getElementById('respi_fatigue');
+            checkFat.checked = true;
+            document.getElementById('lbl_fatigue').classList.add('auto-checked');
+        } else {
+            field.classList.remove('score-alert');
+            document.getElementById('lbl_fatigue').classList.remove('auto-checked');
+        }
+        checkCerfaCriteria();
+        closeModal('fssModal');
+    }
+
+    // --- HAD Logic ---
+    function openHadModal() { document.getElementById("hadModal").style.display = "block"; updateHadTemp(); }
+    
+    function updateHadTemp() {
+        let totalA = 0;
+        let totalD = 0;
+        // A = 1, 3, 5, 7, 9, 11, 13
+        const itemsA = [1, 3, 5, 7, 9, 11, 13];
+        itemsA.forEach(i => {
+            const radios = document.getElementsByName('had' + i);
+            for(let r of radios) { if(r.checked) totalA += parseInt(r.value); }
+        });
+        // D = 2, 4, 6, 8, 10, 12, 14
+        const itemsD = [2, 4, 6, 8, 10, 12, 14];
+        itemsD.forEach(i => {
+            const radios = document.getElementsByName('had' + i);
+            for(let r of radios) { if(r.checked) totalD += parseInt(r.value); }
+        });
+        document.getElementById('hadScoreA').innerText = totalA;
+        document.getElementById('hadScoreD').innerText = totalD;
+    }
+    
+    function validateHad() {
+        const scoreA = document.getElementById('hadScoreA').innerText;
+        const scoreD = document.getElementById('hadScoreD').innerText;
+        const fieldA = document.getElementById('had_a');
+        const fieldD = document.getElementById('had_d');
+        
+        let interpA = "Normal";
+        if(parseInt(scoreA) > 10) { interpA = "Pathologique"; fieldA.classList.add('score-alert'); }
+        else if(parseInt(scoreA) >= 8) { interpA = "Douteux"; fieldA.classList.remove('score-alert'); }
+        else { fieldA.classList.remove('score-alert'); }
+        fieldA.value = scoreA + " (" + interpA + ")";
+        
+        let interpD = "Normal";
+        if(parseInt(scoreD) > 10) { interpD = "Pathologique"; fieldD.classList.add('score-alert'); }
+        else if(parseInt(scoreD) >= 8) { interpD = "Douteux"; fieldD.classList.remove('score-alert'); }
+        else { fieldD.classList.remove('score-alert'); }
+        fieldD.value = scoreD + " (" + interpD + ")";
+        
+        closeModal('hadModal');
+    }
+
+    // --- HOR/OTS Logic ---
+    function openHorOtsModal() { document.getElementById("horOtsModal").style.display = "block"; }
+    function validateHorOts() {
+        const score = document.getElementById('tempHorOts').value;
+        const interp = document.getElementById('horOtsInterp').innerText;
+        
+        if(interp !== "...") {
+            document.getElementById('hor_ots').value = score + " (" + interp + ")";
+        }
+        closeModal('horOtsModal');
+    }
+    
+    function updateHorOtsScore() {
+        let score = 0;
+        for(let i=1; i<=5; i++) {
+            const radios = document.getElementsByName('ho'+i);
+            for(let r of radios) { if(r.checked) score += parseInt(r.value); }
+        }
+        document.getElementById('horOtsScore').innerText = score;
+        const interpSpan = document.getElementById('horOtsInterp');
+        if (score >= 22) { interpSpan.innerText = "Nettement du Matin"; interpSpan.style.color = "#e67e22"; } 
+        else if (score >= 18) { interpSpan.innerText = "Modérément du Matin"; interpSpan.style.color = "#f39c12"; } 
+        else if (score >= 12) { interpSpan.innerText = "Intermédiaire (Neutre)"; interpSpan.style.color = "#7f8c8d"; } 
+        else if (score >= 8) { interpSpan.innerText = "Modérément du Soir"; interpSpan.style.color = "#3f51b5"; } 
+        else { interpSpan.innerText = "Nettement du Soir"; interpSpan.style.color = "#1a237e"; }
+    }
+    
+    function togglePatho(show) {
+        const div = document.getElementById('patho_details');
+        div.style.display = show ? 'block' : 'none';
+    }
+    
+    function togglePhase() {
+        const radios = document.getElementsByName('phase_suspect');
+        let isYes = false;
+        for (let r of radios) { if (r.checked && r.value === 'oui') isYes = true; }
+        document.getElementById('phase_container').style.display = isYes ? 'block' : 'none';
+    }
+
+    // Fermeture globale
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
