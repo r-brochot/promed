@@ -10,14 +10,12 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; }
         .tool-card { transition: all 0.3s ease; }
         .tool-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
-        
-        /* Classe utilitaire pour cacher le contenu avant déverrouillage */
         .cloak { display: none !important; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- ÉCRAN DE CONNEXION (Overlay) -->
+    <!-- ÉCRAN DE CONNEXION -->
     <div id="login-screen" class="fixed inset-0 bg-slate-900 z-50 flex flex-col items-center justify-center p-4">
         <div class="bg-white p-8 rounded-xl shadow-2xl max-w-sm w-full text-center border-t-8 border-blue-600">
             <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner">
@@ -25,7 +23,6 @@
             </div>
             <h2 class="text-2xl font-bold text-slate-800 mb-2">Espace Médecin</h2>
             <p class="text-slate-500 text-sm mb-6">Accès réservé au Dr R. BROCHOT</p>
-            
             <form onsubmit="checkPassword(event)">
                 <div class="relative mb-4">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -44,11 +41,10 @@
         <p class="text-slate-500 text-xs mt-8 opacity-50">Secure Gateway v1.0</p>
     </div>
 
-    <!-- CONTENU DE L'APPLICATION (Masqué par défaut) -->
+    <!-- MAIN APP -->
     <div id="app-content" class="cloak flex-grow flex flex-col w-full">
 
-        <!-- Header -->
-        <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10">
+        <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-20">
             <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
                 <div class="flex items-center gap-3">
                     <div class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">S</div>
@@ -65,47 +61,148 @@
             </div>
         </header>
 
-        <!-- Main Content -->
         <main class="flex-grow max-w-6xl mx-auto px-4 py-12 w-full">
             
             <!-- SECTION 1 : CONSULTATIONS -->
-            <div class="mb-12">
-                <div class="text-center mb-8">
-                    <h2 class="text-3xl font-bold text-slate-800 mb-2">Outils de Consultation</h2>
-                    <p class="text-slate-500 max-w-2xl mx-auto">Guides et canevas pour l'entretien clinique.</p>
-                </div>
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-slate-800 mb-8 border-b border-slate-200 pb-4">
+                    <i class="fa-solid fa-user-md mr-2 text-indigo-600"></i>Outils de Consultation
+                </h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Carte : Canevas Consultation -->
-                    <a href="consultation_sommeil.html" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-indigo-400 group">
-                        <div class="h-2 bg-indigo-600 w-full"></div>
-                        <div class="p-6">
-                            <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                                <i class="fa-solid fa-clipboard-user"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">Consultation Sommeil</h3>
-                            <p class="text-slate-500 text-sm mb-4">Canevas complet : interrogatoire, examen clinique et synthèse.</p>
-                            <div class="text-indigo-600 font-semibold text-sm flex items-center">
-                                Lancer la consult' <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-                            </div>
+                <div class="space-y-10">
+                    
+                    <!-- Groupe A : Consultation Initiale -->
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-600 uppercase tracking-wide mb-4 pl-2 border-l-4 border-indigo-500">
+                            Consultation Sommeil Initiale
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <a href="consultation_sommeil.html" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-indigo-400 group">
+                                <div class="h-2 bg-indigo-600 w-full"></div>
+                                <div class="p-6">
+                                    <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                        <i class="fa-solid fa-clipboard-user"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">Consultation Initiale</h3>
+                                    <p class="text-slate-500 text-sm mb-4">Canevas complet : interrogatoire, examen et synthèse.</p>
+                                    <div class="text-indigo-600 font-semibold text-sm flex items-center">
+                                        Lancer <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
+                    </div>
+
+                    <!-- Groupe B : Troubles Respiratoires (SAOS) -->
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-600 uppercase tracking-wide mb-4 pl-2 border-l-4 border-cyan-500">
+                            Troubles Respiratoires du Sommeil (SAOS)
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            
+                            <!-- Décharge SAHOS (Raccourci) -->
+                            <a href="documents/decharge_sahos.html" target="_blank" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-red-400 group">
+                                <div class="h-2 bg-red-600 w-full"></div>
+                                <div class="p-6">
+                                    <div class="w-14 h-14 bg-red-50 text-red-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors">
+                                        <i class="fa-solid fa-file-signature"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">Décharge Responsabilité</h3>
+                                    <p class="text-slate-500 text-sm mb-4">Arrêt de traitement contre avis médical (Fiche Imprimable).</p>
+                                    <div class="text-red-600 font-semibold text-sm flex items-center">
+                                        Ouvrir <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <!-- Info Patient Conduite (Raccourci) -->
+                            <a href="documents/info_conduite.html" target="_blank" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-orange-400 group">
+                                <div class="h-2 bg-orange-500 w-full"></div>
+                                <div class="p-6">
+                                    <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                                        <i class="fa-solid fa-triangle-exclamation"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">Info Conduite</h3>
+                                    <p class="text-slate-500 text-sm mb-4">Information légale sur le permis de conduire.</p>
+                                    <div class="text-orange-600 font-semibold text-sm flex items-center">
+                                        Ouvrir <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <!-- Placeholder Suivi -->
+                            <div class="block bg-slate-50 rounded-xl overflow-hidden border border-slate-200 border-dashed p-6 flex flex-col justify-center items-center text-center opacity-60">
+                                <div class="w-14 h-14 bg-slate-200 text-slate-400 rounded-lg flex items-center justify-center text-2xl mb-4">
+                                    <i class="fa-solid fa-briefcase-medical"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-slate-400 mb-1">Canevas de Suivi</h3>
+                                <p class="text-slate-400 text-xs uppercase tracking-widest font-bold">À venir</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Groupe C : Consultation Insomnie -->
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-600 uppercase tracking-wide mb-4 pl-2 border-l-4 border-purple-500">
+                            Consultation Insomnie
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            
+                            <!-- Agenda Sommeil (Placeholder) -->
+                            <div class="block bg-slate-50 rounded-xl overflow-hidden border border-slate-200 border-dashed p-6 flex flex-col justify-center items-center text-center opacity-60">
+                                <div class="w-14 h-14 bg-slate-200 text-slate-400 rounded-lg flex items-center justify-center text-2xl mb-4">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-slate-400 mb-1">Agenda du Sommeil</h3>
+                                <p class="text-slate-400 text-xs uppercase tracking-widest font-bold">En construction</p>
+                            </div>
+
+                            <!-- Hygiène Sommeil -->
+                            <a href="documents/hygiene_sommeil.html" target="_blank" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-purple-400 group">
+                                <div class="h-2 bg-purple-600 w-full"></div>
+                                <div class="p-6">
+                                    <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                        <i class="fa-solid fa-moon"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">Règles d'Hygiène</h3>
+                                    <p class="text-slate-500 text-sm mb-4">Conseils comportementaux (Fiche Patient).</p>
+                                    <div class="text-purple-600 font-semibold text-sm flex items-center">
+                                        Ouvrir <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <!-- Info Hypnotiques -->
+                            <a href="documents/info_hypnotiques.html" target="_blank" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-purple-400 group">
+                                <div class="h-2 bg-purple-600 w-full"></div>
+                                <div class="p-6">
+                                    <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                        <i class="fa-solid fa-pills"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-2">Les Hypnotiques</h3>
+                                    <p class="text-slate-500 text-sm mb-4">Risques, bon usage et sevrage (Fiche Patient).</p>
+                                    <div class="text-purple-600 font-semibold text-sm flex items-center">
+                                        Ouvrir <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <!-- Séparateur -->
-            <hr class="border-slate-200 my-12">
-
             <!-- SECTION 2 : ÉCHELLES & DOCS -->
-            <div class="mb-8">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold text-slate-700 mb-2">Boîte à Outils Clinique</h2>
-                    <p class="text-slate-500 max-w-2xl mx-auto">Accès rapide aux échelles d'évaluation et documents.</p>
-                </div>
+            <div>
+                <h2 class="text-3xl font-bold text-slate-800 mb-8 border-b border-slate-200 pb-4">
+                    <i class="fa-solid fa-toolbox mr-2 text-blue-600"></i>Boîte à Outils Clinique
+                </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
-                    <!-- Carte 1 : SDS-25 -->
+                    <!-- SDS-25 -->
                     <a href="sds25.html" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-blue-300 group">
                         <div class="h-2 bg-blue-600 w-full"></div>
                         <div class="p-6">
@@ -120,7 +217,7 @@
                         </div>
                     </a>
 
-                    <!-- Carte 2 : NoSAS Score -->
+                    <!-- NoSAS -->
                     <a href="NoSAS.html" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-cyan-400 group">
                         <div class="h-2 bg-cyan-600 w-full"></div>
                         <div class="p-6">
@@ -128,14 +225,14 @@
                                 <i class="fa-solid fa-lungs"></i>
                             </div>
                             <h3 class="text-xl font-bold text-slate-800 mb-2">Score NoSAS</h3>
-                            <p class="text-slate-500 text-sm mb-4">Dépistage de l'apnée du sommeil (Neck, Obesity, Snoring, Age, Sex).</p>
+                            <p class="text-slate-500 text-sm mb-4">Dépistage de l'apnée du sommeil.</p>
                             <div class="text-cyan-600 font-semibold text-sm flex items-center">
                                 Ouvrir <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                             </div>
                         </div>
                     </a>
 
-                    <!-- Carte 3 : Epworth (ESS) -->
+                    <!-- Epworth -->
                     <a href="epworth.html" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-orange-400 group">
                         <div class="h-2 bg-orange-500 w-full"></div>
                         <div class="p-6">
@@ -143,45 +240,46 @@
                                 <i class="fa-solid fa-car-burst"></i>
                             </div>
                             <h3 class="text-xl font-bold text-slate-800 mb-2">Échelle d'Epworth</h3>
-                            <p class="text-slate-500 text-sm mb-4">Évaluation de la somnolence diurne excessive (ESS).</p>
+                            <p class="text-slate-500 text-sm mb-4">Évaluation de la somnolence diurne excessive.</p>
                             <div class="text-orange-600 font-semibold text-sm flex items-center">
                                 Ouvrir <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                             </div>
                         </div>
                     </a>
 
-                    <!-- Carte 4 : Santé Sommeil Court -->
+                    <!-- Santé Sommeil Court -->
                     <a href="sante_sommeil.html" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-green-400 group">
                         <div class="h-2 bg-green-500 w-full"></div>
                         <div class="p-6">
                             <div class="w-14 h-14 bg-green-50 text-green-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
                                 <i class="fa-solid fa-heart-pulse"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">Santé Sommeil (Court)</h3>
-                            <p class="text-slate-500 text-sm mb-4">Évaluation rapide de la santé du sommeil (Ru-SATED).</p>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">Santé Sommeil</h3>
+                            <p class="text-slate-500 text-sm mb-4">Évaluation rapide (Ru-SATED).</p>
                             <div class="text-green-600 font-semibold text-sm flex items-center">
                                 Ouvrir <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                             </div>
                         </div>
                     </a>
 
-                    <!-- Carte 5 : Documents -->
+                    <!-- Documents Index -->
                     <a href="documents/" class="tool-card block bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:border-purple-300 group">
                         <div class="h-2 bg-purple-600 w-full"></div>
                         <div class="p-6">
                             <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-                                <i class="fa-solid fa-file-pdf"></i>
+                                <i class="fa-solid fa-folder-open"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-2">Documents PDF</h3>
-                            <p class="text-slate-500 text-sm mb-4">Fiches patients et supports à imprimer.</p>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">Bibliothèque PDF</h3>
+                            <p class="text-slate-500 text-sm mb-4">Tous les documents et fiches patients.</p>
                             <div class="text-purple-600 font-semibold text-sm flex items-center">
-                                Accéder <i class="fa-solid fa-folder-open ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                Accéder <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                             </div>
                         </div>
                     </a>
 
                 </div>
             </div>
+
         </main>
 
         <footer class="bg-white border-t border-slate-200 py-8 mt-8 text-center text-slate-400 text-sm">
@@ -192,16 +290,11 @@
 
     <!-- SCRIPT DE SÉCURITÉ -->
     <script>
-        // Mot de passe encodé en Base64 pour ne pas l'écrire en clair
-        // "remi" = "cmVtaQ=="
-        // Pour changer le MDP : va sur https://www.base64encode.org/, tape ton mdp, et colle le résultat ici
         const PASS_HASH = "cmVtaQ=="; 
 
         function checkPassword(e) {
             e.preventDefault();
             const input = document.getElementById('password-input').value;
-            
-            // Vérification basique
             if (btoa(input) === PASS_HASH) {
                 unlock();
             } else {
@@ -215,7 +308,6 @@
         function unlock() {
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('app-content').classList.remove('cloak');
-            // Sauvegarde de la session (reste connecté tant que l'onglet est ouvert)
             sessionStorage.setItem('auth_sommeil', 'true');
         }
 
@@ -224,7 +316,6 @@
             location.reload();
         }
 
-        // Vérification automatique au chargement
         if (sessionStorage.getItem('auth_sommeil') === 'true') {
             unlock();
         }
