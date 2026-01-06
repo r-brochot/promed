@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hygiène du Sommeil - Dr R. BROCHOT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fff; color: #333; }
+        @media print {
+            .no-print { display: none !important; }
+            body { font-size: 11pt; padding: 0; background: white; }
+            .container { max-width: 100% !important; border: none !important; shadow: none !important; padding: 0 !important; margin: 0 !important; }
+            .card { break-inside: avoid; border: 1px solid #ddd; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 p-4 md:p-8">
+
+    <div class="container max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-lg border border-slate-200">
+        
+        <!-- En-tête -->
+        <div class="border-b-2 border-indigo-600 pb-4 mb-8 flex justify-between items-start">
+            <div>
+                <h1 class="text-xl font-bold uppercase tracking-widest text-slate-900">Dr Rémi BROCHOT</h1>
+                <p class="text-sm text-slate-600 font-semibold">Médecine du Sommeil</p>
+            </div>
+            <div class="text-right text-sm text-slate-500 italic">
+                <p>Fiche d'éducation thérapeutique</p>
+                <p>Réf: HYG-SOM-2026</p>
+            </div>
+        </div>
+
+        <!-- Titre -->
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold text-indigo-800 uppercase mb-2">
+                <i class="fa-solid fa-moon mr-2"></i> L'Hygiène du Sommeil
+            </h2>
+            <p class="text-slate-600 max-w-2xl mx-auto">
+                Le sommeil est un comportement fragile. Adopter les bons réflexes permet de resynchroniser votre horloge biologique et d'améliorer la qualité de vos nuits.
+            </p>
+        </div>
+
+        <!-- Grille des conseils -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+            <!-- 1. Horaires -->
+            <div class="card bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+                <h3 class="text-lg font-bold text-blue-900 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-clock"></i> Horaires & Rythme
+                </h3>
+                <ul class="list-disc list-outside ml-4 text-sm text-blue-900 space-y-2">
+                    <li><strong>Régularité avant tout :</strong> Fixez une heure de lever et de coucher régulière, y compris le week-end (pour stabiliser l'horloge biologique).</li>
+                    <li><strong>Besoins :</strong> Respectez votre besoin de sommeil personnel (ne vous forcez pas à dormir plus que nécessaire).</li>
+                    <li><strong>Siestes :</strong> Évitez les siestes trop longues (> 20 min) ou trop tardives (après 15h).</li>
+                </ul>
+            </div>
+
+            <!-- 2. Environnement -->
+            <div class="card bg-indigo-50 p-6 rounded-lg border-l-4 border-indigo-500">
+                <h3 class="text-lg font-bold text-indigo-900 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-bed"></i> La Chambre
+                </h3>
+                <ul class="list-disc list-outside ml-4 text-sm text-indigo-900 space-y-2">
+                    <li><strong>Ambiance :</strong> Environnement calme, silencieux, dans le noir complet et frais (18-19°C).</li>
+                    <li><strong>Confort :</strong> Choisissez un matelas et un oreiller adaptés.</li>
+                    <li><strong>Lumière :</strong> Exposez-vous à la lumière le matin pour l'éveil. Le soir, <strong>limitez les écrans</strong> (lumière bleue) qui retardent l'endormissement.</li>
+                </ul>
+            </div>
+
+            <!-- 3. Alimentation & Excitants -->
+            <div class="card bg-orange-50 p-6 rounded-lg border-l-4 border-orange-500">
+                <h3 class="text-lg font-bold text-orange-900 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-mug-hot"></i> Alimentation & Psychotropes
+                </h3>
+                <ul class="list-disc list-outside ml-4 text-sm text-orange-900 space-y-2">
+                    <li><strong>Le Dîner :</strong> Favorisez les sucres lents (pâtes, riz) qui aident au sommeil. Évitez les repas trop lourds.</li>
+                    <li><strong>Caféine :</strong> À éviter 4 à 6 heures avant le coucher (café, thé, cola, énergisants).</li>
+                    <li><strong>Nicotine :</strong> À éviter 1h avant le coucher et lors des réveils nocturnes (c'est un stimulant).</li>
+                    <li><strong>Alcool :</strong> Fausse bonne idée ! Il facilite l'endormissement mais provoque des réveils nocturnes et un sommeil de mauvaise qualité.</li>
+                </ul>
+            </div>
+
+            <!-- 4. Activité Physique -->
+            <div class="card bg-green-50 p-6 rounded-lg border-l-4 border-green-500">
+                <h3 class="text-lg font-bold text-green-900 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-person-running"></i> Activité Physique
+                </h3>
+                <ul class="list-disc list-outside ml-4 text-sm text-green-900 space-y-2">
+                    <li><strong>Bouger :</strong> Pratiquez une activité physique régulière, de préférence le matin ou en journée.</li>
+                    <li><strong>Le soir :</strong> Privilégiez les activités calmes. Le sport intense le soir peut augmenter la température corporelle et retarder le sommeil.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Encart Enfant -->
+        <div class="bg-slate-100 p-6 rounded-xl border border-slate-300 break-inside-avoid">
+            <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-child-reaching text-pink-500"></i> Spécificités chez l'Enfant
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4 text-sm text-slate-700">
+                <ul class="list-disc list-inside space-y-1">
+                    <li><strong>Besoin de sommeil :</strong> Veillez à ce que la durée totale de sommeil corresponde à l'âge de l'enfant.</li>
+                    <li><strong>Rituels du coucher :</strong> Indispensables ! Mettre en place une routine calme (15-20 min), tous les soirs (histoire, berceuse).</li>
+                </ul>
+                <ul class="list-disc list-inside space-y-1">
+                    <li><strong>Écrans :</strong> Adapter strictement le temps d'écran à l'âge. Pas d'écran avant de dormir.</li>
+                    <li><strong>Cadre :</strong> Chambre calme, 18-20°C, lit sécurisant.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-xs text-slate-400 border-t pt-4">
+            <p>Document remis par le Dr Rémi BROCHOT. Ces conseils ne remplacent pas une consultation médicale si les troubles persistent.</p>
+        </div>
+
+    </div>
+
+    <!-- Bouton Imprimer -->
+    <div class="no-print fixed bottom-8 right-8">
+        <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-6 rounded-full shadow-xl flex items-center gap-3 transition-transform hover:scale-105">
+            <i class="fa-solid fa-print"></i> Imprimer la fiche
+        </button>
+    </div>
+
+</body>
+</html>
