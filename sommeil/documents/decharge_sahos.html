@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Décharge de Responsabilité - Dr R. BROCHOT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fff; color: #333; }
+        .dotted-line { border-bottom: 2px dotted #94a3b8; display: inline-block; width: 100%; height: 1.5em; margin-bottom: -0.2em; }
+        .dotted-line-sm { width: 150px; }
+        .dotted-line-md { width: 300px; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { font-size: 12pt; padding: 0; }
+            .container { max-width: 100% !important; border: none !important; shadow: none !important; padding: 0 !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 p-4 md:p-8">
+
+    <div class="container max-w-3xl mx-auto bg-white p-12 rounded-xl shadow-lg border border-slate-200">
+        
+        <!-- En-tête -->
+        <div class="border-b-2 border-slate-800 pb-4 mb-10">
+            <!-- Coordonnées Médecin -->
+            <div>
+                <h1 class="text-xl font-bold uppercase tracking-widest text-slate-900">Dr Rémi BROCHOT</h1>                
+                <div class="text-sm text-slate-500 leading-snug">
+                    <p>13 rue Roger Salengro</p>
+                    <p>54230 Neuves-Maisons</p>
+                    <p class="text-xs mt-1 text-slate-400">RPPS 10100977767 - AM 541021366</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Titre -->
+        <div class="text-center mb-10">
+            <h2 class="text-2xl font-bold text-slate-800 uppercase underline decoration-2 decoration-slate-300 underline-offset-4">
+                Décharge de Responsabilité
+            </h2>
+        </div>
+
+        <!-- Corps du texte -->
+        <div class="content space-y-6 text-justify leading-loose text-slate-800">
+            
+            <p>
+                Je soussigné(e), <span class="dotted-line dotted-line-md"></span>
+            </p>
+            
+            <p>
+                Demeurant à <span class="dotted-line dotted-line-md"></span>
+            </p>
+
+            <p>
+                Suivi(e) par le Docteur <strong>Rémi BROCHOT</strong>,
+            </p>
+
+            <p>
+                Demande ce jour l'arrêt de mon traitement concernant le <strong>Syndrome d'Apnées-Hypopnées Obstructives du Sommeil (SAHOS)</strong> prescrit le <span class="dotted-line dotted-line-sm"></span>.
+            </p>
+
+            <div class="bg-slate-50 p-6 border-l-4 border-red-500 my-6 text-sm">
+                <p class="mb-4">
+                    Je déclare agir <strong>en pleine connaissance de cause</strong> sur les conséquences directes et indirectes de cet arrêt sur les pathologies concernées, telles que précisées ce jour par le médecin et le prestataire de soins à domicile.
+                </p>
+                <p>
+                    Je reconnais avoir été informé(e) notamment des <strong>risques métaboliques, cardio-vasculaires, comportementaux</strong> et de somnolence diurne liés à l'absence de traitement.
+                </p>
+            </div>
+
+            <p>
+                Je reconnais également l'obligation de suivre ce traitement dans le cas de l'exercice de certains métiers, notamment comme <strong>conducteur de véhicule</strong> (quel qu'il soit) ou travailleur sur certaines machines-outils, conformément à l'arrêté du 28 mars 2022 fixant la liste des affections médicales incompatibles avec le permis de conduire.
+            </p>
+
+            <p>
+                Je m'engage, en toute conscience des risques encourus pour ma santé suite à cet arrêt, et <strong>renonce à engager toute poursuite</strong> contre le médecin prescripteur et la société prestataire de soins à domicile, quelles qu'en soient les raisons, les causes et les circonstances.
+            </p>
+
+        </div>
+
+        <!-- Signatures -->
+        <div class="mt-16 pt-8 flex flex-col md:flex-row justify-between gap-12">
+            <div class="w-full">
+                <!-- Lieu et Date automatiques -->
+                <p class="mb-2 text-lg">
+                    Fait à <strong>Neuves-Maisons</strong>, le <strong id="date-jour"></strong>
+                </p>
+                
+                <div class="mt-8 p-4 border border-dashed border-slate-400 h-40 bg-slate-50 rounded relative">
+                    <p class="text-xs text-slate-500 absolute top-2 left-2">Signature du patient</p>
+                    <p class="text-center text-slate-400 mt-12 text-sm italic">(Précédée de la mention manuscrite "Lu et approuvé")</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bouton Imprimer -->
+    <div class="no-print fixed bottom-8 right-8">
+        <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-full shadow-xl flex items-center gap-3 transition-transform hover:scale-105">
+            <i class="fa-solid fa-print"></i> Imprimer
+        </button>
+    </div>
+
+    <!-- Script Date Auto -->
+    <script>
+        // Met la date du jour au format français (ex: 06/01/2026)
+        document.getElementById('date-jour').textContent = new Date().toLocaleDateString('fr-FR');
+    </script>
+
+</body>
+</html>
