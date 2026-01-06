@@ -14,17 +14,19 @@
         
         @media print {
             .no-print { display: none !important; }
-            body { font-size: 12pt; padding: 0; }
-            .container { max-width: 100% !important; border: none !important; shadow: none !important; padding: 0 !important; }
+            body { font-size: 11pt; padding: 0; margin: 0; }
+            .container { max-width: 100% !important; width: 100% !important; border: none !important; shadow: none !important; padding: 0 !important; margin: 0 !important; }
+            /* Force le tout sur une page si possible */
+            html, body { height: 100%; overflow: hidden; }
         }
     </style>
 </head>
 <body class="bg-slate-100 p-4 md:p-8">
 
-    <div class="container max-w-3xl mx-auto bg-white p-12 rounded-xl shadow-lg border border-slate-200">
+    <div class="container max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-slate-200">
         
-        <!-- En-tête -->
-        <div class="border-b-2 border-slate-800 pb-4 mb-10">
+        <!-- En-tête (Compacté) -->
+        <div class="border-b-2 border-slate-800 pb-3 mb-6">
             <!-- Coordonnées Médecin -->
             <div>
                 <h1 class="text-xl font-bold uppercase tracking-widest text-slate-900">Dr Rémi BROCHOT</h1>                
@@ -36,15 +38,15 @@
             </div>
         </div>
 
-        <!-- Titre -->
-        <div class="text-center mb-10">
-            <h2 class="text-2xl font-bold text-slate-800 uppercase underline decoration-2 decoration-slate-300 underline-offset-4">
+        <!-- Titre (Marge réduite) -->
+        <div class="text-center mb-6">
+            <h2 class="text-xl font-bold text-slate-800 uppercase underline decoration-2 decoration-slate-300 underline-offset-4">
                 Décharge de Responsabilité
             </h2>
         </div>
 
-        <!-- Corps du texte -->
-        <div class="content space-y-6 text-justify leading-loose text-slate-800">
+        <!-- Corps du texte (Interligne réduit et espacement réduit) -->
+        <div class="content space-y-4 text-justify leading-normal text-slate-800 text-sm md:text-base">
             
             <p>
                 Je soussigné(e), <span class="dotted-line dotted-line-md"></span>
@@ -62,8 +64,8 @@
                 Demande ce jour l'arrêt de mon traitement concernant le <strong>Syndrome d'Apnées-Hypopnées Obstructives du Sommeil (SAHOS)</strong> prescrit le <span class="dotted-line dotted-line-sm"></span>.
             </p>
 
-            <div class="bg-slate-50 p-6 border-l-4 border-red-500 my-6 text-sm">
-                <p class="mb-4">
+            <div class="bg-slate-50 p-4 border-l-4 border-red-500 my-4 text-sm">
+                <p class="mb-2">
                     Je déclare agir <strong>en pleine connaissance de cause</strong> sur les conséquences directes et indirectes de cet arrêt sur les pathologies concernées, telles que précisées ce jour par le médecin et le prestataire de soins à domicile.
                 </p>
                 <p>
@@ -81,17 +83,20 @@
 
         </div>
 
-        <!-- Signatures -->
-        <div class="mt-16 pt-8 flex flex-col md:flex-row justify-between gap-12">
+        <!-- Signatures (Compactées) -->
+        <div class="mt-8 pt-4 flex flex-col md:flex-row justify-between gap-8">
             <div class="w-full">
                 <!-- Lieu et Date automatiques -->
-                <p class="mb-2 text-lg">
+                <p class="mb-2 text-base">
                     Fait à <strong>Neuves-Maisons</strong>, le <strong id="date-jour"></strong>
                 </p>
                 
-                <div class="mt-8 p-4 border border-dashed border-slate-400 h-40 bg-slate-50 rounded relative">
-                    <p class="text-xs text-slate-500 absolute top-2 left-2">Signature du patient</p>
-                    <p class="text-center text-slate-400 mt-12 text-sm italic">(Précédée de la mention manuscrite "Lu et approuvé")</p>
+                <!-- Cadre réduit (h-32 au lieu de h-40) -->
+                <div class="mt-4 p-3 border border-dashed border-slate-400 h-32 bg-slate-50 rounded relative">
+                    <p class="text-xs text-slate-500 absolute top-2 left-2 font-bold">Signature du patient</p>
+                    <div class="flex items-center justify-center h-full">
+                        <p class="text-slate-400 text-xs italic text-center px-4 pt-4">(Précédée de la mention manuscrite<br>"Lu et approuvé")</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,14 +105,13 @@
 
     <!-- Bouton Imprimer -->
     <div class="no-print fixed bottom-8 right-8">
-        <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-6 rounded-full shadow-xl flex items-center gap-3 transition-transform hover:scale-105">
+        <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-5 rounded-full shadow-xl flex items-center gap-2 transition-transform hover:scale-105 text-sm">
             <i class="fa-solid fa-print"></i> Imprimer
         </button>
     </div>
 
     <!-- Script Date Auto -->
     <script>
-        // Met la date du jour au format français (ex: 06/01/2026)
         document.getElementById('date-jour').textContent = new Date().toLocaleDateString('fr-FR');
     </script>
 
