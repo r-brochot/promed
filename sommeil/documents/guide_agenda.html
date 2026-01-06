@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Agenda Sommeil - Dr R. BROCHOT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-10 print:hidden">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="inline-flex items-center gap-2 text-slate-500 hover:text-blue-700 font-medium transition-colors">
+                <i class="fa-solid fa-arrow-left"></i> Retour
+            </a>
+            <!-- Lien rapide vers le PDF patient -->
+            <a href="documents/agenda_sommeil.pdf" target="_blank" class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full hover:bg-blue-200 transition-colors">
+                <i class="fa-solid fa-print mr-1"></i> Imprimer la grille vierge & consignes patients
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-slate-800 flex items-center gap-3">
+                <i class="fa-solid fa-chart-line text-purple-600"></i> Guide Agenda Sommeil
+            </h1>
+            <p class="text-slate-500 mt-1 text-lg">Lecture et interprétation (Adulte)</p>
+        </header>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            
+            <!-- Définition & Durée -->
+            <div class="md:col-span-2 space-y-6">
+                
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h2 class="text-lg font-bold text-slate-700 mb-3 border-b pb-2">
+                        <i class="fa-solid fa-ruler-combined mr-2 text-blue-500"></i>Protocole de Recueil
+                    </h2>
+                    <ul class="space-y-3 text-slate-600 text-sm">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-calendar-check text-green-500 mt-1"></i>
+                            <div><strong>Durée :</strong> 3 semaines minimum pour être représentatif.</div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-pen-to-square text-blue-500 mt-1"></i>
+                            <div><strong>Remplissage :</strong> Matin (nuit précédente) et Soir (journée écoulée).</div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-orange-500 mt-1"></i>
+                            <div><strong>Consigne clé :</strong> Ne pas regarder sa montre la nuit ! C'est une évaluation subjective (ressenti).</div>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h2 class="text-lg font-bold text-slate-700 mb-3 border-b pb-2">
+                        <i class="fa-solid fa-magnifying-glass-chart mr-2 text-purple-500"></i>Analyse Visuelle (Qualitative)
+                    </h2>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <h4 class="font-bold text-slate-800 mb-1">Stabilité</h4>
+                            <ul class="list-disc list-inside text-slate-600">
+                                <li>Heures de lever/coucher régulières ?</li>
+                                <li>Décalage semaine/week-end ?</li>
+                                <li>Retard de phase (coucher tardif) ?</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 mb-1">Continuité</h4>
+                            <ul class="list-disc list-inside text-slate-600">
+                                <li>Fragmentation (hachure) ?</li>
+                                <li>Éveil matinal précoce ?</li>
+                                <li>Siestes (nombre/durée) ?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Indications -->
+            <div class="md:col-span-1">
+                <section class="bg-indigo-50 p-6 rounded-xl border border-indigo-100 h-full">
+                    <h2 class="text-lg font-bold text-indigo-900 mb-4">Indications</h2>
+                    <ul class="space-y-4 text-sm text-indigo-800">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-bed mt-1"></i>
+                            <span><strong>Insomnie Chronique :</strong> Indispensable pour la TCC (restriction du temps passé au lit).</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-clock-rotate-left mt-1"></i>
+                            <span><strong>Trouble du Rythme Circadien :</strong> Retard/Avance de phase.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-battery-quarter mt-1"></i>
+                            <span><strong>Insuffisance de Sommeil :</strong> Dette chronique.</span>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+
+        </div>
+
+        <!-- Analyse Quantifiée (Formules) -->
+        <section class="bg-white p-6 rounded-xl shadow-md border-l-4 border-green-500 mb-8">
+            <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <i class="fa-solid fa-calculator text-green-600"></i> Analyse Quantifiée
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left border-collapse">
+                    <thead class="bg-slate-100 text-slate-700 uppercase font-bold text-xs">
+                        <tr>
+                            <th class="p-3 border-b">Paramètre</th>
+                            <th class="p-3 border-b">Formule / Définition</th>
+                            <th class="p-3 border-b">Norme / Interprétation</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-slate-700">
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold">TTE<br><span class="text-xs font-normal text-slate-400">Temps Total passé au Lit</span></td>
+                            <td class="p-3">Heure Lever - Heure Coucher</td>
+                            <td class="p-3"><span class="text-orange-600">Si > TTS de beaucoup = Mauvaise efficacité (cf. Paramètre SE)</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold">LE<br><span class="text-xs font-normal text-slate-400">Latence d'Endormissement</span></td>
+                            <td class="p-3">Temps pour s'endormir</td>
+                            <td class="p-3"><span class="bg-red-100 text-red-800 px-2 py-1 rounded font-bold">> 30 min</span> = Augmentée</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold">PTS<br><span class="text-xs font-normal text-slate-400">Période Totale de Sommeil</span></td>
+                            <td class="p-3">Heure Réveil Final - Heure Endormissement</td>
+                            <td class="p-3 text-slate-500 italic">Durée de la période de sommeil (inclus les éveils)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold">TEE <span class="text-[10px] font-normal text-slate-400">(ou WASO)</span><br><span class="text-xs font-normal text-slate-400">Temps d'Éveil Intra-sommeil</span></td>
+                            <td class="p-3">Somme des éveils nocturnes</td>
+                            <td class="p-3"><span class="bg-red-100 text-red-800 px-2 py-1 rounded font-bold">> 30 min</span> = Pathologique</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-3 font-bold">TTS<br><span class="text-xs font-normal text-slate-400">Temps Total de Sommeil</span></td>
+                            <td class="p-3">PTS - TEE<br><span class="text-xs italic">(Période Totale Sommeil - Éveils)</span></td>
+                            <td class="p-3">
+                                <span class="text-red-600">< 6h</span> (Court dormeur/Dette)<br>
+                                <span class="text-orange-600">> 11h</span> (Long dormeur/Hypersomnie)
+                            </td>
+                        </tr>
+                        <tr class="bg-green-50 hover:bg-green-100 border-t-2 border-green-200">
+                            <td class="p-3 font-bold text-green-900">SE<br><span class="text-xs font-normal text-green-700">Efficacité du Sommeil</span></td>
+                            <td class="p-3 font-mono text-green-800 font-bold">(TTS / TTE) x 100</td>
+                            <td class="p-3">
+                                <span class="bg-green-200 text-green-900 px-2 py-1 rounded font-bold">> 85%</span> = Normal<br>
+                                <span class="text-red-600 font-bold">< 80%</span> = Insomnie
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 text-slate-400 text-xs bg-white border-t border-slate-200">
+        &copy; 2026 Dr R. BROCHOT - Outils Médicaux
+    </footer>
+
+</body>
+</html>
