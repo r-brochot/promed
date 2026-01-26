@@ -321,28 +321,55 @@
         .score-alert { background-color: #ffebee !important; color: #c0392b !important; border-color: #e74c3c !important; }
 
         @media print {
+            /* 1. FORCER L'IMPRESSION DES ARRIÈRE-PLANS (LE FIX PRINCIPAL) */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
             body { background-color: white; padding: 0; font-size: 11pt; }
             .container { box-shadow: none; width: 100%; max-width: 100%; padding: 0; margin: 0; }
             .btn-print { display: none; }
             h1 { font-size: 14pt; margin-bottom: 10px; border-bottom: 1px solid #000; }
-            h2.section-title { font-size: 12pt; border: none; padding: 0; margin-top: 15px; color: #000; font-weight: bold; text-decoration: underline; background: none;}
-            .bio-grid, .risk-grid, .atcd-frs-grid, .sleep-grid, .psy-container, .general-history-grid, .respi-grid, .score-grid-top, .score-grid-bottom { border: 1px solid #ccc; background-color: transparent; page-break-inside: avoid; margin-bottom: 10px; padding: 5px; }
+            h2.section-title { font-size: 12pt; border: none; padding: 0; margin-top: 15px; color: #000; font-weight: bold; text-decoration: underline; background: none !important;}
+            
+            /* Bordures pour la structure, fond transparent sauf si spécifié autrement */
+            .bio-grid, .risk-grid, .atcd-frs-grid, .sleep-grid, .psy-container, .general-history-grid, .respi-grid, .score-grid-top, .score-grid-bottom { 
+                border: 1px solid #ccc; 
+                background-color: transparent; 
+                page-break-inside: avoid; 
+                margin-bottom: 10px; 
+                padding: 5px; 
+            }
             .ident-grid { border: none; padding: 0; margin-bottom: 5px; }
+            
+            /* Champs de formulaire */
             input, select, textarea { border: none; border-bottom: 1px dotted #999; padding: 0; background: transparent !important; }
             textarea { height: auto; resize: none; }
+            
             .pathology-warning, .imc-warning, .driving-warning { color: black; font-style: italic; background: none; border: none; padding: 0;}
             .psy-scores { display: grid !important; } 
             .psy-toggle { display: none; }
             #ant_fam_precision:placeholder-shown { display: none !important; }
             
             .sub-option, .precision-input { display: block !important; border:none; padding:0; margin-left: 20px; }
+            /* On garde cette ligne pour cacher les sous-options NON cochées, mais on fait attention à l'affichage de la coche */
             .sub-option input:not(:checked) + .checkmark { display:none; }
             .precision-input:placeholder-shown { display: none !important; }
             
             /* Print specifics Respi & Sommeil */
             .respi-grid, .sleep-grid, .atcd-frs-grid { grid-template-columns: 1fr 1fr; }
+            
+            /* Gestion Mallampati */
             .mallampati-option { border: 1px solid #000; }
-            .mallampati-option.selected { background-color: #ddd !important; color: black !important; border: 2px solid black; }
+            .mallampati-option.selected { 
+                background-color: #ddd !important; 
+                color: black !important; 
+                border: 2px solid black; 
+                box-shadow: inset 0 0 0 1000px #ddd; /* Hack pour certains navigateurs */
+            }
+
             .clickable { border: none !important; }
             #nycturie_precision, #ronflement_precision, #dentier_precision, #nez_precision_div { display: block !important; }
             .cerfa-positive { background-color: #eee !important; color: black !important; font-weight: bold; }
@@ -351,6 +378,40 @@
             .hidden-section { display: block !important; border: none; padding: 0; }
             .radio-group { display: none; }
             
+            /* 2. FORCER LES COULEURS DES CHECKBOXES */
+            /* Checkbox Standard (Bleu) */
+            .checkbox-container input:checked ~ .checkmark {
+                background-color: #3498db !important;
+                border-color: #3498db !important;
+                -webkit-print-color-adjust: exact;
+            }
+
+            /* Checkbox Orange (Risques/FRS) */
+            .risk-grid .checkbox-container input:checked ~ .checkmark,
+            .frs-box .checkbox-container input:checked ~ .checkmark, 
+            .sub-option .checkbox-container input:checked ~ .checkmark,
+            .atcd-frs-grid .frs-tag { 
+                background-color: #e67e22 !important;
+                border-color: #e67e22 !important;
+            }
+
+            /* Checkbox Rouge (Respi) */
+            .respi-grid .checkbox-container input:checked ~ .checkmark { 
+                background-color: #e74c3c !important;
+                border-color: #e74c3c !important;
+            }
+
+            /* Checkbox Indigo (Sommeil) */
+            .sleep-grid .checkbox-container input:checked ~ .checkmark { 
+                background-color: #3f51b5 !important;
+                border-color: #3f51b5 !important;
+            }
+
+            /* Forcer la couleur blanche de la coche (le "V") */
+            .checkbox-container input:checked ~ .checkmark:after {
+                border-color: white !important;
+            }
+
             /* Footer */
             .footer { position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 0.6em; border-top: none; }
         }
