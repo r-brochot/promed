@@ -371,7 +371,7 @@
             }
 
             .clickable { border: none !important; }
-            #nycturie_precision, #ronflement_precision, #dentier_precision, #nez_precision_div { display: block !important; }
+            #nycturie_precision, #ronflement_precision, #dentier_precision, #nez_precision_div, #patho_autre_div { display: block !important; }
             .cerfa-positive { background-color: #eee !important; color: black !important; font-weight: bold; }
             .ppc-alert { display: block !important; border: 2px solid black; color: black; }
             .link-schema { display: none; }
@@ -620,7 +620,6 @@
                     <option value="">Préciser...</option>
                     <option value="simple">Simple / Positionnel</option>
                     <option value="severe">Sévère et quotidien</option> 
-                    <option value="intrusif">Incommodant l'entourage</option>
                 </select>
             </div>
 
@@ -821,6 +820,10 @@
                     <label class="checkbox-container">Syndrome Jambes Sans Repos (SJSR) <input type="checkbox" id="patho_sjsr"><span class="checkmark"></span></label>
                     <label class="checkbox-container">Mouvements Périodiques (MPJ) <input type="checkbox" id="patho_mpj"><span class="checkmark"></span></label>
                     <label class="checkbox-container" style="color:#d35400;">Insomnie <input type="checkbox" id="patho_insomnie"><span class="checkmark"></span></label>
+                    <label class="checkbox-container">Autre <input type="checkbox" id="patho_autre" onchange="togglePathoAutre()"><span class="checkmark"></span></label>
+                    <div id="patho_autre_div" style="display:none; margin-left:30px;">
+                        <input type="text" id="patho_autre_precision" placeholder="Préciser...">
+                    </div>
                 </div>
             </div>
         </div>
@@ -1297,7 +1300,7 @@
     // --- HOR/OTS Logic ---
     function openHorOtsModal() { document.getElementById("horOtsModal").style.display = "block"; }
     function validateHorOts() {
-        const score = document.getElementById('tempHorOts').value;
+        const score = document.getElementById('horOtsScore').innerText;
         const interp = document.getElementById('horOtsInterp').innerText;
         
         if(interp !== "...") {
@@ -1326,6 +1329,12 @@
         div.style.display = show ? 'block' : 'none';
     }
     
+    function togglePathoAutre() {
+        const isChecked = document.getElementById('patho_autre').checked;
+        document.getElementById('patho_autre_div').style.display = isChecked ? 'block' : 'none';
+        if(isChecked) document.getElementById('patho_autre_precision').focus();
+    }
+
     function togglePhase() {
         const radios = document.getElementsByName('phase_suspect');
         let isYes = false;
