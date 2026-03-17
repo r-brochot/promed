@@ -10,105 +10,106 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fff; color: #333; }
         @media print {
             .no-print { display: none !important; }
-            body { font-size: 11pt; padding: 0; background: white; }
-            .container { max-width: 100% !important; border: none !important; shadow: none !important; padding: 0 !important; margin: 0 !important; }
-            .card { break-inside: avoid; border: 1px solid #ddd; }
-            h2 { color: #000 !important; }
+            body { 
+                font-size: 10pt; 
+                padding: 0; 
+                background: white; 
+                -webkit-print-color-adjust: exact; /* Force l'impression des couleurs de fond */
+                print-color-adjust: exact;
+            }
+            .container { max-width: 100% !important; border: none !important; box-shadow: none !important; }
+            .card { break-inside: avoid; page-break-inside: avoid; }
         }
     </style>
 </head>
-<body class="bg-slate-50 p-4 md:p-8">
+<body class="bg-slate-50 p-4 md:p-8 print:p-0">
 
-    <div class="container max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-lg border border-slate-200">
+    <div class="container max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-lg border border-slate-200 print:p-4 print:border-none print:shadow-none">
         
         <!-- En-tête -->
-        <div class="border-b-2 border-slate-800 pb-4 mb-8 flex justify-between items-start">
+        <div class="border-b-2 border-slate-800 pb-4 mb-8 flex justify-between items-start print:pb-2 print:mb-4">
             <div>
-                <h1 class="text-xl font-bold uppercase tracking-widest text-slate-900">Dr Rémi BROCHOT</h1>
-                <p class="text-sm text-slate-600 font-semibold">Médecine du Sommeil</p>
+                <h1 class="text-xl font-bold uppercase tracking-widest text-slate-900 print:text-lg">Dr Rémi BROCHOT</h1>
+                <p class="text-sm text-slate-600 font-semibold print:text-xs">Médecine du Sommeil</p>
             </div>
-            <div class="text-right text-sm text-slate-500 italic">
+            <div class="text-right text-sm text-slate-500 italic print:text-xs">
                 <p>Fiche d'information Médicament</p>
                 <p>Réf: MED-HYP-2026</p>
             </div>
         </div>
 
         <!-- Titre -->
-        <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-slate-800 uppercase mb-2">
+        <div class="text-center mb-8 print:mb-4">
+            <h2 class="text-3xl font-bold text-slate-800 uppercase mb-2 print:text-xl">
                 Les Hypnotiques ("Somnifères")
             </h2>
-            <p class="text-slate-600 max-w-2xl mx-auto italic">
+            <p class="text-slate-600 max-w-2xl mx-auto italic print:text-xs">
                 Information sur le bon usage, les risques et le sevrage.
             </p>
         </div>
 
         <!-- Warning Box -->
-        <div class="bg-amber-50 border-l-8 border-amber-500 p-6 mb-8 rounded-r-lg">
-            <h3 class="text-xl font-bold text-amber-900 mb-2 flex items-center gap-2">
+        <div class="bg-amber-50 border-l-8 border-amber-500 p-6 mb-8 rounded-r-lg print:p-3 print:mb-4">
+            <h3 class="text-xl font-bold text-amber-900 mb-2 flex items-center gap-2 print:text-base print:mb-1">
                 <i class="fa-solid fa-triangle-exclamation"></i> Ce qu'il faut retenir
             </h3>
-            <p class="text-amber-800 leading-relaxed">
+            <p class="text-amber-800 leading-relaxed print:text-xs print:leading-normal">
                 Le somnifère classique est une <strong>aide ponctuelle</strong> (insomnie aiguë). Il ne guérit pas la cause.<br>
                 Pour l'insomnie chronique, le traitement de référence reste la <strong>Thérapie Comportementale et Cognitive (TCC)</strong>.
             </p>
         </div>
 
         <!-- Les 3 Règles d'Or -->
-        <div class="grid md:grid-cols-3 gap-6 mb-8">
-            <div class="card bg-slate-50 p-5 rounded-lg border-t-4 border-blue-500 text-center">
-                <div class="text-3xl text-blue-500 mb-3"><i class="fa-solid fa-hourglass-half"></i></div>
-                <h4 class="font-bold text-slate-800 mb-2">Durée Limitée</h4>
-                <p class="text-sm text-slate-600">Prescription limitée à <strong>4 semaines maximum</strong> (28 jours) pour éviter l'accoutumance et la dépendance.</p>
+        <div class="grid md:grid-cols-3 gap-6 mb-8 print:gap-3 print:mb-4">
+            <div class="card bg-slate-50 p-5 rounded-lg border-t-4 border-blue-500 text-center print:p-2">
+                <div class="text-3xl text-blue-500 mb-3 print:text-xl print:mb-1"><i class="fa-solid fa-hourglass-half"></i></div>
+                <h4 class="font-bold text-slate-800 mb-2 print:text-sm print:mb-1">Durée Limitée</h4>
+                <p class="text-sm text-slate-600 print:text-[11px] print:leading-tight">Prescription limitée à <strong>4 semaines max.</strong> (28 jours) pour éviter accoutumance et dépendance.</p>
             </div>
-            <div class="card bg-slate-50 p-5 rounded-lg border-t-4 border-red-500 text-center">
-                <div class="text-3xl text-red-500 mb-3"><i class="fa-solid fa-ban"></i></div>
-                <h4 class="font-bold text-slate-800 mb-2">Pas d'alcool</h4>
-                <p class="text-sm text-slate-600">L'association avec l'alcool est dangereuse (risque de coma, apnées, chutes).</p>
+            <div class="card bg-slate-50 p-5 rounded-lg border-t-4 border-red-500 text-center print:p-2">
+                <div class="text-3xl text-red-500 mb-3 print:text-xl print:mb-1"><i class="fa-solid fa-ban"></i></div>
+                <h4 class="font-bold text-slate-800 mb-2 print:text-sm print:mb-1">Pas d'alcool</h4>
+                <p class="text-sm text-slate-600 print:text-[11px] print:leading-tight">L'association avec l'alcool est dangereuse (risque de coma, apnées, chutes).</p>
             </div>
-            <div class="card bg-slate-50 p-5 rounded-lg border-t-4 border-purple-500 text-center">
-                <div class="text-3xl text-purple-500 mb-3"><i class="fa-solid fa-bed"></i></div>
-                <h4 class="font-bold text-slate-800 mb-2">Au lit !</h4>
-                <p class="text-sm text-slate-600">À prendre <strong>juste au moment du coucher</strong> (pas 1h avant devant la télé !).</p>
+            <div class="card bg-slate-50 p-5 rounded-lg border-t-4 border-purple-500 text-center print:p-2">
+                <div class="text-3xl text-purple-500 mb-3 print:text-xl print:mb-1"><i class="fa-solid fa-bed"></i></div>
+                <h4 class="font-bold text-slate-800 mb-2 print:text-sm print:mb-1">Au lit !</h4>
+                <p class="text-sm text-slate-600 print:text-[11px] print:leading-tight">À prendre <strong>juste au moment du coucher</strong> (pas 1h avant devant la télé !).</p>
             </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <div class="grid md:grid-cols-2 gap-8 mb-8 print:gap-4 print:mb-4">
             
             <!-- Les Risques -->
             <div>
-                <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">⚠️ Les Risques et Effets Secondaires</h3>
-                <ul class="space-y-4 text-sm text-slate-700">
+                <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2 print:text-base print:mb-2 print:pb-1">⚠️ Risques et Effets Secondaires</h3>
+                <ul class="space-y-4 text-sm text-slate-700 print:space-y-2 print:text-xs">
                     
                     <!-- ALERTE CONDUITE -->
-                    <li class="flex items-start gap-3 bg-red-50 p-3 rounded-lg border border-red-100">
-                        <i class="fa-solid fa-car-burst text-red-600 mt-1 text-lg"></i>
-                        <div>
+                    <li class="flex items-start gap-3 bg-red-50 p-3 rounded-lg border border-red-100 print:p-2">
+                        <i class="fa-solid fa-car-burst text-red-600 mt-1 text-lg print:text-base"></i>
+                        <div class="print:leading-tight">
                             <strong class="text-red-700 uppercase">Conduite Automobile : DANGER</strong><br>
-                            Risque important de somnolence le lendemain matin. La vigilance peut être altérée même sans sensation de fatigue.<br>
-                            <strong>Soyez extrêmement prudent.</strong>
+                            Risque important de somnolence le lendemain matin. Vigilance altérée même sans sensation de fatigue. <strong>Soyez prudent.</strong>
                         </div>
                     </li>
 
-                    <li class="flex items-start gap-3 px-2">
+                    <li class="flex items-start gap-3 px-2 print:px-0">
                         <i class="fa-solid fa-link text-slate-500 mt-1"></i>
-                        <div>
-                            <strong>Dépendance & Accoutumance :</strong><br>
-                            Le corps s'habitue, l'effet diminue avec le temps. L'arrêt brutal provoque un rebond.
+                        <div class="print:leading-tight">
+                            <strong>Dépendance & Accoutumance :</strong> L'effet diminue avec le temps. L'arrêt brutal provoque un rebond.
                         </div>
                     </li>
-                    <li class="flex items-start gap-3 px-2">
+                    <li class="flex items-start gap-3 px-2 print:px-0">
                         <i class="fa-solid fa-person-falling text-orange-500 mt-1"></i>
-                        <div>
-                            <strong>Chutes :</strong><br>
-                            Risque majeur de chute la nuit (surtout chez le sujet âgé).
+                        <div class="print:leading-tight">
+                            <strong>Chutes :</strong> Risque majeur de chute la nuit (surtout chez le sujet âgé).
                         </div>
                     </li>
-                    <li class="flex items-start gap-3 px-2">
+                    <li class="flex items-start gap-3 px-2 print:px-0">
                         <i class="fa-solid fa-brain text-slate-500 mt-1"></i>
-                        <div>
-                            <strong>Mémoire :</strong><br>
-                            Risque d'amnésie des faits récents et troubles de la concentration.
+                        <div class="print:leading-tight">
+                            <strong>Mémoire :</strong> Risque d'amnésie des faits récents et troubles de concentration.
                         </div>
                     </li>
                 </ul>
@@ -116,70 +117,85 @@
 
             <!-- Tableau des Molécules -->
             <div>
-                <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">💊 Durée d'action (Demi-vie)</h3>
+                <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2 print:text-base print:mb-2 print:pb-1">💊 Durée d'action (Demi-vie)</h3>
                 <div class="overflow-hidden rounded-lg border border-slate-200">
-                    <table class="w-full text-sm text-left">
+                    <table class="w-full text-sm text-left print:text-xs">
                         <thead class="bg-slate-100 text-slate-700 font-bold">
                             <tr>
-                                <th class="p-3">Médicament</th>
-                                <th class="p-3">Indication</th>
-                                <th class="p-3">Demi-vie</th>
+                                <th class="p-3 print:p-1.5">Médicament</th>
+                                <th class="p-3 print:p-1.5">Indication</th>
+                                <th class="p-3 print:p-1.5">Demi-vie</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
                             <!-- Classiques -->
                             <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-semibold">Zolpidem (Stilnox®)</td>
-                                <td class="p-3 text-slate-600">Endormissement</td>
-                                <td class="p-3">Courte (~2h30)</td>
+                                <td class="p-3 font-semibold print:p-1.5">Zolpidem (Stilnox®)</td>
+                                <td class="p-3 text-slate-600 print:p-1.5">Endormissement</td>
+                                <td class="p-3 print:p-1.5">Courte (~2h30)</td>
                             </tr>
                             <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-semibold">Zopiclone (Imovane®)</td>
-                                <td class="p-3 text-slate-600">Maintien</td>
-                                <td class="p-3">Moyenne (~5h)</td>
+                                <td class="p-3 font-semibold print:p-1.5">Zopiclone (Imovane®)</td>
+                                <td class="p-3 text-slate-600 print:p-1.5">Maintien</td>
+                                <td class="p-3 print:p-1.5">Moyenne (~5h)</td>
                             </tr>
                             <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-semibold">Loprazolam (Havlane®)</td>
-                                <td class="p-3 text-slate-600">Maintien</td>
-                                <td class="p-3">Moyenne (~8h)</td>
+                                <td class="p-3 font-semibold print:p-1.5">Loprazolam (Havlane®)</td>
+                                <td class="p-3 text-slate-600 print:p-1.5">Maintien</td>
+                                <td class="p-3 print:p-1.5">Moyenne (~8h)</td>
                             </tr>
                             <!-- Nouveau : Quviviq -->
                             <tr class="bg-indigo-50 hover:bg-indigo-100 border-t-2 border-indigo-100">
-                                <td class="p-3">
+                                <td class="p-3 print:p-1.5">
                                     <div class="font-bold text-indigo-900">Daridorexant (Quviviq®)</div>
-                                    <div class="text-[10px] text-indigo-700 mt-1 font-semibold">
-                                        <i class="fa-solid fa-star text-yellow-500 mr-1"></i>Seul traitement avec AMM "Insomnie Chronique"
+                                    <div class="text-[10px] text-indigo-700 mt-1 font-semibold print:text-[8px] print:leading-tight">
+                                        <i class="fa-solid fa-star text-yellow-500 mr-1"></i>Seul avec AMM "Insomnie Chronique"
                                     </div>
                                 </td>
-                                <td class="p-3 text-indigo-800 text-xs">
+                                <td class="p-3 text-indigo-800 text-xs print:p-1.5 print:text-[10px] print:leading-tight">
                                     <strong>Traitement de fond</strong><br>
-                                    (Toujours associé aux TCC/ETP)
+                                    (Avec TCC/ETP)
                                 </td>
-                                <td class="p-3 text-indigo-800">Moyenne (~8h)</td>
+                                <td class="p-3 text-indigo-800 print:p-1.5">Moyenne (~8h)</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="text-xs text-slate-400 mt-2 italic">
-                    *Demi-vie : temps d'élimination par l'organisme. Plus elle est longue, plus le risque de somnolence le lendemain matin est élevé.
+                <p class="text-xs text-slate-400 mt-2 italic print:text-[10px] print:mt-1">
+                    *Demi-vie : temps d'élimination. Plus elle est longue, plus le risque de somnolence le lendemain est élevé.
                 </p>
             </div>
 
         </div>
 
-        <!-- Sevrage (Simplifié) -->
-        <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
-            <h3 class="text-lg font-bold text-blue-900 mb-2 flex items-center gap-2">
-                <i class="fa-solid fa-stairs"></i> Comment arrêter ? (Le Sevrage)
+        <!-- Sevrage & Ressources -->
+        <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 print:p-3">
+            <h3 class="text-lg font-bold text-blue-900 mb-3 flex items-center gap-2 print:text-base print:mb-1">
+                <i class="fa-solid fa-stairs"></i> Comment arrêter ? <span class="print:hidden">(Ressources)</span><span class="hidden print:inline">(Le Sevrage)</span>
             </h3>
-            <p class="text-blue-800 text-sm font-medium leading-relaxed">
-                En cas d'usage prolongé, <strong>il ne faut pas arrêter brutalement</strong>. L'arrêt doit être progressif pour éviter l'insomnie de rebond.<br>
+            
+            <!-- Version Écran (Médecin) -->
+            <p class="text-blue-800 text-sm font-medium mb-4 print:hidden">
+                L'arrêt doit être progressif et encadré médicalement. Voici des protocoles de référence :
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 print:hidden">
+                <a href="https://ordoscopie.fr/protocole-darret-des-hypnotiques/" target="_blank" class="flex-1 bg-white text-blue-700 px-4 py-3 rounded-lg border border-blue-200 text-sm font-semibold hover:bg-blue-600 hover:text-white transition-colors flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-link"></i> Protocole Ordoscopie
+                </a>
+                <a href="https://www.has-sante.fr/upload/docs/application/pdf/2015-06/fiche_memo_rapport_elaboration_arret_benzodiazepines__2015_06_17.pdf" target="_blank" class="flex-1 bg-white text-blue-700 px-4 py-3 rounded-lg border border-blue-200 text-sm font-semibold hover:bg-blue-600 hover:text-white transition-colors flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-file-pdf"></i> Fiche Mémo HAS
+                </a>
+            </div>
+
+            <!-- Version Impression (Patient) -->
+            <p class="hidden print:block text-blue-800 text-xs font-medium leading-relaxed">
+                L'arrêt doit être progressif et encadré médicalement. En cas d'usage prolongé, <strong>il ne faut pas arrêter brutalement</strong>.<br>
                 <span class="block mt-2 font-bold"><i class="fa-solid fa-user-doctor mr-1"></i> Parlez-en à votre médecin pour établir un plan de décroissance personnalisé.</span>
             </p>
         </div>
 
         <!-- Footer -->
-        <div class="mt-8 text-center text-xs text-slate-400 border-t pt-4">
+        <div class="mt-8 text-center text-xs text-slate-400 border-t pt-4 print:mt-4 print:pt-2 print:text-[10px]">
             <p>Document remis par le Dr Rémi BROCHOT. Ne modifiez pas votre traitement sans avis médical.</p>
         </div>
 
