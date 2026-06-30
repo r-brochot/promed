@@ -90,6 +90,10 @@
       }
     }
 
+    .full-width {
+      margin-bottom: 16px;
+    }
+
     .card {
       background: var(--card);
       border-radius: 14px;
@@ -210,6 +214,11 @@
       color: #92400e;
     }
 
+    .badge-spec {
+      background: var(--accent-soft);
+      color: #1e40af;
+    }
+
     /* Boutons d'action */
     .actions {
       margin: 20px 0 10px;
@@ -295,7 +304,17 @@
     
     .result li { margin-bottom: 4px; }
 
-    /* --- FOOTER CREATIVE COMMONS --- */
+    /* Bloc CI spécifiques masqué par défaut */
+    #card-specifiques { display: none; }
+    .spec-block { margin-bottom: 8px; }
+    .spec-block-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin: 12px 0 4px;
+        color: #1e40af;
+    }
+
+    /* --- FOOTER --- */
     footer.site-footer {
         text-align: center;
         font-size: 0.8em;
@@ -313,7 +332,6 @@
     }
     
     footer.site-footer a { color: #6c757d; text-decoration: underline; }
-    footer.site-footer img { margin-bottom: 5px; }
 
     /* --- Bouton Retour Accueil --- */
     .home-button {
@@ -389,7 +407,6 @@
             bottom: 0;
             width: 100%;
         }
-        footer.site-footer img { height: 20px; width: auto; }
     }
   </style>
 </head>
@@ -413,12 +430,12 @@
         <h2>1. Informations patient</h2>
         <div class="field-row">
           <div class="field">
-            <label for="nom">Nom / Initiales</label>
-            <input id="nom" type="text" placeholder="Ex. M. X..." />
+            <label for="ref-patient">Nom / Initiales <small>(facultatif)</small></label>
+            <input id="ref-patient" type="text" placeholder="Ex. M.X." autocomplete="off" spellcheck="false" />
           </div>
           <div class="field">
             <label for="age">Âge</label>
-            <input id="age" type="number" min="0" max="120" placeholder="Années" />
+            <input id="age" type="number" min="0" max="120" placeholder="Années" autocomplete="off" />
           </div>
         </div>
 
@@ -435,11 +452,23 @@
               <option value="AUTRE">Autre / à préciser</option>
             </select>
           </div>
+          <div class="field">
+            <label for="orientation2">Seconde orientation <small>(optionnelle)</small></label>
+            <select id="orientation2">
+              <option value="">— aucune —</option>
+              <option value="RH">Rhumatologie (RH)</option>
+              <option value="VR">Voies respiratoires (VR)</option>
+              <option value="DER">Dermatologie (DER)</option>
+              <option value="METAB">Métabolique / Obésité</option>
+              <option value="MCA">Cardio-artériel (MCA)</option>
+              <option value="AUTRE">Autre / à préciser</option>
+            </select>
+          </div>
         </div>
 
         <div class="field">
           <label for="pathologies">Pathologies / contexte (résumé)</label>
-          <textarea id="pathologies" rows="3" placeholder="Ex. arthrose, asthme, DT2..."></textarea>
+          <textarea id="pathologies" rows="3" placeholder="Ex. arthrose, asthme, DT2..." autocomplete="off"></textarea>
         </div>
 
       </section>
@@ -456,7 +485,7 @@
             <span>Cancer en phase évolutive</span>
           </label>
           <label class="checkbox-item">
-            <input type="checkbox" data-type="absolute" value="AVC ou infarctus du myocarde &lt; 6 mois" />
+            <input type="checkbox" data-type="absolute" value="AVC, Embolie Pulmonaire ou infarctus du myocarde &lt; 6 mois" />
             <span>AVC, Embolie Pulmonaire ou infarctus du myocarde &lt; 6 mois</span>
           </label>
            <label class="checkbox-item">
@@ -467,10 +496,6 @@
             <input type="checkbox" data-type="absolute" value="Déficit immunitaire profond" />
             <span>Déficit immunitaire profond</span>
           </label>
-           <label class="checkbox-item">
-            <input type="checkbox" data-type="absolute" value="Mucoviscidose" />
-            <span>Mucoviscidose</span>
-          </label>
           <label class="checkbox-item">
             <input type="checkbox" data-type="absolute" value="Phlébite &lt; 3 mois" />
             <span>Phlébite &lt; 3 mois</span>
@@ -480,8 +505,8 @@
             <span>Hypertension artérielle non stabilisée</span>
           </label>
           <label class="checkbox-item">
-            <input type="checkbox" data-type="absolute" value="Maladie infectieuse en cours" />
-            <span>Maladie infectieuse en cours (respiratoire, cutanée, etc.)</span>
+            <input type="checkbox" data-type="absolute" value="Maladie infectieuse ou transmissible en cours" />
+            <span>Maladie infectieuse ou transmissible en cours (respiratoire, cutanée, etc.)</span>
           </label>
           <label class="checkbox-item">
             <input type="checkbox" data-type="absolute" value="Insuffisance d’organe sévère" />
@@ -507,10 +532,17 @@
             <input type="checkbox" data-type="absolute" value="Altération sévère de l’état général / cachexie" />
             <span>Altération sévère de l’état général / cachexie</span>
           </label>
-
           <label class="checkbox-item">
             <input type="checkbox" data-type="absolute" value="Désaturation au repos" />
             <span>Désaturation au repos</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" data-type="absolute" value="Allergie connue aux minéraux de l’eau (soufre)" />
+            <span>Allergie connue aux minéraux de l’eau (soufre)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" data-type="absolute" value="Grossesse pathologique" />
+            <span>Grossesse pathologique</span>
           </label>
         </div>
       </section>
@@ -544,21 +576,50 @@
             <input type="checkbox" data-type="relative" value="Plaie non infectée (protection par pansement occlusif)" />
             <span>Plaie non infectée (protection par pansement occlusif imperméable)</span>
           </label>
-
           <label class="checkbox-item">
             <input type="checkbox" data-type="relative" value="Désaturation à l’effort (SpO₂ < 90 % au TM6 ou chute ≥ 4 points)" />
             <span>Désaturation à l’effort (SpO₂ &lt; 90 % au TM6 ou chute ≥ 4 points)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" data-type="relative" value="Grossesse physiologique (limiter l’exposition à la chaleur, surtout au 1er trimestre)" />
+            <span>Grossesse physiologique (limiter l’exposition à la chaleur, surtout au 1<sup>er</sup> trimestre)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" data-type="relative" value="Immunodépression modérée (à discuter selon le niveau)" />
+            <span>Immunodépression modérée (à discuter selon le niveau)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" data-type="relative" value="Maladie d’Alzheimer débutante (soins aménageables)" />
+            <span>Maladie d’Alzheimer débutante (soins aménageables)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" data-type="relative" value="Handicap moteur ou sensoriel (selon équipements adaptés)" />
+            <span>Handicap moteur ou sensoriel (sous réserve d’équipements adaptés)</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" data-type="relative" value="Autonomie insuffisante (selon les équipements de la station)" />
+            <span>Autonomie insuffisante (selon les équipements de la station)</span>
           </label>
         </div>
 
         <h3>Autres éléments de prudence (note perso)</h3>
         <div class="field">
-          <textarea id="notes" rows="3" placeholder="Ex. traitement antifibrosant, RA modérée, etc."></textarea>
+          <textarea id="notes" rows="3" placeholder="Ex. traitement antifibrosant, RA modérée, etc." autocomplete="off"></textarea>
         </div>
       </section>
 
+      <section class="card" id="card-specifiques">
+        <h2>
+          4. Contre-indications <span class="badge badge-spec">Spécifiques à l’orientation</span>
+        </h2>
+        <p class="hint">Apparaissent selon l’orientation (ou les deux orientations) sélectionnée(s) ci-dessus.</p>
+        <div id="ci-spec-container"></div>
+      </section>
+    </div>
+
+    <div class="full-width">
       <section class="card">
-        <h2>4. Résultat & synthèse</h2>
+        <h2>5. Résultat &amp; synthèse</h2>
         <div class="actions">
           <button class="primary" id="btnEval">
             ⚖️ Évaluer l’aptitude à la cure
@@ -583,34 +644,86 @@
       </section>
     </div>
 
-    <!-- NOUVEAU FOOTER AVEC LICENCE CC -->
+    <!-- FOOTER : tous droits réservés -->
     <footer class="site-footer">
         <span class="warning-text">
             ⚠️ Outil pédagogique local – à adapter à votre pratique. Ne remplace pas la décision clinique.
         </span>
 
-        <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">
-            <img alt="Licence Creative Commons" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" width="88" height="31" />
-        </a>
-        <br />
-        
         <div style="line-height:1.6; margin-top:8px;">
-            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">
-                Outil d'aide à la prescription
-            </span> 
-            par 
-            <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName" style="font-weight:bold;">
-                Dr Rémi Brochot - 2025 -
-            </span> 
-            mis à disposition selon les termes de la <br>
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">
-                Licence Creative Commons Attribution - Pas d'Utilisation Commerciale 4.0 International
-            </a>.
+            <strong>Outil d’aide à la prescription « Prescri’Therm »</strong><br />
+            © 2025 — Dr Marie-Laurence Frognet-Fau &amp; Dr Rémi Brochot — Tous droits réservés.<br />
+            Reproduction, intégration à un logiciel tiers ou usage commercial soumis à l’accord des auteurs.
         </div>
     </footer>
   </div>
 
   <script>
+    /* ---------------------------------------------------------------
+       Contre-indications spécifiques par orientation (delta net-new ;
+       les CI déjà présentes dans la grille générale ne sont pas répétées).
+       --------------------------------------------------------------- */
+    const orientationCIs = {
+      VR: {
+        label: "Voies respiratoires (VR)",
+        items: [
+          { type: "absolute", value: "VR — Mucoviscidose" },
+          { type: "absolute", value: "VR — Obstruction nasale totale (polypose nasale sévère)" },
+          { type: "absolute", value: "VR — BPCO sévère (VEMS < 50 %) et/ou hypoxémie (PaO₂ < 70 mmHg)" },
+          { type: "absolute", value: "VR — Hypertension pulmonaire" },
+          { type: "relative", value: "VR — Perforation tympanique récente (CI aux insufflations tubaires)" }
+        ]
+      },
+      DER: {
+        label: "Dermatologie (DER)",
+        items: [
+          { type: "absolute", value: "DER — Poussée infectieuse cutanée (herpès, zona, varicelle, mycose) → report" }
+        ]
+      }
+      /* RH, METAB, MCA, AUTRE : pas de CI spécifique nette au-delà de la grille générale. */
+    };
+
+    function escapeHtml(s) {
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function renderSpecifiques() {
+      const o1 = document.getElementById("orientation").value;
+      const o2 = document.getElementById("orientation2").value;
+      const chosen = [];
+      if (o1 && orientationCIs[o1]) chosen.push(o1);
+      if (o2 && o2 !== o1 && orientationCIs[o2]) chosen.push(o2);
+
+      const container = document.getElementById("ci-spec-container");
+      const card = document.getElementById("card-specifiques");
+
+      if (chosen.length === 0) {
+        container.innerHTML = "";
+        card.style.display = "none";
+        return;
+      }
+
+      let html = "";
+      chosen.forEach(code => {
+        const o = orientationCIs[code];
+        html += '<div class="spec-block">';
+        html += '<div class="spec-block-title">' + escapeHtml(o.label) + '</div>';
+        html += '<div class="checkbox-group">';
+        o.items.forEach(item => {
+          const badge = item.type === "absolute"
+            ? '<span class="badge badge-abs">Abs.</span>'
+            : '<span class="badge badge-rel">Rel.</span>';
+          html += '<label class="checkbox-item">'
+                + '<input type="checkbox" data-type="' + item.type + '" data-spec="1" value="' + escapeHtml(item.value) + '" />'
+                + '<span>' + escapeHtml(item.value.replace(/^[A-Z]+ — /, "")) + ' ' + badge + '</span>'
+                + '</label>';
+        });
+        html += '</div></div>';
+      });
+      container.innerHTML = html;
+      card.style.display = "block";
+    }
+
     function evaluate() {
       const absolutes = Array.from(
         document.querySelectorAll('input[type="checkbox"][data-type="absolute"]')
@@ -626,9 +739,10 @@
       const title = resultDiv.querySelector('.result-title');
       const body = resultDiv.querySelector('.result-body');
 
-      const nom = document.getElementById('nom').value.trim();
+      const nom = document.getElementById('ref-patient').value.trim();
       const age = document.getElementById('age').value.trim();
       const orientation = document.getElementById('orientation').value;
+      const orientation2 = document.getElementById('orientation2').value;
       const pathologies = document.getElementById('pathologies').value.trim();
       const notes = document.getElementById('notes').value.trim();
 
@@ -638,7 +752,11 @@
         header += "<p><strong>Patient :</strong> ";
         if (nom) header += nom + " ";
         if (age) header += "(" + age + " ans) ";
-        if (orientation) header += "– Orientation : " + orientation + " ";
+        if (orientation) {
+          header += "– Orientation : " + orientation;
+          if (orientation2 && orientation2 !== orientation) header += " + " + orientation2;
+          header += " ";
+        }
         header += "</p>";
       }
 
@@ -666,7 +784,6 @@
         if (notes) html += "<p><strong>Notes :</strong> " + notes + "</p>";
 
         body.innerHTML = html;
-        // Petit scroll vers le résultat pour le mobile
         resultDiv.scrollIntoView({behavior: "smooth", block: "center"});
         return;
       }
@@ -711,6 +828,8 @@
       document.querySelectorAll('input[type="checkbox"]').forEach(cb => (cb.checked = false));
       document.querySelectorAll('input[type="text"], input[type="number"], textarea').forEach(el => (el.value = ""));
       document.getElementById('orientation').value = "";
+      document.getElementById('orientation2').value = "";
+      renderSpecifiques();
 
       const resultDiv = document.getElementById('result');
       const title = resultDiv.querySelector('.result-title');
@@ -725,6 +844,8 @@
 
     document.getElementById('btnEval').addEventListener('click', evaluate);
     document.getElementById('btnReset').addEventListener('click', resetAll);
+    document.getElementById('orientation').addEventListener('change', renderSpecifiques);
+    document.getElementById('orientation2').addEventListener('change', renderSpecifiques);
   </script>
 </body>
 </html>
