@@ -331,6 +331,19 @@
             text-align: center;
         }
         .qr-section h3 { margin: 0 0 10px 0; color: #546e7a; font-size: 1em; }
+        .btn-qr-copy {
+            padding: 10px 18px; background-color: #78909c; color: #fff; border: none;
+            border-radius: 6px; font-size: 15px; cursor: pointer; margin-left: 8px;
+        }
+        .btn-qr-copy:hover { background-color: #546e7a; }
+        #qr_json {
+            margin: 15px auto 0; max-width: 90%; text-align: left;
+            font-family: 'Courier New', monospace; font-size: 9px; line-height: 1.35;
+            color: #607d8b; background: #f5f7f8; border: 1px solid #e0e0e0;
+            border-radius: 4px; padding: 10px; white-space: pre-wrap;
+            word-break: break-all; overflow-wrap: anywhere;
+        }
+        #qr_copy_status { font-size: 0.8em; color: #27ae60; margin-left: 8px; }
         .qr-hint { font-size: 0.8em; color: #90a4ae; margin-bottom: 12px; }
         .btn-qr {
             padding: 10px 18px; background-color: #546e7a; color: #fff; border: none;
@@ -451,6 +464,11 @@
             .btn-qr, .qr-hint { display: none !important; }
             #qr_render svg { width: 340px !important; height: 340px !important; }
             #qr_meta { display: block; font-size: 8pt; color: #000; }
+            .btn-qr-copy, #qr_copy_status { display: none !important; }
+            #qr_json {
+                display: block; max-width: 100%; font-size: 6.5pt; color: #000;
+                background: none !important; border: 1px solid #999; margin-top: 12px;
+            }
 
             /* Footer */
             .footer { position: fixed; bottom: 10px; width: 100%; text-align: center; font-size: 0.6em; border-top: none; }
@@ -910,8 +928,11 @@
         <h3>Export QR (donnees structurees)</h3>
         <div class="qr-hint">Se regenere automatiquement a l'impression. Imprime seul sur la derniere page.</div>
         <button type="button" class="btn-qr" onclick="genererQR()">Generer / Rafraichir le QR</button>
+        <button type="button" class="btn-qr-copy" onclick="copierJSON()">Copier JSON</button>
+        <span id="qr_copy_status"></span>
         <div id="qr_render"></div>
         <div id="qr_meta"></div>
+        <pre id="qr_json"></pre>
     </div>
 
     <div class="footer">
@@ -1594,10 +1615,34 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
             cible.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
             const ver = (qr.getModuleCount() - 17) / 4;
             meta.innerHTML = "consult_sommeil v1 | " + payload.length + " octets | QR v" + ver + " | ECC " + ecc;
+            // Bloc texte : meme payload, en clair (couche texte du PDF -> lisible sans decodage QR)
+            const jsonEl = document.getElementById('qr_json');
+            if (jsonEl) jsonEl.textContent = payload;
         } catch (err) {
             cible.innerHTML = "";
             meta.innerHTML = "<span style='color:#c0392b'>Erreur QR : " + err.message + "</span>";
+            const jsonEl = document.getElementById('qr_json');
+            if (jsonEl) jsonEl.textContent = "";
             console.error(err);
+        }
+    }
+
+    // Copie le JSON dans le presse-papier (pour coller dans Doctolib / un Projet)
+    function copierJSON() {
+        const payload = _ascii(JSON.stringify(collecterDonnees()));
+        const statut = document.getElementById('qr_copy_status');
+        const done = () => { if (statut) { statut.textContent = "Copie !"; setTimeout(function(){ statut.textContent = ""; }, 2500); } };
+        const fallback = () => {
+            const ta = document.createElement('textarea');
+            ta.value = payload; ta.style.position = 'fixed'; ta.style.opacity = '0';
+            document.body.appendChild(ta); ta.focus(); ta.select();
+            try { document.execCommand('copy'); done(); } catch (e) { if (statut) statut.textContent = "Copie impossible"; }
+            document.body.removeChild(ta);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(payload).then(done).catch(fallback);
+        } else {
+            fallback();
         }
     }
 
