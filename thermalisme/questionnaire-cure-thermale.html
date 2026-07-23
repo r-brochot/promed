@@ -17,36 +17,30 @@
       --muted: #6b7280;
       --border: #e5e7eb;
     }
-
     * {
       box-sizing: border-box;
     }
-
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background: radial-gradient(circle at top left, #e0ecff, #f9fafb);
       color: var(--text);
       /* Espace pour éviter que le bouton accueil ne cache le titre sur mobile */
-      padding-top: 50px; 
+      padding-top: 50px;
     }
-
     /* --- CONFIGURATION STANDARD IMPRESSION --- */
     @page {
         size: A4;
         margin: 15mm;
     }
-
     .app {
       max-width: 960px;
       margin: 0 auto;
       padding: 0 16px 48px;
     }
-
     header {
       margin-bottom: 24px;
     }
-
     h1 {
       font-size: 1.5rem;
       margin: 0 0 6px;
@@ -55,7 +49,6 @@
       gap: 0.5rem;
       line-height: 1.3;
     }
-
     h1 span.logo {
       display: inline-flex;
       align-items: center;
@@ -69,31 +62,26 @@
       font-weight: 700;
       font-size: 1.1rem;
     }
-
     header p {
       margin: 0;
       font-size: 0.9rem;
       color: var(--muted);
     }
-
     .grid {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
       gap: 16px;
       margin-bottom: 16px;
     }
-
     /* Passage en 1 colonne sur tablette/mobile pour ne pas écraser le texte */
     @media (max-width: 800px) {
       .grid {
         grid-template-columns: 1fr;
       }
     }
-
     .full-width {
       margin-bottom: 16px;
     }
-
     .card {
       background: var(--card);
       border-radius: 14px;
@@ -101,7 +89,6 @@
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       border: 1px solid var(--border);
     }
-
     .card h2 {
       font-size: 1.1rem;
       margin: 0 0 12px;
@@ -110,18 +97,16 @@
       gap: 0.4rem;
       color: var(--accent);
     }
-
     .card h3 {
       font-size: 1rem;
       margin: 16px 0 8px;
       font-weight: 600;
     }
-    
+
     .card small {
       font-size: 0.8rem;
       color: var(--muted);
     }
-
     /* Inputs et Formulaires */
     .field-row {
       display: flex;
@@ -129,12 +114,10 @@
       margin-bottom: 12px;
       flex-wrap: wrap;
     }
-
     .field {
       flex: 1 1 150px;
       min-width: 0;
     }
-
     .field label {
       display: block;
       font-size: 0.85rem;
@@ -142,7 +125,6 @@
       color: var(--muted);
       margin-bottom: 4px;
     }
-
     .field input,
     .field select,
     .field textarea {
@@ -153,18 +135,15 @@
       font-size: 1rem; /* 16px évite le zoom auto sur iPhone */
       background-color: #fff;
     }
-
     .field textarea {
       resize: vertical;
     }
-
     /* Checkboxes améliorées pour le tactile */
     .checkbox-group {
       display: flex;
       flex-direction: column;
       gap: 0;
     }
-
     .checkbox-item {
       display: flex;
       align-items: flex-start;
@@ -173,25 +152,27 @@
       padding: 8px 0; /* Zone de clic agrandie en hauteur */
       cursor: pointer;
     }
-
     .checkbox-item:not(:last-child) {
         border-bottom: 1px solid #f3f4f6; /* Séparation visuelle */
     }
-
     .checkbox-item input[type="checkbox"] {
       margin-top: 3px;
       min-width: 20px;
       min-height: 20px; /* Case plus grosse */
       accent-color: var(--accent);
     }
-
     .hint {
       font-size: 0.8rem;
       color: var(--muted);
       margin-bottom: 10px;
       font-style: italic;
     }
-
+    .static-tip {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: italic;
+      margin: 4px 0 16px;
+    }
     .badge {
       display: inline-flex;
       align-items: center;
@@ -203,22 +184,18 @@
       letter-spacing: 0.02em;
       vertical-align: middle;
     }
-
     .badge-abs {
       background: #fee2e2;
       color: #991b1b;
     }
-
     .badge-rel {
       background: #fef3c7;
       color: #92400e;
     }
-
     .badge-spec {
       background: var(--accent-soft);
       color: #1e40af;
     }
-
     /* Boutons d'action */
     .actions {
       margin: 20px 0 10px;
@@ -226,7 +203,6 @@
       flex-direction: column; /* Stack buttons on mobile default */
       gap: 10px;
     }
-
     @media (min-width: 600px) {
         .actions {
             flex-direction: row;
@@ -234,7 +210,6 @@
             flex-wrap: wrap;
         }
     }
-
     button {
       border-radius: 8px;
       border: none;
@@ -249,34 +224,30 @@
       transition: all 0.2s ease;
       width: 100%; /* Pleine largeur sur mobile */
     }
-    
+
     @media (min-width: 600px) {
         button { width: auto; border-radius: 999px; padding: 8px 16px; font-size: 0.9rem;}
     }
-
     button.primary {
       background: var(--accent);
       color: white;
       box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
     }
-
     button.primary:active {
       transform: scale(0.98);
     }
-
     button.secondary {
       background: #f3f4f6;
       color: #374151;
       border: 1px solid #e5e7eb;
     }
-
     /* Bouton d'impression */
     button.print-btn {
         background: #059669;
         color: white;
         margin-top: 15px;
     }
-    
+
     /* Résultats */
     .result {
       margin-top: 16px;
@@ -286,24 +257,20 @@
       background: #f8fafc;
       border: 1px solid #e2e8f0;
     }
-
     .result-title {
       font-weight: 700;
       font-size: 1.1rem;
       margin-bottom: 8px;
     }
-
     .status-ok { color: var(--ok); }
     .status-warning { color: var(--warning); }
     .status-danger { color: var(--danger); }
-
     .result ul {
       margin: 8px 0 8px 20px;
       padding: 0;
     }
-    
-    .result li { margin-bottom: 4px; }
 
+    .result li { margin-bottom: 4px; }
     /* Bloc CI spécifiques masqué par défaut */
     #card-specifiques { display: none; }
     .spec-block { margin-bottom: 8px; }
@@ -313,7 +280,6 @@
         margin: 12px 0 4px;
         color: #1e40af;
     }
-
     /* --- FOOTER --- */
     footer.site-footer {
         text-align: center;
@@ -323,16 +289,15 @@
         margin-top: 20px;
         border-top: 1px solid #e2e8f0;
     }
-    
+
     footer.site-footer .warning-text {
         color: #c53030;
         font-weight: 600;
         display: block;
         margin-bottom: 15px;
     }
-    
-    footer.site-footer a { color: #6c757d; text-decoration: underline; }
 
+    footer.site-footer a { color: #6c757d; text-decoration: underline; }
     /* --- Bouton Retour Accueil --- */
     .home-button {
       position: fixed;
@@ -351,7 +316,7 @@
       font-size: 0.9rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    
+
     @media (min-width: 800px) {
         body { padding-top: 0; }
         .home-button {
@@ -364,7 +329,6 @@
             justify-content: flex-start;
         }
     }
-
     /* --- STYLES SPÉCIFIQUES MÉDIA PRINT --- */
     @media print {
         body {
@@ -374,16 +338,16 @@
             color: #000 !important;
             font-size: 11px !important;
         }
-        
+
         .app { padding: 0 !important; max-width: 100% !important; }
         .home-button, .actions, .print-btn, .hint { display: none !important; }
-        
+
         .grid {
-            display: grid !important; 
+            display: grid !important;
             grid-template-columns: 1fr 1fr !important;
             gap: 10px !important;
         }
-        
+
         .card {
             box-shadow: none !important;
             border: 1px solid #ccc !important;
@@ -392,11 +356,11 @@
             background: white !important;
             padding: 8px !important;
         }
-        
+
         h1 { font-size: 1.4rem !important; }
         h1 span.logo { border: 1px solid #000; color: #000 !important; background: none !important; }
         .badge { border: 1px solid #000; color: #000 !important; background: none !important; }
-        
+
         /* Footer impression */
         footer.site-footer {
             margin-top: 20px;
@@ -411,20 +375,17 @@
   </style>
 </head>
 <body>
-
   <a href="../index.html" class="home-button">
     🏠 Accueil
   </a>
-
   <div class="app">
     <header>
       <h1>
         <span class="logo">T</span>
         Grille d’aptitude à une cure thermale
       </h1>
-      <p>Outil rapide d’aide à la décision clinique. A utiliser en complément du jugement médical.</p>
+      <p>Grille de rappel des critères d’aptitude à la cure thermale, à titre de support de consultation.</p>
     </header>
-
     <div class="grid">
       <section class="card">
         <h2>1. Informations patient</h2>
@@ -438,7 +399,6 @@
             <input id="age" type="number" min="0" max="120" placeholder="Années" autocomplete="off" />
           </div>
         </div>
-
         <div class="field-row">
           <div class="field">
             <label for="orientation">Orientation envisagée</label>
@@ -477,20 +437,16 @@
             </select>
           </div>
         </div>
-
         <div class="field">
           <label for="pathologies">Pathologies / contexte (résumé)</label>
           <textarea id="pathologies" rows="3" placeholder="Ex. arthrose, asthme, DT2..." autocomplete="off"></textarea>
         </div>
-
       </section>
-
       <section class="card">
         <h2>
           2. Contre-indications <span class="badge badge-abs">Absolues</span>
         </h2>
         <p class="hint">D’après la grille des contre-indications de médecine thermale.</p>
-
         <div class="checkbox-group">
           <label class="checkbox-item">
             <input type="checkbox" data-type="absolute" value="Cancer en phase évolutive" />
@@ -559,14 +515,12 @@
         </div>
       </section>
     </div>
-
     <div class="grid">
       <section class="card">
         <h2>
           3. Contre-indications <span class="badge badge-rel">Relatives</span>
         </h2>
         <p class="hint">Imposent une adaptation des soins (température, intensité, type de techniques).</p>
-
         <div class="checkbox-group">
           <label class="checkbox-item">
             <input type="checkbox" data-type="relative" value="Insuffisance veineuse importante (soins chauds statiques)" />
@@ -613,13 +567,11 @@
             <span>Autonomie insuffisante (selon les équipements de la station)</span>
           </label>
         </div>
-
         <h3>Autres éléments de prudence (note perso)</h3>
         <div class="field">
           <textarea id="notes" rows="3" placeholder="Ex. traitement antifibrosant, RA modérée, etc." autocomplete="off"></textarea>
         </div>
       </section>
-
       <section class="card" id="card-specifiques">
         <h2>
           4. Contre-indications <span class="badge badge-spec">Spécifiques à l’orientation</span>
@@ -628,26 +580,24 @@
         <div id="ci-spec-container"></div>
       </section>
     </div>
-
     <div class="full-width">
       <section class="card">
         <h2>5. Résultat &amp; synthèse</h2>
+        <p class="static-tip">Ce récapitulatif restitue les éléments cochés ci-dessus, sans les interpréter. En cas de doute sur l’aptitude du patient, rapprochez-vous du médecin de la station thermale ou du prescripteur référent avant l’admission.</p>
         <div class="actions">
           <button class="primary" id="btnEval">
-            ⚖️ Évaluer l’aptitude à la cure
+            📋 Générer le récapitulatif
           </button>
           <button class="secondary" id="btnReset">
             ♻️ Réinitialiser
           </button>
         </div>
-
         <div id="result" class="result">
-          <div class="result-title">En attente d’évaluation.</div>
+          <div class="result-title">En attente de récapitulatif.</div>
           <div class="result-body">
-            Cochez les éléments pertinents puis cliquez sur <strong>« Évaluer »</strong>.
+            Cochez les éléments pertinents puis cliquez sur <strong>« Générer le récapitulatif »</strong>.
           </div>
         </div>
-
         <div class="print-container">
             <button class="print-btn" onclick="window.print()">
                 🖨️ Imprimer la synthèse
@@ -655,13 +605,11 @@
         </div>
       </section>
     </div>
-
     <!-- FOOTER : tous droits réservés -->
     <footer class="site-footer">
         <span class="warning-text">
-            ⚠️ Outil pédagogique local – à adapter à votre pratique. Ne remplace pas la décision clinique.
+            Cet outil affiche les critères de contre-indication reconnus en médecine thermale, à titre de rappel. Il n’émet aucune recommandation ni conclusion automatisée — l’interprétation et la décision clinique relèvent exclusivement du médecin.
         </span>
-
         <div style="line-height:1.6; margin-top:8px;">
             <strong>Outil d’aide à la prescription « Prescri’Therm »</strong><br />
             © 2025 — Dr Marie-Laurence Frognet-Fau &amp; Dr Rémi Brochot — Tous droits réservés.<br />
@@ -669,7 +617,6 @@
         </div>
     </footer>
   </div>
-
   <script>
     /* ---------------------------------------------------------------
        Contre-indications spécifiques par orientation (delta net-new ;
@@ -694,27 +641,22 @@
       }
       /* RH, METAB, MCA, AUTRE : pas de CI spécifique nette au-delà de la grille générale. */
     };
-
     function escapeHtml(s) {
       return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
-
     function renderSpecifiques() {
       const o1 = document.getElementById("orientation").value;
       const o2 = document.getElementById("orientation2").value;
       const chosen = [];
       if (o1 && orientationCIs[o1]) chosen.push(o1);
       if (o2 && o2 !== o1 && orientationCIs[o2]) chosen.push(o2);
-
       const container = document.getElementById("ci-spec-container");
       const card = document.getElementById("card-specifiques");
-
       if (chosen.length === 0) {
         container.innerHTML = "";
         card.style.display = "none";
         return;
       }
-
       let html = "";
       chosen.forEach(code => {
         const o = orientationCIs[code];
@@ -735,7 +677,6 @@
       container.innerHTML = html;
       card.style.display = "block";
     }
-
     function evaluate() {
       const absolutes = Array.from(
         document.querySelectorAll('input[type="checkbox"][data-type="absolute"]')
@@ -743,21 +684,17 @@
       const relatives = Array.from(
         document.querySelectorAll('input[type="checkbox"][data-type="relative"]')
       );
-
       const absChecked = absolutes.filter(cb => cb.checked);
       const relChecked = relatives.filter(cb => cb.checked);
-
       const resultDiv = document.getElementById('result');
       const title = resultDiv.querySelector('.result-title');
       const body = resultDiv.querySelector('.result-body');
-
       const nom = document.getElementById('ref-patient').value.trim();
       const age = document.getElementById('age').value.trim();
       const orientation = document.getElementById('orientation').value;
       const orientation2 = document.getElementById('orientation2').value;
       const pathologies = document.getElementById('pathologies').value.trim();
       const notes = document.getElementById('notes').value.trim();
-
       // Construction entête
       let header = "";
       if (nom || age || orientation) {
@@ -771,89 +708,48 @@
         }
         header += "</p>";
       }
-
-      // CI ABSOLUES
-      if (absChecked.length > 0) {
-        title.textContent = "❌ Contre-indication ABSOLUE à la cure thermale.";
-        title.className = "result-title status-danger";
-
-        let html = header;
-        html += "<p>Au moins une contre-indication absolue est relevée :</p><ul>";
-        absChecked.forEach(cb => {
-          html += "<li>" + cb.value + "</li>";
-        });
-        html += "</ul>";
-
+      // Récapitulatif neutre — pas de verdict, pas d'interprétation.
+      title.textContent = "Récapitulatif des éléments cochés";
+      title.className = "result-title";
+      let html = header;
+      if (absChecked.length === 0 && relChecked.length === 0) {
+        html += "<p>Aucun élément coché dans les grilles de contre-indications.</p>";
+      } else {
+        if (absChecked.length > 0) {
+          html += "<p><strong>CI absolues cochées :</strong></p><ul>";
+          absChecked.forEach(cb => {
+            html += "<li>" + cb.value + "</li>";
+          });
+          html += "</ul>";
+        }
         if (relChecked.length > 0) {
-          html += "<p>Contre-indications relatives associées :</p><ul>";
+          html += "<p><strong>CI relatives cochées :</strong></p><ul>";
           relChecked.forEach(cb => {
             html += "<li>" + cb.value + "</li>";
           });
           html += "</ul>";
         }
-
-        if (pathologies) html += "<p><strong>Contexte :</strong> " + pathologies + "</p>";
-        if (notes) html += "<p><strong>Notes :</strong> " + notes + "</p>";
-
-        body.innerHTML = html;
-        resultDiv.scrollIntoView({behavior: "smooth", block: "center"});
-        return;
       }
-
-      // CI RELATIVES
-      if (relChecked.length > 0) {
-        title.textContent = "⚠️ Pas de CI absolue, mais prudence.";
-        title.className = "result-title status-warning";
-
-        let html = header;
-        html += "<p>Aucune contre-indication absolue n’est cochée.</p>";
-        html += "<p>Contre-indications relatives nécessitant adaptation des soins :</p><ul>";
-        relChecked.forEach(cb => {
-          html += "<li>" + cb.value + "</li>";
-        });
-        html += "</ul>";
-
-        if (pathologies) html += "<p><strong>Contexte :</strong> " + pathologies + "</p>";
-        if (notes) html += "<p><strong>Notes :</strong> " + notes + "</p>";
-
-        body.innerHTML = html;
-        resultDiv.scrollIntoView({behavior: "smooth", block: "center"});
-        return;
-      }
-
-      // Aucune CI
-      title.textContent = "✅ Aucune contre-indication retrouvée.";
-      title.className = "result-title status-ok";
-
-      let html = header;
-      html += "<p>Aucune contre-indication absolue ou relative n’a été cochée.</p>";
-      html += "<p>La cure thermale peut être envisagée.</p>";
-
       if (pathologies) html += "<p><strong>Contexte :</strong> " + pathologies + "</p>";
       if (notes) html += "<p><strong>Notes :</strong> " + notes + "</p>";
-
       body.innerHTML = html;
       resultDiv.scrollIntoView({behavior: "smooth", block: "center"});
     }
-
     function resetAll() {
       document.querySelectorAll('input[type="checkbox"]').forEach(cb => (cb.checked = false));
       document.querySelectorAll('input[type="text"], input[type="number"], textarea').forEach(el => (el.value = ""));
       document.getElementById('orientation').value = "";
       document.getElementById('orientation2').value = "";
       renderSpecifiques();
-
       const resultDiv = document.getElementById('result');
       const title = resultDiv.querySelector('.result-title');
       const body = resultDiv.querySelector('.result-body');
-
-      title.textContent = "En attente d’évaluation.";
+      title.textContent = "En attente de récapitulatif.";
       title.className = "result-title";
-      body.innerHTML = 'Cochez les éléments pertinents puis cliquez sur <strong>« Évaluer »</strong>.';
-      
+      body.innerHTML = 'Cochez les éléments pertinents puis cliquez sur <strong>« Générer le récapitulatif »</strong>.';
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
     document.getElementById('btnEval').addEventListener('click', evaluate);
     document.getElementById('btnReset').addEventListener('click', resetAll);
     document.getElementById('orientation').addEventListener('change', renderSpecifiques);
